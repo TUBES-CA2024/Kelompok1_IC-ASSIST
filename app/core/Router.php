@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Core;
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 class Router {
 
@@ -33,42 +36,51 @@ class Router {
             'handler' => $handler
         ];
     }
-    public static function route ($method, $path) {
+    public static function route($method, $path) {
+        // Debugging: Tampilkan method dan path yang diterima
+        echo "Method: " . $method . "<br>";
+        echo "Requested Path: " . $path . "<br>";
+    
         $routes = array();
         switch($method) {
             case 'GET' :
                 $routes = self::$getRoutes;
                 break;
-
+    
             case 'PUT' :
                 $routes = self::$putRoutes;
                 break;
-                
+    
             case 'POST' :
-                $routes = self::$postRoutes;
+                $routes = self::$postRoutes; 
                 break;
-                
+    
             case 'DELETE' :
                 $routes = self::$deleteRoutes;
                 break;    
         }
-        
+    
+        // Cek apakah path cocok dengan rute yang ada
         foreach($routes as $route) {
-            $pattern = str_replace("/","\/",$route['path']);
-            $pattern = preg_replace('/\{(\w+)\}/','(?P<$1>[^\/');
+            $pattern = str_replace("/", "\/", $route['path']);
+            $pattern = preg_replace('/\{(\w+)\}/', '(?P<$1>[^\/]+)', $pattern);
             $pattern = '/^' . $pattern . '$/';
-
+    
+            // Debugging: Tampilkan pattern yang dibentuk
+            echo "Matching Pattern: " . $pattern . "<br>";
+    
             if (preg_match($pattern, $path, $matches)) {
-                $index = array_search($route, $matches);
-                $handler = $route[$index]['handler'];
+                $handler = $route['handler'];
                 return $handler($matches);
-                break;
             }
         }
-
+    
+        // Jika tidak ada yang cocok, redirect ke halaman 404
+        echo "No matching route found. Redirecting to 404...<br>"; // Debugging: Tampilkan sebelum redirect
         if($path != APP_URL . '/miscellaneous/404'){
-            redirect('miscellaneous/404');
+            redirect(APP_URL . '/miscellaneous/404');
         }
     }
+    
 }
 

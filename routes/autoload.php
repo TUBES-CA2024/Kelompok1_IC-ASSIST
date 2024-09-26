@@ -8,3 +8,6 @@ foreach ($core as $file) {
 foreach ($config as $file) {
     require $file;
 }
+
+$app = new App;
+$app->run();

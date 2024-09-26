@@ -1,3 +1,3 @@
 <?php
-require_once '../routes/Autoload.php';
+require_once '../routes/autoload.php';
 $app = new App();
