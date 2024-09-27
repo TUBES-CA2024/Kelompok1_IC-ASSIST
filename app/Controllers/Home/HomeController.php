@@ -7,7 +7,7 @@ use App\Core\Controller;
 class HomeController extends Controller {
 
     public function index() {
-        echo "Welcome from HomeController";
+        view('index','Home');
     }
 
 }

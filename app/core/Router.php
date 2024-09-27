@@ -71,13 +71,10 @@ class Router
                     return is_callable($handler) ? $handler($matches) : throw new Exception('Handler not callable.');
                 }
             } catch (Exception $e) {
-                echo $e->getMessage();
-                // Arahkan ke halaman 404 jika ada error atau rute tidak ditemukan
                 redirect('miscellaneous/404');
             }
         }
 
-        // Jika tidak ada rute yang cocok, arahkan ke halaman 404
         if (!$found) {
             echo "404 Not Found";
             redirect('miscellaneous/404');
