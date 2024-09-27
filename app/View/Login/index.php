@@ -56,15 +56,14 @@
                             <img src="../../../Public/Assets/Img/password.svg" alt="Lock Icon"
                                 style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px;">
                             <input type="password" id="password" name="password" placeholder="Password"
-                                style="padding-left: 40px; width: 100%; height: 45px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+                                style="padding-left: 40px; width: 100%; height: 45px; 
+        //paramsfont-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
                             <span
                                 style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"
                                 id="togglePassword">
                                 <i class="bi bi-eye-slash" id="toggleIcon"></i>
                             </span>
-                        </div>
-
-                        <div style="position: relative; width: 100%; margin-bottom: 15px;">
+                            //params 15px;">
                             <img src="../../../Public/Assets/Img/password.svg" alt="Key Icon"
                                 style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px;">
                             <input type="password" id="confirmPass" name="konfirmasiPassword"
