@@ -14,5 +14,15 @@ foreach ($config as $file) {
     require $file;
 }
 
+spl_autoload_register(function($class) {
+    $class = str_replace("App\\", "app/", $class); 
+    $file = __DIR__ . '/../' . str_replace("\\", "/", $class) . ".php";
+
+    if (file_exists($file)) {
+        require $file;
+    }
+
+});
+
 $app = new App\Core\App;
 $app->run();

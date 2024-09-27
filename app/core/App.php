@@ -4,14 +4,22 @@ namespace App\Core;
 
 use App\Core\Router;
 
-class App {
-    public function run() {
+class App
+{
+    public function run()
+    {
         require_once "../routes/web.php";
-    
-        $path = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+        $path = str_replace('/tubes_web/public', '', $path);
+
+        if ($path == '') {
+            $path = '/';
+        }
 
         $method = $_SERVER['REQUEST_METHOD'];
-    
+
         Router::route($method, $path);
     }
 }
