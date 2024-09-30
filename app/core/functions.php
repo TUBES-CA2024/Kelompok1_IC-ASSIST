@@ -7,3 +7,6 @@ function redirect($path) {
      die;
  }
  
+ function back() {
+    header("Location: {$_SERVER['HTTP_REFERER']}");
+ }
