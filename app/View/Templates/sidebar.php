@@ -12,18 +12,17 @@
 <body>
     <div class ="sidebar">
         <div class="top">
-            <div class="logo">
-                <i class="bx bxl-codepen"></i>]
-                <span>IC-ASSIST</span>
-            </div>
-            <i class="bx bx-menu" id="btn"></i>
+        <div class="logo">
+            <img src="/tubes_web/public/Assets/Img/iclabs.png" alt="IC-Assist Logo" class="icon">
+            <span>IC-ASSIST</span>
         </div>
+        <i class="bx bx-menu" id="btn"></i>
+    </div>
         <div class="user">
             <img src ="/tubes_web/public/Assets/Img/dummy.jpeg" alt="foto" 
             name="userphoto" id="userphoto" class="user-img">
             <div>
-                <p class="bold" name="username" id="username">dummy</p>
-                <p>Admin</p>
+                <p class="bold" name="username" id="username">Ahmad Mufli Ramadhan</p>
             </div>
         </div>
         <ul>
@@ -80,7 +79,8 @@
     </div>
     <div class="main-content">
         <div class="container">
-            <h1>IC ASSIST</h1>
+            <h1>Dashboard</h1>
+            <p>Selamat datang di IC-Assist, Ahmad Mufli Ramadhan</p>
         </div>
     </div>
     <script src="/tubes_web/public/Assets/Script/sidebar/ScriptSidebar.js"></script>
