@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Core;
-
+use \PDO;
 class Database {
     private static $pdo;
     private static $DB_CONNECTION = "mysql";

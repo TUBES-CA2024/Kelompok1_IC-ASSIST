@@ -130,13 +130,13 @@
             <div class="toggle">
                 <div class="toggle-panel toggle-right">
                     <h1>Sudah punya akun?</h1>
-                    <p>Silahkan login jika anda telah mempunyai akun pendaftaran calon asisten</p>
+                    <p>Silahkan login jika anda telah mempunyai akun IC-ASSIST</p>
                     <button class="hidden" id="register">Masuk</button>
                 </div>
                 <div class="toggle-panel toggle-left">
                     <h1>Belum punya akun?</h1>
 
-                    <p>Silahkan daftar akun untuk melanjutkan proses pendaftaran calon asisten</p>
+                    <p>Silahkan daftar akun untuk melanjutkan proses IC-ASSIST</p>
                     <button class="hidden" id="login">Daftar</button>
                 </div>
             </div>

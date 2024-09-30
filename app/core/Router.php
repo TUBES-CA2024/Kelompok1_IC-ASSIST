@@ -51,20 +51,17 @@ class Router
         $found = false; 
 
         foreach ($routes as $route) {
-            // Buat pattern regex untuk menangani rute dinamis
             $pattern = str_replace("/", "\/", $route['path']);
             $pattern = preg_replace('/\{(\w+)\}/', '(?P<$1>[^\/]+)', $pattern);
             $pattern = '/^' . $pattern . '$/';
 
             try {
-                // Periksa apakah rute cocok secara langsung dengan $path
                 if (isset($route['handler']) && $path === $route['path']) {
                     $handler = $route['handler'];
                     $found = true; 
                     return is_callable($handler) ? $handler() : throw new Exception('Handler not callable.');
                 }
 
-                // Periksa apakah rute dinamis cocok menggunakan regex (preg_match)
                 if (isset($route['handler']) && preg_match($pattern, $path, $matches)) {
                     $handler = $route['handler'];
                     $found = true; 
