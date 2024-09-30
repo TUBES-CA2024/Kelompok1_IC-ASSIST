@@ -13,6 +13,7 @@ class HomeController extends Controller {
         echo "<pre>";
         $users = New UserModel;
         print_r($users->where("id","=",1)->get());
+        print_r($users->orderBy("id","ASC")->limit(4)->offset(3)->get());
     }
 
 }

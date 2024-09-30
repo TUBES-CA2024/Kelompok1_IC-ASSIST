@@ -40,7 +40,7 @@ abstract class Model {
     }
 
     public function where ($column, $operator, $value) {
-        static::$orderBys[] = [
+        static::$wheres[] = [
             'column' => $column,
             'operator' => $operator,
             'value' => $value
@@ -81,7 +81,35 @@ abstract class Model {
                 }
                 $query .= $where['column'] . " " . $where['operator'] . ' :' . $where['column'];
             }
+        }
+
+        if(!empty(static::$orderBys)) {
+            $query .= " ORDER BY ";
+            foreach(static::$orderBys as $index => $orderBy) {
+                if($index != 0) {
+                    $query .= ", ";
+                }
+                $query .= $orderBy['column'] . " " . $orderBy['direction'];
+            }
+        }
+
+        if(!empty(static::$groupBy)) {
+            $query .= " GROUP BY ";
+            foreach(static::$groupBy as $index => $groupBy) {
+                if($index != 0) {
+                    $query .= ", ";
+                }
+                $query .= $groupBy;
+            }
+        }
+
+        if(!empty(static::$limit)) {
+            $query .= " LIMIT " . static::$limit[0];
             print_r($query);
+
+        }
+        if(!empty(static::$offset)) {
+            $query .= " OFFSET " . static::$offset[0];
         }
         $stmt = Database::query($query, $this->getWhereParameters());
         var_dump($stmt);
