@@ -35,7 +35,7 @@
 
 .sidebar.active  ~ .main-content {
     left: 250px;
-    width: calc(100% - 250px);
+    width: calc(100% - 80px);
 }
 
 .sidebar.active {
@@ -194,4 +194,9 @@
     transition: all 0.5s ease;
     width: calc(100% - 80px);
     padding: 1rem;
+}
+
+.container {
+    max-width: 100%;
+    overflow-x: hidden;
 }

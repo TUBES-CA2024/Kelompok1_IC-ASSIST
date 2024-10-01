@@ -11,6 +11,10 @@ class HomeController extends Controller {
 
     public function index() {
         View::render('sidebar','Templates');
+        View::render('index','Home');
+    }
+    public function dashboard() {
+        View::render('dashboard','Home');
     }
 
 }

@@ -6,6 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    <p>GACOR COK</p>
+   <div class="main-content">
+    <div class="container">
+        
+    </div>    
+   </div>
 </body>
 </html>

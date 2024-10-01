@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,49 +28,49 @@
         </div>
         <ul>
             <li>
-                <a href="#">
+                <a href="dashboard.php">
                     <i class="bx bx-home"></i>
                     <span class="nav-item">Dashboard</span>
                 </a>
                 <span class="tooltip">Dashboard</span>
             </li>
             <li>
-                <a href="#">
+                <a href="biodata.php">
                     <i class="bx bxs-id-card"></i>
                     <span class="nav-item">Lengkapi Biodata</span>
                 </a>
                 <span class="tooltip">Lengkapi Biodata</span>
             </li>
             <li>
-                <a href="#">
+                <a href="uploadBerkas.php">
                     <i class="bx bx-file"></i>
                     <span class="nav-item">Upload Berkas</span>
                 </a>
                 <span class="tooltip">Upload Berkas</span>
             </li>
             <li>
-                <a href="#">
+                <a href="tesTulis.php">
                     <i class="bx bx-task"></i>
                     <span class="nav-item">Tes Tulis</span>
                 </a>
                 <span class="tooltip">Tes Tulis</span>
             </li>
             <li>
-                <a href="#">
+                <a href="presentasi.php">
                     <i class="bx bx-chalkboard"></i>
                     <span class="nav-item">Presentasi</span>
                 </a>
                 <span class="tooltip">Presentasi</span>
             </li>
             <li>
-                <a href="#">
+                <a href="wawancara.php">
                     <i class="bx bx-user-voice"></i>
                     <span class="nav-item">Wawancara</span>
                 </a>
                 <span class="tooltip">Wawancara</span>
             </li>
             <li>
-                <a href="#">
+                <a href="pengumuman.php">
                     <i class="bx bx-notepad"></i>
                     <span class="nav-item">Pengumuman</span>
                 </a>
