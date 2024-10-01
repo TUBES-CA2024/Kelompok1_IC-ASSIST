@@ -16,6 +16,10 @@ class Database {
         self::$pdo = new \PDO($DB,self::$DB_USER,self::$DB_PASS);
     }
 
+    public static function getInstance() {
+        self::con();
+        return self::$pdo;
+    }
     public static function query($query,$data = []) {
         self::con();
 
@@ -27,6 +31,3 @@ class Database {
         return $stmt;
     }
 }
-
-$query = "SELECT * FROM user";
-Database::query($query);

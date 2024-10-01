@@ -44,3 +44,27 @@ loginIconPass.addEventListener('click', ()=>{
     togglePassLogin.classList.toggle('bi-eye');
     togglePassLogin.classList.toggle('bi-eye-slash');
 })
+
+//ajax
+
+$(document).ready(function(){
+    $('#registerForm').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url: '/tubes_web/public/register/authenticate',
+            type: 'post',
+            data: $('#registerForm').serialize(),
+            dataType: 'json',
+        });
+    });
+
+    $('#loginForm').submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url: '/tubes_web/public/login/authenticate',
+            type: 'post',
+            data: $('#loginForm').serialize(),
+            dataType: 'json',
+        });
+    });
+});
