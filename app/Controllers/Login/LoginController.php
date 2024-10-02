@@ -30,7 +30,7 @@ class LoginController extends Controller {
     
             if ($user && isset($user['password']) && password_verify($password, $user['password'])) {
                 $_SESSION['user'] = $user;
-                header('Location: /tubes_web/public/home');
+                header('Location: /tubes_web/public/');
                 exit();
             } else {
                 echo "<script>alert('Stambuk or password is incorrect.')</script>";
