@@ -31,8 +31,8 @@
 </head>
 
 <body>
-    <div class="container" id="container">
-        <div class="form-container sign-in">
+    <div class="container-gacor" id="container-gacor">
+        <div class="form-container-gacor sign-in">
             <form id = "registerForm" action="tubes_web/public/register/authenticate" method="POST">
                 <div>
                     <h1 style="text-align: center;">Buat Akun</h1>
@@ -83,7 +83,7 @@
                 </div>
             </form>
         </div>
-        <div class="form-container sign-up">
+        <div class="form-container-gacor sign-up">
             <form id = "loginForm" action ="/tubes_web/public/login/authenticate" method ="POST">
                 <div>
                     <div style="margin-bottom: 20px; text-align: center; position: relative; top: -10px;">
@@ -129,7 +129,7 @@
                 </div>
             </form>
         </div>
-        <div class="toggle-container">
+        <div class="toggle-container-gacor">
             <div class="toggle">
                 <div class="toggle-panel toggle-right">
                     <h1>Sudah punya akun?</h1>

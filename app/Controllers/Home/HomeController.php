@@ -11,7 +11,7 @@ class HomeController extends Controller {
     public function index() {
         // Check if the user is logged in
         if ($this->isLoggedIn()) {
-            // Render the main layout which includes the sidebar and a content container
+            // Render the main layout which includes the sidebar and a content container-gacor
             View::render('main', 'Templates');
         } else {
             // Redirect to login page if not logged in
@@ -35,7 +35,7 @@ class HomeController extends Controller {
             case 'pengumuman':
                 View::render('pengumuman', 'Templates');
                 break;
-            case 'presetnasi' :
+            case 'presentasi' :
                 View::render('presentasi', 'Templates');
                 break;
             case 'tesTulis' :

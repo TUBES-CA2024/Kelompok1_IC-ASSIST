@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/tubes_web/public/Assets/Style/sidebarStyle.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <title>Document</title>
+    <title>IC-ASSIST</title>
 </head>
 
 <body>
@@ -80,9 +80,16 @@
         </ul>
     </div>
     <div class="main-content" id="content">
-       
+
     </div>
-    <script> const APP_URL =  '<?php echo APP_URL; ?>' </script>
+
+    <footer id="footer">
+        <div class="container-gacor-footer">
+            <p>&copy; 2024 ICLABS. <a href="#">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+    <script> const APP_URL = '<?php echo APP_URL; ?>' </script>
     <script src="/tubes_web/public/Assets/Script/sidebar/ScriptSidebar.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/tubes_web/public/Assets/Script/app.js"></script>
