@@ -15,7 +15,7 @@ Router::post('/register/authenticate', [new RegisterController, 'register']);
 Router::get('/',[new HomeController, 'index']);
 Router::get('/home',[new HomeController, 'index']);
 Router::get('/home/dashboard',[new HomeController, 'dashboard']);
-
+Router::get('/{page}', [new HomeController, 'loadContent']);
 
 
 

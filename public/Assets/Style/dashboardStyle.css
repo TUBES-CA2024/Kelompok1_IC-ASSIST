@@ -213,7 +213,36 @@ main .insights small {
     margin-top: 1.6rem;
     display: block;
 }
+table {
+    font-size: 0.9rem;
+}
+table thead th {
+    color: var(--color-primary);
+}
+main .dashboard {
+    margin-bottom: 1rem;
+    background-color: var(--color-white);
+    width: 18%;
+    text-align: center;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    color: var(--color-primary);
+    border: 1px solid var(--color-light);
 
+}
+
+main .tahapan-pendaftaran {
+    margin-top: 2rem;
+    margin-bottom: 0.8rem;
+    background-color: var(--color-white);
+    width: 71%;
+    text-align: center;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    color: var(--color-primary);
+    border: 1px solid var(--color-light);
+
+}
 main .recent_tahapan {
     margin-top: 2rem;
 }
@@ -240,4 +269,29 @@ main table tbody td {
 main table tbody tr:last-child td {
     border: none;
 }
+
+.right {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2rem;
+    position: absolute; 
+    top: 1.4rem; 
+    right: 1rem; 
+    margin-top: 1.4rem; 
+    margin-top: 1.4rem;
+}
+.right .top {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    background: var(--color-white);
+    border-radius: var(--border-radius-1);
+    padding: var(--card-padding);
+    box-shadow: var(--box-shadow);
+}
+
+.right .top .notification h2 {
+    color: var(--color-primary);
+}
+
 
