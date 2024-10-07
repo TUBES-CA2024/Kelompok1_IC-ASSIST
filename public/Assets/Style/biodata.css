@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+    --color-primary: #3DC2EC;
+    --color-danger : #ff7782;
+    --color-success : #4CAF50;
+    --color-warning : #FFC107;
+    --color-white : #fff;
+    --color-info-dark : #3A3A3A;
+    --color-info-light : #F5F5F5;
+    --color-dark : #333;
+    --color-light:rgba(132,139,200,0.18);
+    --color-primary-variant:#111e88;
+    --color-dark-variant:#677483;
+    --color-background:#f5f5f5;
+
+    --card-border-radius:2rem;
+    --border-radius-1:0.4rem;
+    --border-radius-2:0.8rem;
+    --border-radius-3:1.2rem;
+
+    --card-padding:1.8rem;
+    --padding-1:1.2rem;
+
+    --box-shadow :0 2rem 3 rem var(--color-light);
+}
+.biodata {
+    margin-bottom: 1rem;
+    background-color: var(--color-white);
+    width: 18%;
+    text-align: center;
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    color: var(--color-primary);
+    border: 1px solid var(--color-light);
+}
+
+.form-container {
+    max-width: 50%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.form-control,
+.form-select,
+.form-check-input,
+.btn,
+textarea {
+    border-radius: 4px !important; }
+
+.form-container input[type="text"],
+.form-container input[type="number"],
+.form-container input[type="file"],
+.form-container textarea,
+.form-container select {
+    padding: 8px;
+    font-size: 14px;
+}
+
+.form-container button {
+    padding: 10px 20px;
+    font-size: 14px;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+}
