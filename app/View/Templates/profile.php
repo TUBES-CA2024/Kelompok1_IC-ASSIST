@@ -1,10 +1,10 @@
 <div class="profile">
-    <h2 class="presentasi" style="font-size: 1.5rem; text-align: center; margin-bottom: 15px;">Profile</h2>
+<h2 class="presentasi" style="font-size: 1.5rem; text-align: center; margin-bottom: 15px;">Profile</h2>
         <div class="form-container"
             style="display: flex; align-items: center; justify-content: space-between; padding: 30px; height: 250px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; background-color: #fff;">
             <div style="flex: 1; display: flex; justify-content: center;">
                 <img src="/tubes_web/public/Assets/Img/dummy.jpeg" alt="Profile Picture"
-                    style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
             </div>
             <div style="flex: 2; padding-left: 20px;">
                 <p style="font-size: 1rem; margin-bottom: 10px;">Username : <strong>dummy.ext</strong></p>

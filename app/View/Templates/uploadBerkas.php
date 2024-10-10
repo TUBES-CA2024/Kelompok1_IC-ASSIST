@@ -1,6 +1,6 @@
 <h2 class="berkas">Upload Berkas</h2>
-<div class="form-container">
-    <form>
+<div class="form-container" style="max-width: 1000px; height: 500px; padding: 20px; margin: 0 auto;">
+    <form style="padding:10px">
         <div class="mb-3">
             <label for="foto" class="form-label">Masukkan Foto 3x4</label>
             <input class="form-control" type="file" id="foto" name="foto" required>
@@ -22,7 +22,7 @@
         </div>
 
         <div class="d-grid">
-            <button type="submit" class="btn btn-submit">Submit</button>
+            <button type="submit" class="btn btn-submit" style="margin-top:90px;">Submit</button>
         </div>
     </form>
 </div>

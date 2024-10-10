@@ -1,3 +1,4 @@
+
 <main>
   <h1 class="dashboard">Dashboard</h1>
   <div class="insights">
@@ -20,8 +21,8 @@
       <small class="text_muted">Last 24 Hours</small>
       <!--end of tahap -->
     </div>
-    
-    
+
+
   </div>
   <div class="recent-tahapan">
     <h2 class="tahapan-pendaftaran">
@@ -99,6 +100,7 @@
   </div>
 </main>
 <!-- END OF MAIN -->
+<!-- Notification Area -->
 <div class="right">
   <div class="top">
     <div class="notification">
@@ -109,19 +111,47 @@
       <div class="updates">
         <div class="update">
           <div class="profile-photo">
-            <img src="../../../public/Assets/Img/dummy.jpeg" alt="foto dummy" />
+            <img src="/tubes_web/public/Assets/Img/dummy.jpeg" alt="foto dummy" style="width:100%; height:100%;"
+              id="openModal" />
           </div>
           <div class="message">
             <p>
-              <b>Tim Iclabs</b>
-              selamat kamu telah berhasil mendaftar di web IC-ASSIST
+              <b>Tim Iclabs</b> selamat kamu telah berhasil mendaftar di web IC-ASSIST
             </p>
             <small class="text_muted">10 hours ago</small>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+          Lihat Pesan
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+
 </div>
 </div>
 </div>
