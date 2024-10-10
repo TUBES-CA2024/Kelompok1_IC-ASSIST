@@ -1,5 +1,5 @@
 const registerBtn = document.getElementById('register');
-const container = document.getElementById('container-gacor');
+const container = document.getElementById('container');
 const loginBtn = document.getElementById('login');
 const togglePassword = document.querySelector('#togglePassword');
 const password = document.querySelector('#password');
@@ -13,11 +13,11 @@ const togglePassLogin = document.querySelector('#togglePassLogin');
 const passwordLogin = document.querySelector('#passwordLogin');  
 
 registerBtn.addEventListener('click',()=>{
-    container-gacor.classList.add("active");
+    container.classList.add("active");
 });
 
 loginBtn.addEventListener('click',()=>{
-    container-gacor.classList.remove("active");
+    container.classList.remove("active");
 });
 
 togglePassword.addEventListener('click', function () {

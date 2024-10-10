@@ -12,7 +12,11 @@ class Database {
     private static $DB_PASS = "";
 
     private static function con() {
-        $DB = self::$DB_CONNECTION . ':host=' . self::$DB_HOST . ';port=' . self::$DB_PORT . ';dbname=' . self::$DB_NAME;
+        $DB = self::$DB_CONNECTION . ':host=' . 
+        self::$DB_HOST . ';port=' . 
+        self::$DB_PORT . ';dbname=' . 
+        self::$DB_NAME;
+        
         self::$pdo = new \PDO($DB,self::$DB_USER,self::$DB_PASS);
     }
 

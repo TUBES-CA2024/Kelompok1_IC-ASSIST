@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/tubes_web/public/Assets/Style/Styles.css">
+    <link rel="stylesheet" href="/tubes_web/public/Assets/Style/Styles1.css">
     <link rel="icon" href="/tubes_web/public/Assets/Img/iclabs.png">
 
     <title>Pendaftaran calon asisten ICLABS</title>
@@ -31,9 +31,9 @@
 </head>
 
 <body>
-    <div class="container-gacor" id="container-gacor">
-        <div class="form-container-gacor sign-in">
-            <form id = "registerForm" action="tubes_web/public/register/authenticate" method="POST">
+    <div class="container" id="container">
+        <div class="form-container sign-in">
+            <form id = "registerForm" action="/tubes_web/public/register/authenticate" method="POST">
                 <div>
                     <h1 style="text-align: center;">Buat Akun</h1>
                     <div style="width: 100%; max-width: 400px; margin: auto; padding: 20px;">
@@ -48,7 +48,7 @@
                         <div style="position: relative; width: 100%; margin-bottom: 15px;">
                             <img src="/tubes_web/public/Assets/Img/idcard.svg" alt="ID Card Icon"
                                 style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px;">
-                            <input type="text" class="form-control" id="stambuk" name="stambuk" placeholder="Stambuk"
+                            <input type="text" class="form-control" id="stambukregister" name="stambuk" placeholder="Stambuk"
                                 style="padding-left: 40px; width: 100%; height: 45px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;" required>
                         </div>
 
@@ -83,7 +83,7 @@
                 </div>
             </form>
         </div>
-        <div class="form-container-gacor sign-up">
+        <div class="form-container sign-up">
             <form id = "loginForm" action ="/tubes_web/public/login/authenticate" method ="POST">
                 <div>
                     <div style="margin-bottom: 20px; text-align: center; position: relative; top: -10px;">
@@ -129,7 +129,7 @@
                 </div>
             </form>
         </div>
-        <div class="toggle-container-gacor">
+        <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-right">
                     <h1>Sudah punya akun?</h1>
@@ -152,7 +152,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-        <script src="/tubes_web/public/Assets/Script/Login/ScriptLogin.js"></script>
+    <script src="/tubes_web/public/Assets/Script/Login/ScriptLogin.js"></script>
 </body>
 
 </html>

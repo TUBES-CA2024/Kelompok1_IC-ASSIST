@@ -14,7 +14,7 @@
     --color-dark-variant:#677483;
     --color-background:#f5f5f5;
 
-    --card-border-radius:2rem;
+    --card-border-radius:1rem;
     --border-radius-1:0.4rem;
     --border-radius-2:0.8rem;
     --border-radius-3:1.2rem;
@@ -173,8 +173,8 @@ main .insights h3 {
 
 main .insights .progress {
     position: relative;
-    width: 92px;
-    height: 92px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
 }
 /* PROGRESS CIRCLE */
@@ -224,7 +224,7 @@ main .dashboard {
     background-color: var(--color-white);
     width: 18%;
     text-align: center;
-    border-radius: var(--card-border-radius);
+    border-radius: var(--border-radius-1);
     box-shadow: var(--box-shadow);
     color: var(--color-primary);
     border: 1px solid var(--color-light);
@@ -235,9 +235,9 @@ main .tahapan-pendaftaran {
     margin-top: 2rem;
     margin-bottom: 0.8rem;
     background-color: var(--color-white);
-    width: 71%;
+    width: 100%;
     text-align: center;
-    border-radius: var(--card-border-radius);
+    border-radius: var(--border-radius-1);
     box-shadow: var(--box-shadow);
     color: var(--color-primary);
     border: 1px solid var(--color-light);
@@ -252,18 +252,18 @@ main .recent-tahapan h2 {
 main .recent-tahapan table {
     background: var(--color-white);
     width: 100%;
-    border-radius: var(--card-border-radius);
+    border-radius: var(--border-radius-1);
     padding: var(--card-padding);
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;
-    border-collapse: collapse;  /* Kolaps border */
+    border-collapse: collapse;  
 }
 
 main table th, main table td {
-    padding: 0.5rem 1rem;  /* Padding konsisten */
+    padding: 0.5rem 1rem;  
     text-align: center;
-    height: 2.8rem;  /* Konsistensi tinggi */
-    line-height: 2.8rem;  /* Line-height seragam */
+    height: 2.8rem;
+    line-height: 2.8rem;  
     vertical-align: middle;
     border-bottom: 1px solid var(--color-light);
 }
@@ -278,7 +278,7 @@ table tbody tr:last-child td {
 }
 
 main .recent-tahapan table:hover {
-    box-shadow: none;  /* Hapus efek hover */
+    box-shadow: none;  
 }
 
 
@@ -294,7 +294,7 @@ main .recent-tahapan table:hover {
 }
 .right .top {
     display: flex;
-    justify-content: end;
+    justify-content: center;
     gap: 2rem;
     background: var(--color-white);
     border-radius: var(--border-radius-1);

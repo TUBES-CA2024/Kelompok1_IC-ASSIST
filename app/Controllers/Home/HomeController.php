@@ -47,6 +47,12 @@ class HomeController extends Controller {
             case 'wawancara' :
                 View::render('wawancara', 'Templates');
                 break;
+            case 'profile':
+                View::render('profile', 'Templates');
+                break;
+            case 'editprofile':
+                View::render('editprofile', 'Templates');
+                break;
         }
     }
 

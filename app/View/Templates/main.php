@@ -6,79 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="/tubes_web/public/Assets/Style/sidebarStyle.css">
+    <link rel="stylesheet" href="/tubes_web/public/Assets/Style/wawancara.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/tubes_web/public/Assets/Style/presentasi.css" />
+    <link rel="stylesheet" href="/tubes_web/public/Assets/Style/uploadberkas.css" />
+    <link rel="stylesheet" href="/tubes_web/public/Assets/Style/dashboardStyle.css" />
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="/tubes_web/public/Assets/Style/biodata.css" />
     <title>IC-ASSIST</title>
 </head>
 
 <body>
-    <div class="sidebar" id="sidebar">
-        <div class="top">
-            <div class="logo">
-                <img src="/tubes_web/public/Assets/Img/iclabs.png" alt="IC-Assist Logo" class="icon">
-                <span>IC-ASSIST</span>
-            </div>
-            <i class="bx bx-menu" id="btn"></i>
-        </div>
-        <div class="user">
-            <img src="/tubes_web/public/Assets/Img/dummy.jpeg" alt="foto" name="userphoto" id="userphoto"
-                class="user-img">
-            <div>
-                <p class="bold" name="username" id="username">Ahmad Mufli Ramadhan</p>
-            </div>
-        </div>
-        <ul>
-            <li>
-                <a href="#" data-page="dashboard">
-                    <i class="bx bx-home"></i>
-                    <span class="nav-item">Dashboard</span>
-                </a>
-                <span class="tooltip">Dashboard</span>
-            </li>
-            <li>
-                <a href="#" data-page="biodata">
-                    <i class="bx bxs-id-card"></i>
-                    <span class="nav-item">Lengkapi Biodata</span>
-                </a>
-                <span class="tooltip">Lengkapi Biodata</span>
-            </li>
-            <li>
-                <a href="#" data-page="uploadBerkas">
-                    <i class="bx bx-file"></i>
-                    <span class="nav-item">Upload Berkas</span>
-                </a>
-                <span class="tooltip">Upload Berkas</span>
-            </li>
-            <li>
-                <a href="#" data-page="tesTulis">
-                    <i class="bx bx-task"></i>
-                    <span class="nav-item">Tes Tulis</span>
-                </a>
-                <span class="tooltip">Tes Tulis</span>
-            </li>
-            <li>
-                <a href="#" data-page="presentasi">
-                    <i class="bx bx-chalkboard"></i>
-                    <span class="nav-item">Presentasi</span>
-                </a>
-                <span class="tooltip">Presentasi</span>
-            </li>
-            <li>
-                <a href="#" data-page="wawancara">
-                    <i class="bx bx-user-voice"></i>
-                    <span class="nav-item">Wawancara</span>
-                </a>
-                <span class="tooltip">Wawancara</span>
-            </li>
-            <li>
-                <a href="#" data-page="pengumuman">
-                    <i class="bx bx-notepad"></i>
-                    <span class="nav-item">Pengumuman</span>
-                </a>
-                <span class="tooltip">Pengumuman</span>
-            </li>
-        </ul>
-    </div>
+    <?php require_once "sidebar.php"?>
     <div class="main-content" id="content">
 
     </div>
@@ -93,7 +36,9 @@
     <script src="/tubes_web/public/Assets/Script/sidebar/ScriptSidebar.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/tubes_web/public/Assets/Script/app.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
