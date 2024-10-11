@@ -6,7 +6,6 @@ use App\Core\View;
 use App\Model\User\UserModel;
 class LoginController extends Controller {
     public function __construct() {
-        // Start the session
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }

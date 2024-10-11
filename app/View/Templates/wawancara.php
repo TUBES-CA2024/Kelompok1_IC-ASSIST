@@ -1,5 +1,5 @@
 <main>
-    <h2 class="wawancara">Wawancara</h2>
+    <h2 class="dashboard">Wawancara</h2>
     <div class="recent-judul">
         <table>
             <thead>

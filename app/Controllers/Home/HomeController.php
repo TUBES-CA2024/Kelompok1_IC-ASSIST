@@ -4,24 +4,19 @@ namespace App\Controllers\Home;
 
 use App\Core\Controller;
 use App\Core\View;
-use App\Model\User\UserModel;
 
 
 class HomeController extends Controller {
     public function index() {
-        // Check if the user is logged in
         if ($this->isLoggedIn()) {
-            // Render the main layout which includes the sidebar and a content container-gacor
             View::render('main', 'Templates');
         } else {
-            // Redirect to login page if not logged in
             header('Location: '.APP_URL.'/login');
             exit();
         }
     }
 
     public function loadContent($page) {
-        // Handle AJAX requests to load different content
         if (is_array($page)) {
             $page = $page['page'];  
         }
@@ -53,6 +48,9 @@ class HomeController extends Controller {
             case 'editprofile':
                 View::render('editprofile', 'Templates');
                 break;
+            case 'notifcation' :
+                View::render('notification', 'Templates');
+                break;    
         }
     }
 

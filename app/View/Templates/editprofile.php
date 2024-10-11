@@ -1,6 +1,6 @@
 <div class="container">
     <div>
-        <h1 class="biodata">Biodata</h1>
+        <h1 class="dashboard">Biodata</h1>
     </div>
     <form action="">
     <div class="form-container">
