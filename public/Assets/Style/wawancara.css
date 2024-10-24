@@ -26,7 +26,7 @@
 }
 .recent-judul table {
     background: var(--color-white);
-    width: 100%;
+    width: 85%;
     border-radius: var(--card-border-radius);
     padding: var(--card-padding);
     box-shadow: var(--box-shadow);
@@ -56,7 +56,7 @@ main .recent-judul table:hover {
 .wawancara {
     margin-bottom: 1rem;
     background-color: var(--color-white);
-    width: 18%;
+    width: 16%;
     text-align: center;
     border-radius: var(--border-radius-1);
     box-shadow: var(--box-shadow);

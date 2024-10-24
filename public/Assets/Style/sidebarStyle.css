@@ -75,16 +75,16 @@
 .sidebar #btn {
     position: absolute;
     color: #3DC2EC;
-    top: .4rem;
-    left: 50%;
+    top: .3rem;
+    /* left: 50%; */
     font-size: 1.5rem;
     line-height: 50px;
-    transform: translateX(-50%);
+    /* transform: translateX(-50%); */
     cursor: pointer;
 }
 
 .sidebar.active #btn {
-    left: 90%;
+    left: 80%;
 }
 
 .sidebar .top .logo {

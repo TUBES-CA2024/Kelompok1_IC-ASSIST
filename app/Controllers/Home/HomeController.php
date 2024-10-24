@@ -8,12 +8,9 @@ use App\Core\View;
 
 class HomeController extends Controller {
     public function index() {
-        if ($this->isLoggedIn()) {
+        
             View::render('main', 'Templates');
-        } else {
-            header('Location: '.APP_URL.'/login');
-            exit();
-        }
+       
     }
 
     public function loadContent($page) {
