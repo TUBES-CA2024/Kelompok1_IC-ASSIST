@@ -1,10 +1,9 @@
 $('#logoutButton').click(function(e) {
     e.preventDefault();
     $.ajax({
-        url: 'tubes_web/public/logout', // URL endpoint untuk logout
-        type: 'POST', // Pastikan method sesuai dengan route
+        url: 'tubes_web/public/logout', 
+        type: 'POST',
         success: function(response) {
-            // Cek status logout, lalu arahkan ke halaman login jika sukses
             if (response.status === 'success') {
                 alert(response.message || 'Logout berhasil');
                 window.location.href = 'tubes_web/public/login';
@@ -18,3 +17,49 @@ $('#logoutButton').click(function(e) {
         }
     });
 });
+
+$(document).ready(function() {
+    $('#biodataForm').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: 'tubes_web/public/store',
+            type: 'POST',
+            data: $('#biodataForm').serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert(response.message || 'Data berhasil disimpan');
+                    window.location.href = 'tubes_web/public/';
+                } else {
+                    alert(response.message || 'Data gagal disimpan');
+                }
+            },
+        });
+    });
+});
+
+function updateKelasOptions() {
+    const gender = document.querySelector('input[name="gender"]:checked').value;
+    const kelasSelect = document.getElementById('floatingSelect');
+
+    kelasSelect.innerHTML = '';
+
+    if (gender === 'wanita') {
+        const kelasOptions = ['B1', 'B2', 'B3', 'B4', 'B5'];
+        kelasOptions.forEach(kelas => {
+            const option = document.createElement('option');
+            option.value = kelas;
+            option.text = kelas;
+            kelasSelect.appendChild(option);
+        });
+    } else if (gender === 'pria') {
+        const kelasOptions = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9'];
+        kelasOptions.forEach(kelas => {
+            const option = document.createElement('option');
+            option.value = kelas;
+            option.text = kelas;
+            kelasSelect.appendChild(option);
+        });
+    }
+}

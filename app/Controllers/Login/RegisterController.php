@@ -4,7 +4,6 @@ namespace App\Controllers\Login;
 
 use App\Core\Controller;
 use App\Model\User\UserModel;
-use App\Core\View;
 
 class RegisterController extends Controller
 {
