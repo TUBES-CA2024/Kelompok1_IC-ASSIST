@@ -84,3 +84,4 @@ $noHp = ProfileController::viewBiodata() == null ? "No Telephone" : ProfileContr
     </div>
 </div>
 </div>
+<script src="/tubes_web/public/Assets/Script/biodata/biodata.js"></script>

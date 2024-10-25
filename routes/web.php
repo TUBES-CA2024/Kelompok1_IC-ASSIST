@@ -12,6 +12,6 @@ Router::post('/login/authenticate', [new LoginController, 'authenticate']);
 Router::post('/register/authenticate', [new RegisterController, 'register']);
 Router::get('/',[new HomeController, 'index']);
 Router::get('/{page}', [new HomeController, 'loadContent']);
-Router::get('/logout', [new LogoutController, 'logout']);
+Router::post('/logout', [new LogoutController, 'logout']);
 
 
