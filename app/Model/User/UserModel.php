@@ -91,5 +91,19 @@ class UserModel extends Model {
             return null;
         }
     }
+    public function getUser($id) {
+        $query = "SELECT * 
+        FROM " . static::$table . " WHERE id = ?";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $stmt = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = [
+            "username" => $stmt['username'],
+            "stambuk" => $stmt['stambuk'],
+            "password" => $stmt['password']
+        ];
+        return $stmt;
+    }
     
 }

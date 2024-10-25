@@ -5,9 +5,6 @@ use App\Controllers\Login\LoginController;
 use App\Controllers\Login\RegisterController;
 use App\Core\Router;
 
-Router::get('/about', function() {
-    echo "WELCOME from web.php";
-});
 Router::get('/login', [new LoginController, 'index']);
 Router::get('/Login', [new LoginController, 'index']);
 Router::post('/login/authenticate', [new LoginController, 'authenticate']);

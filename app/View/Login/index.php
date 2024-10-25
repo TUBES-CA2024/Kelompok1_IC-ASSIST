@@ -84,7 +84,7 @@
             </form>
         </div>
         <div class="form-container sign-up">
-            <form id = "loginForm" action ="/tubes_web/public/login/authenticate" method ="POST">
+            <form id = "loginForm" action ="" method ="POST">
                 <div>
                     <div style="margin-bottom: 20px; text-align: center; position: relative; top: -10px;">
                         <img src="/tubes_web/public/Assets/Img/umi.png" alt="logo fikom" class="logo"

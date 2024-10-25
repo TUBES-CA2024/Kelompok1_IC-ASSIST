@@ -1,21 +1,21 @@
 <?php 
 
-namespace App\Model\User\BiodataUser;
+namespace App\Model\User;
 use App\Core\Model;
-
+use PDO;
 class BiodataUser extends Model {
-    private static $table = 'mahasiswa';
-    private $id;
-    private $idUser;
-    private $idJurusan;
-    private $stambuk;
-    private $id_kelas;
-    private $namaLengkap;
-    private $alamat;
-    private $jenisKelamin;
-    private $tempatLahir;
-    private $tanggalLahir;
-    private $noHp;
+    protected static $table = 'mahasiswa';
+    protected $id;
+    protected $idUser;
+    protected $idJurusan;
+    protected $stambuk;
+    protected $id_kelas;
+    protected $namaLengkap;
+    protected $alamat;
+    protected $jenisKelamin;
+    protected $tempatLahir;
+    protected $tanggalLahir;
+    protected $noHp;
 
     public function __construct(
         $id = null, 
@@ -77,5 +77,31 @@ class BiodataUser extends Model {
         || $result['noHp'] == null) 
         ? true : false;
     }
-    
+
+    public function getBiodata($id) {
+        $query = 
+        "SELECT stambuk,(SELECT nama FROM kelas where id = id_kelas) as kelas,
+        (SELECT nama FROM jurusan where id = id_jurusan) as jurusan, 
+        nama_lengkap, alamat, jenis_kelamin, tempat_lahir, tanggal_lahir, 
+        no_telp FROM " . static::$table . " where id_user = ?";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $stmt = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($stmt) {
+            $stmt = [
+                "stambuk" => $stmt["stambuk"],
+                "kelas" => $stmt["kelas"],
+                "jurusan" => $stmt["jurusan"],
+                "namaLengkap" => $stmt["nama_lengkap"],
+                "alamat" => $stmt["alamat"],
+                "jenisKelamin" => $stmt["jenis_kelamin"],
+                "tempatLahir" => $stmt["tempat_lahir"],
+                "tanggalLahir" => $stmt["tanggal_lahir"],
+                "noHp" => $stmt["no_telp"]
+            ];
+            return $stmt;
+        }
+       return null;
+    }
 }
