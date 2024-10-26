@@ -35,6 +35,10 @@ $(document).ready(function() {
                     alert(response.message || 'Data gagal disimpan');
                 }
             },
+            error: function(xhr, status, error) {
+                console.log('Error:', xhr.responseText);
+                alert('Terjadi kesalahan: ' + error);
+            }
         });
     });
 });

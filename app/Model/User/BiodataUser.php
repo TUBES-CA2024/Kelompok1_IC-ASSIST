@@ -112,14 +112,21 @@ class BiodataUser extends Model {
         $stmt->bindParam(1, $idUser);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return ($result['id_jurusan'] == null || $result['stambuk'] == null
-        || $result['id_kelas'] == null || $result['nama_lengkap'] == null
-        || $result['alamat'] == null || $result['jenis_kelamin'] == null
-        || $result['tempat_lahir'] == null || $result['tanggal_lahir'] == null
-        || $result['no_telp'] == null) 
-        ? true : false;
+    
+        // Periksa apakah $result adalah array, jika tidak kembalikan true
+        if (!$result) {
+            return true;
+        }
+    
+        return (
+            $result['id_jurusan'] === null || $result['stambuk'] === null ||
+            $result['id_kelas'] === null || $result['nama_lengkap'] === null ||
+            $result['alamat'] === null || $result['jenis_kelamin'] === null ||
+            $result['tempat_lahir'] === null || $result['tanggal_lahir'] === null ||
+            $result['no_telp'] === null
+        );
     }
+    
 
     public function getBiodata($id) {
         $query = 

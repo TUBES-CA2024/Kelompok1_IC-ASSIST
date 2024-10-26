@@ -26,7 +26,7 @@ $noHp = ProfileController::viewBiodata() == null ? "No Telephone" : ProfileContr
 
         <div class="mb-3">
             <label for="stambuk" class="form-label">Stambuk</label>
-            <input type="number" class="form-control" id="stambuk" name="stambuk" placeholder="Stambuk" required>
+            <input type="text" class="form-control" value="<?=$stambuk?>"readonly>
         </div>
 
         <div>

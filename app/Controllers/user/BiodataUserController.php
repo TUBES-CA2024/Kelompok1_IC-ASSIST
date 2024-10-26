@@ -33,8 +33,8 @@ class BiodataUserController extends Controller {
         $idUser = $_SESSION['user']['id'];
         $jurusan = $_POST['jurusan'] ?? '';
         $kelas = $_POST['kelas'] ?? '';
-        $stambuk = $_POST['stambuk'] ?? '';
         $nama = $_POST['nama'] ?? '';
+        $stambuk = $_SESSION['user']['stambuk'];
         $gender = $_POST['gender'] ?? '';
         $alamat = $_POST['alamat'] ?? '';
         $tempatLahir = $_POST['tempatlahir'] ?? '';
@@ -44,7 +44,7 @@ class BiodataUserController extends Controller {
         var_dump($jurusan);
         var_dump($kelas);
         // Validasi apakah semua field terisi
-        if (empty($jurusan) || empty($kelas) || empty($stambuk) || empty($nama) || empty($gender) || empty($alamat) || empty($tempatLahir) || empty($tanggalLahir) || empty($noHp)) {
+        if (empty($jurusan) || empty($kelas)  || empty($nama) || empty($gender) || empty($alamat) || empty($tempatLahir) || empty($tanggalLahir) || empty($noHp)) {
             header('Content-Type: application/json');
             echo json_encode(['status' => 'error', 'message' => 'All fields are required']);
             return;
