@@ -82,6 +82,7 @@ class BerkasUser extends Model {
             throw new Exception(message: "Mahasiswa tidak ditemukan");
         }
         $idMahasiswa = $idMahasiswaData['id_user'];
+        var_dump($idMahasiswa);
         $stmt->bindParam(1, $idMahasiswa);
         $stmt->bindParam(2, $gambar);
         $stmt->bindParam(3, $fileCv);

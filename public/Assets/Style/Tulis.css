@@ -1,0 +1,60 @@
+/* General Body Style */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1e1e1e;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container for the content */
+.container {
+    background-color: #252525;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+    text-align: center;
+}
+
+/* Header Title */
+h1 {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+/* Rule Section */
+p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* List styling */
+ul {
+    text-align: left;
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/* Button Style */
+button {
+    background-color: #00bcd4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #008ba3;
+}
