@@ -78,85 +78,106 @@ class BerkasUser extends Model {
         }
     
         $idMahasiswaData = $this->getIdMahasiswa($berkas->id_mahasiswa);
-        if (!$idMahasiswaData || !isset($idMahasiswaData['id_user'])) {
-            throw new Exception(message: "Mahasiswa tidak ditemukan");
+        if (!$idMahasiswaData || !isset($idMahasiswaData['id'])) {
+            throw new Exception("Mahasiswa tidak ditemukan" + var_dump($idMahasiswaData)); 
         }
-        $idMahasiswa = $idMahasiswaData['id_user'];
+        $idMahasiswa = $idMahasiswaData['id']; 
+        
         $stmt->bindParam(1, $idMahasiswa);
         $stmt->bindParam(2, $gambar);
         $stmt->bindParam(3, $fileCv);
         $stmt->bindParam(4, $fileNilai);
         $stmt->bindParam(5, $filePernyataan);
         $stmt->bindParam(6, $berkas->isRevisi, PDO::PARAM_BOOL);
-        $stmt->bindParam(7, $berkas->isAccepted,PDO::PARAM_BOOL);
-    
+        $stmt->bindParam(7, $berkas->isAccepted, PDO::PARAM_BOOL);
+        
         return $stmt->execute();
     }
 
     private function getImageName($berkas, $berkasSize) {
         $imageExt = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
-        
         if (!in_array($imageExt, $this->imageAccepted)) {
             throw new Exception("Gunakan ekstensi jpg, jpeg, atau png untuk gambar.");
         }
-        
+    
         if ($berkasSize > $this->maxFileSize) {
             throw new Exception("Ukuran file gambar terlalu besar.");
         }
-        
-        $newImageName = uniqid() . '.' . $imageExt;
+    
         $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/imageUser/';
         if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
+            mkdir($uploadDir, 0755, true); // Membuat direktori jika tidak ada
         }
-        
+    
+        $newImageName = uniqid() . '.' . $imageExt;
+    
         if (empty($berkas)) {
             throw new Exception("Path file sementara kosong.");
         }
-        
+    
         $destination = $uploadDir . $newImageName;
         if (!move_uploaded_file($berkas, $destination)) {
-            throw new Exception("Gagal memindahkan file foto.");
+            throw new Exception("Gagal memindahkan file foto. Pastikan folder tujuan dapat diakses.");
         }
-        
+    
         return $newImageName;
     }
     
     private function getFileName($berkas, $berkasSize) {
         $fileExt = strtolower(pathinfo($_FILES['cv']['name'], PATHINFO_EXTENSION));
-        
         if ($fileExt !== $this->fileAccepted) {
             throw new Exception("Gunakan ekstensi pdf untuk file.");
         }
-        
+    
         if ($berkasSize > $this->maxFileSize) {
             throw new Exception("Ukuran file terlalu besar.");
         }
-        
-        $newFileName = uniqid() . '.' . $fileExt;
-        
+    
         $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/berkasUser/';
         if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
+            mkdir($uploadDir, 0755, true); // Membuat direktori jika tidak ada
         }
-        
+    
+        $newFileName = uniqid() . '.' . $fileExt;
+    
         if (empty($berkas)) {
             throw new Exception("Path file sementara untuk CV kosong.");
         }
-        
+    
         $destination = $uploadDir . $newFileName;
         if (!move_uploaded_file($berkas, $destination)) {
-            throw new Exception("Gagal memindahkan file CV.");
+            throw new Exception("Gagal memindahkan file CV. Pastikan folder tujuan dapat diakses.");
         }
-        
+    
         return $newFileName;
     }
+    
     private function getIdMahasiswa($idUser) {
-        $query = "SELECT id_user FROM mahasiswa WHERE id_user = ?";
+        $query = "SELECT id FROM mahasiswa WHERE id_user = ?";
         $stmt = self::getDB()->prepare($query);
-        $stmt->bindParam(1, $idUser);
+        $stmt->bindParam(1, $idUser, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result;
+
+        return $result ? $result : null;
     }
-}
+    
+    public function getBerkas($id) {
+        $query = "SELECT * FROM " . static::$table . " WHERE id_mahasiswa = ?";
+        $idMahasiswa = $this->getIdMahasiswa($id);
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(1,$idMahasiswa['id']);
+        $stmt->execute();
+        $stmt = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(!$stmt) {
+            return null;
+        }
+        $stmt = [
+            "foto" => $stmt["foto"],
+            "cv" => $stmt["cv"],
+            "transkrip_nilai" => $stmt["transkrip_nilai"],
+            "surat_pernyataan" => $stmt["surat_pernyataan"]
+        ];
+        return $stmt;
+    }
+} 

@@ -60,7 +60,8 @@ $(document).ready(function(){
                     alert('Register Berhasil');
                     window.location.href = '/tubes_web/public/login';
                 } else {
-                    alert('Register Gagal');
+                    alert('Register Gagal ' + response.message);
+                    console.log(response.message);
                 }
             },
             error: function(xhr, status, error){

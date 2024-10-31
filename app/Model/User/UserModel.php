@@ -78,7 +78,6 @@ class UserModel extends Model {
     public static function getDB() {
         return Database::getInstance();
     }
-
     public static function findByStambuk($stambuk) {
         $query = "SELECT * FROM " . static::$table . " WHERE stambuk = :stambuk LIMIT 1";
         $stmt = self::getDB()->prepare($query);
@@ -101,9 +100,18 @@ class UserModel extends Model {
         $stmt = [
             "username" => $stmt['username'],
             "stambuk" => $stmt['stambuk'],
-            "password" => $stmt['password']
+            "password" => $stmt['password'],
+            "role" => $stmt['role']
         ];
         return $stmt;
+    }
+    public function isStambukExists($stambuk) {
+        $query = "SELECT COUNT(*) FROM " . static::$table . " WHERE stambuk = :stambuk";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(':stambuk', $stambuk);
+        $stmt->execute();
+        
+        return $stmt->fetchColumn() > 0;
     }
     
 }

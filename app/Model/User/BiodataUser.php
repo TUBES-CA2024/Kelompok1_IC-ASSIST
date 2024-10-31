@@ -154,4 +154,5 @@ class BiodataUser extends Model {
         }
        return null;
     }
+
 }

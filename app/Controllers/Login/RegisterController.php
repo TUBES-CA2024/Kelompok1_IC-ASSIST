@@ -16,28 +16,29 @@ class RegisterController extends Controller
                 $password = $_POST['password'] ?? '';
                 $confirmPassword = $_POST['konfirmasiPassword'] ?? '';
     
-                // Cek input kosong
                 if (empty($name) || empty($stambuk) || empty($password) || empty($confirmPassword)) {
                     header('Content-Type: application/json');
                     echo json_encode(['status' => 'error', 'message' => 'All fields are required.']);
                     return;
                 }
     
-                // Cek password dan konfirmasi password
                 if ($password !== $confirmPassword) {
                     header('Content-Type: application/json');
                     echo json_encode(['status' => 'error', 'message' => 'Passwords do not match.']);
                     return;
                 }
     
-                // Hash password
+                $user = new UserModel();
+                if ($user->isStambukExists($stambuk)) { 
+                    header('Content-Type: application/json');
+                    echo json_encode(['status' => 'error', 'message' => "Please use a different stambuk. User with '$stambuk' already exists."]);
+                    return;
+                }
+    
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     
-                // Buat user baru
-                $user = new UserModel;
                 $user->__construct2($name, $stambuk, $hashedPassword);
     
-                // Simpan user
                 if ($user->save()) {
                     header('Content-Type: application/json');
                     echo json_encode(['status' => 'success', 'message' => 'Registration successful. Please log in.']);
@@ -48,9 +49,9 @@ class RegisterController extends Controller
             }
         } catch (\Exception $e) {
             header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => "Please use a different stambuk. User with '$stambuk' already exists."]);
+            echo json_encode(['status' => 'error', 'message' => 'An unexpected error occurred: ' . $e->getMessage()]);
         }
-    }
+    } 
     
 }
 ?>

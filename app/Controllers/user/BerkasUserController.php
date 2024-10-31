@@ -59,4 +59,12 @@ class BerkasUserController extends Controller {
             echo json_encode(['status' => 'error', 'message' => 'Berkas gagal diupload']);
         }
     }
+    public static function viewBerkas() {
+        $user = new BerkasUser();
+        $berkas = $user->getBerkas($_SESSION['user']['id']);
+        if(!$berkas) {
+            return null;
+        }
+        return $berkas;
+    }
 }

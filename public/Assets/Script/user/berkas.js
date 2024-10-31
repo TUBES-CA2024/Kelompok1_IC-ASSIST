@@ -3,7 +3,7 @@ $(document).ready(function() {
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
-            url: 'tubes_web/public/berkas',
+            url: '/tubes_web/public/berkas',
             type: 'POST',
             data: formData,
             dataType: 'json',
@@ -12,7 +12,7 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status === 'success') {
                     alert(response.message || 'Berkas berhasil disimpan');
-                    window.location.href = 'tubes_web/public/';
+                    window.location.href = '/tubes_web/public/';
                 } else {
                     alert(response.message || 'Berkas gagal disimpan');
                 }

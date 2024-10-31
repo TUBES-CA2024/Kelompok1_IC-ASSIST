@@ -1,3 +1,14 @@
+<?php
+use app\Controllers\Profile\ProfileController;
+use App\Controllers\user\BerkasUserController;
+$role = ProfileController::viewUser()["role"];
+$userName = ProfileController::viewUser()["username"];
+$photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto"] ?? "default.png");
+
+if($role === "User") {
+
+?>
+
 <div class="sidebar" id="sidebar">
     <div class="top">
         <div class="logo">
@@ -7,9 +18,9 @@
         <i class="bx bx-menu" id="btn"></i>
     </div>
     <div class="user">
-        <a href="#" data-page="profile"> <img src="/tubes_web/public/Assets/Img/dummy.jpeg" alt="foto" name="userphoto" id="userphoto" class="user-img"></a>
+        <a href="#" data-page="profile"><img src=<?=$photo?> alt="foto" name="userphoto" id="userphoto" class="user-img"></a>
         <div>
-            <p class="bold" name="username" id="username">Ahmad Mufli Ramadhan</p>
+            <p class="bold" id="username"><?=$userName?></p>
         </div>
     </div>
     <ul>
@@ -64,3 +75,6 @@
         </li>
     </ul>
 </div>
+<?php 
+    } 
+?>

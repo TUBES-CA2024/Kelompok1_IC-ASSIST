@@ -1,5 +1,6 @@
 <?php
 use App\Controllers\Profile\ProfileController;
+use App\Controllers\user\BerkasUserController;
 $userName = ProfileController::viewUser()["username"];
 $nama = ProfileController::viewBiodata() == null ? "Nama Lengkap" : ProfileController::viewBiodata()["namaLengkap"];
 $stambuk = ProfileController::viewUser()["stambuk"];
@@ -10,12 +11,13 @@ $jenisKelamin = ProfileController::viewBiodata() == null ? "Jenis Kelamin" : Pro
 $tempatLahir = ProfileController::viewBiodata() == null ? "Tempat Lahir" : ProfileController::viewBiodata()["tempatLahir"];
 $tanggalLahir = ProfileController::viewBiodata() == null ? "Tanggal Lahir" : ProfileController::viewBiodata()["tanggalLahir"];
 $noHp = ProfileController::viewBiodata() == null ? "No Telephone" : ProfileController::viewBiodata()["noHp"];
+$photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto"] ?? "default.png");
 ?>
 <div class="profile">
     <div class="form-container"
         style="display: flex; align-items: center; justify-content: space-between; padding: 30px; height: 250px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; background-color: #fff;">
         <div style="flex: 1; display: flex; justify-content: center; margin">
-            <img src="/tubes_web/public/Assets/Img/dummy.jpeg" alt="Profile Picture"
+            <img src=<?=$photo?> alt="Profile Picture"
                 style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
         </div>
         <div style="flex: 2; padding-left: 20px;">
