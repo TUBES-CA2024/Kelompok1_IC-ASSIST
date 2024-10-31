@@ -33,7 +33,7 @@
 <body>
     <div class="container" id="container">
         <div class="form-container sign-in">
-            <form id = "registerForm" action="/tubes_web/public/register/authenticate" method="POST">
+            <form id = "registerForm">
                 <div>
                     <h1 style="text-align: center;">Buat Akun</h1>
                     <div style="width: 100%; max-width: 400px; margin: auto; padding: 20px;">
@@ -84,7 +84,7 @@
             </form>
         </div>
         <div class="form-container sign-up">
-            <form id = "loginForm" action ="" method ="POST">
+            <form id = "loginForm">
                 <div>
                     <div style="margin-bottom: 20px; text-align: center; position: relative; top: -10px;">
                         <img src="/tubes_web/public/Assets/Img/umi.png" alt="logo fikom" class="logo"

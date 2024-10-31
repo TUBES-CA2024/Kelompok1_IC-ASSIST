@@ -4,7 +4,6 @@ namespace App\Controllers\Login;
 
 use App\Core\Controller;
 use App\Model\User\UserModel;
-use App\Core\View;
 
 class RegisterController extends Controller
 {
@@ -16,34 +15,42 @@ class RegisterController extends Controller
                 $stambuk = $_POST['stambuk'] ?? '';
                 $password = $_POST['password'] ?? '';
                 $confirmPassword = $_POST['konfirmasiPassword'] ?? '';
-
+    
+                // Cek input kosong
                 if (empty($name) || empty($stambuk) || empty($password) || empty($confirmPassword)) {
-                    echo json_encode(['error' => 'All fields are required.']);
+                    header('Content-Type: application/json');
+                    echo json_encode(['status' => 'error', 'message' => 'All fields are required.']);
                     return;
                 }
-
+    
+                // Cek password dan konfirmasi password
                 if ($password !== $confirmPassword) {
-                    echo json_encode(['error' => 'Passwords do not match.']);
+                    header('Content-Type: application/json');
+                    echo json_encode(['status' => 'error', 'message' => 'Passwords do not match.']);
                     return;
                 }
-
+    
+                // Hash password
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
+    
+                // Buat user baru
                 $user = new UserModel;
                 $user->__construct2($name, $stambuk, $hashedPassword);
-
+    
+                // Simpan user
                 if ($user->save()) {
-                    echo "<script>alert('Berhasil silahkan login')</script>";
-                    View::render('index', 'Login');
+                    header('Content-Type: application/json');
+                    echo json_encode(['status' => 'success', 'message' => 'Registration successful. Please log in.']);
                 } else {
-                    echo "<script>alert('Registrasi gagal')</script>";
-                    View::render('index', 'Login');
+                    header('Content-Type: application/json');
+                    echo json_encode(['status' => 'error', 'message' => 'Registration failed.']);
                 }
             }
-        }  catch (\Exception $e) {
-            echo "<script>alert('Silahkan gunakan stambuk yang lain! pengguna dengan '$stambuk' telah ada!')</script>";
-            View::render('index', 'Login');
+        } catch (\Exception $e) {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => "Please use a different stambuk. User with '$stambuk' already exists."]);
         }
     }
+    
 }
 ?>

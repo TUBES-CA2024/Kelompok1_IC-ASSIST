@@ -55,6 +55,17 @@ $(document).ready(function(){
             type: 'post',
             data: $('#registerForm').serialize(),
             dataType: 'json',
+            success: function(response){
+                if(response.status === 'success'){
+                    alert('Register Berhasil');
+                    window.location.href = '/tubes_web/public/login';
+                } else {
+                    alert('Register Gagal');
+                }
+            },
+            error: function(xhr, status, error){
+                console.log('Terjadi kesalahan: ' + error);
+            }
         });
     });
 
@@ -65,6 +76,16 @@ $(document).ready(function(){
             type: 'post',
             data: $('#loginForm').serialize(),
             dataType: 'json',
+            success: function(response){
+                if(response.status === 'success'){
+                    window.location.href = '/tubes_web/public/';
+                } else {
+                    alert('stambuk atau password salah');
+                }
+            },
+            error: function(xhr, status, error){
+                console.log('Terjadi kesalahan: ' + xhr.responseText);
+            }
         });
     });
 });
