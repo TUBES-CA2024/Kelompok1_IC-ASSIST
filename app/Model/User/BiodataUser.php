@@ -53,7 +53,6 @@ class BiodataUser extends Model {
     
         $stmt = self::getDB()->prepare($query);
     
-        // Konversi nama jurusan ke id jurusan
         $idJurusanData = $this->getIdJurusan($biodata->jurusan);
         if (!$idJurusanData) {
             throw new Exception("Jurusan tidak ditemukan: " . $biodata->jurusan);
@@ -61,7 +60,6 @@ class BiodataUser extends Model {
         $biodata->idJurusan = $idJurusanData['id'];
         
         $jenisKelamin = ucfirst($biodata->jenisKelamin);
-        // Konversi nama kelas ke id kelas
         $idKelasData = $this->getIdKelas($biodata->kelas);
         if (!$idKelasData) {
             throw new Exception("Kelas tidak ditemukan: " . $biodata->kelas);

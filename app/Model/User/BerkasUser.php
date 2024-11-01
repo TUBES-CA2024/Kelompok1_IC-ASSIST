@@ -62,17 +62,17 @@ class BerkasUser extends Model {
             throw new Exception("Gagal memproses foto");
         }
     
-        $fileCv = $this->getFileName($berkas->cv, $berkas->cvSize);
+        $fileCv = $this->getFileCv($berkas->cv, $berkas->cvSize);
         if (!$fileCv) {
             throw new Exception("Gagal memproses CV");
         }
     
-        $fileNilai = $this->getFileName($berkas->transkripNilai, $berkas->transkripNilaiSize);
+        $fileNilai = $this->getFileTranskrip($berkas->transkripNilai, $berkas->transkripNilaiSize);
         if (!$fileNilai) {
             throw new Exception("Gagal memproses transkrip nilai");
         }
     
-        $filePernyataan = $this->getFileName($berkas->suratPernyataan, $berkas->suratPernyataanSize);
+        $filePernyataan = $this->getFileSuratPernyataan($berkas->suratPernyataan, $berkas->suratPernyataanSize);
         if (!$filePernyataan) {
             throw new Exception("Gagal memproses surat pernyataan");
         }
@@ -123,7 +123,7 @@ class BerkasUser extends Model {
         return $newImageName;
     }
     
-    private function getFileName($berkas, $berkasSize) {
+    private function getFileCv($berkas, $berkasSize) {
         $fileExt = strtolower(pathinfo($_FILES['cv']['name'], PATHINFO_EXTENSION));
         if ($fileExt !== $this->fileAccepted) {
             throw new Exception("Gunakan ekstensi pdf untuk file.");
@@ -151,7 +151,62 @@ class BerkasUser extends Model {
     
         return $newFileName;
     }
+    private function getFileTranskrip($berkas, $berkasSize) {
+        $fileExt = strtolower(pathinfo($_FILES['transkrip']['name'], PATHINFO_EXTENSION));
+        if ($fileExt !== $this->fileAccepted) {
+            throw new Exception("Gunakan ekstensi pdf untuk file.");
+        }
     
+        if ($berkasSize > $this->maxFileSize) {
+            throw new Exception("Ukuran file terlalu besar.");
+        }
+    
+        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/berkasUser/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true); // Membuat direktori jika tidak ada
+        }
+    
+        $newFileName = uniqid() . '.' . $fileExt;
+    
+        if (empty($berkas)) {
+            throw new Exception("Path file sementara untuk CV kosong.");
+        }
+    
+        $destination = $uploadDir . $newFileName;
+        if (!move_uploaded_file($berkas, $destination)) {
+            throw new Exception("Gagal memindahkan file CV. Pastikan folder tujuan dapat diakses.");
+        }
+    
+        return $newFileName;
+    }
+    private function getFileSuratPernyataan($berkas, $berkasSize) {
+        $fileExt = strtolower(pathinfo($_FILES['suratpernyataan']['name'], PATHINFO_EXTENSION));
+        if ($fileExt !== $this->fileAccepted) {
+            throw new Exception("Gunakan ekstensi pdf untuk file.");
+        }
+    
+        if ($berkasSize > $this->maxFileSize) {
+            throw new Exception("Ukuran file terlalu besar.");
+        }
+    
+        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/berkasUser/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true); // Membuat direktori jika tidak ada
+        }
+    
+        $newFileName = uniqid() . '.' . $fileExt;
+    
+        if (empty($berkas)) {
+            throw new Exception("Path file sementara untuk CV kosong.");
+        }
+    
+        $destination = $uploadDir . $newFileName;
+        if (!move_uploaded_file($berkas, $destination)) {
+            throw new Exception("Gagal memindahkan file CV. Pastikan folder tujuan dapat diakses.");
+        }
+    
+        return $newFileName;
+    }
     private function getIdMahasiswa($idUser) {
         $query = "SELECT id FROM mahasiswa WHERE id_user = ?";
         $stmt = self::getDB()->prepare($query);

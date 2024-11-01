@@ -6,6 +6,7 @@ use App\Controllers\Login\RegisterController;
 use App\Controllers\Login\LogoutController;
 use App\Controllers\user\BerkasUserController;
 use App\Controllers\user\BiodataUserController;
+use App\Controllers\user\PresentasiUserController;
 use App\Core\Router;
 
 Router::get('/login', [new LoginController, 'index']);
@@ -19,5 +20,6 @@ Router::post('/register/authenticate', [new RegisterController, 'register']);
 Router::post('/logout', [new LogoutController, 'logout']);
 Router::post("/store", [new BiodataUserController, 'saveBiodata']);
 Router::post("/berkas", [new BerkasUserController, 'saveBerkas']);
+Router::post("/judul", [new PresentasiUserController, 'saveJudul']);
 
 
