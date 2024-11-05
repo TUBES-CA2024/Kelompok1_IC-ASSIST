@@ -50,7 +50,8 @@ class HomeController extends Controller {
                 break;
             case 'notifcation' :
                 View::render('notification', 'Templates');
-                break;    
+                break;
+                    
         }
     }
 

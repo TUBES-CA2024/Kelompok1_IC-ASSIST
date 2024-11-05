@@ -155,7 +155,19 @@ class PresentasiUser extends Model {
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(1,$idMahasiswa['id']);
         $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(!$result) {
+            return null;
+        }
+        return $result;
+    }
+    public function getValueForTable($id) {
+        $query = "SELECT judul, is_revisi, is_accepted,created_at FROM " . static::$table . " WHERE id_mahasiswa = ?";
+        $stmt = self::getDB()->prepare($query);
+        $idMahasiswa = $this->getIdMahasiswa($id);
+        $stmt->bindParam(1,$idMahasiswa['id']);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if(!$result) {
             return null;
         }

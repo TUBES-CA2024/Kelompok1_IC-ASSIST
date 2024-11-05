@@ -86,4 +86,4 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
     </div>
 </div>
 </div>
-<script src="/tubes_web/public/Assets/Script/biodata/biodata.js"></script>
+<script src="/tubes_web/public/Assets/Script/user/biodata.js"></script>

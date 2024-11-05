@@ -40,10 +40,10 @@ class PresentasiUserController extends Controller {
         }
     }
 
-    public function viewAll(){
+    public static function viewAll(){
         $presentasi = new PresentasiUser();
-        $idMahasiswa = $presentasi->getIdMahasiswa($_SESSION['user']['id']);
-        $presentasiUser = $presentasi->getAllPresentasi($idMahasiswa);
+        $id = $_SESSION['user']['id'];
+        $presentasiUser = $presentasi->getValueForTable($id);
         return $presentasiUser;
     }
 }

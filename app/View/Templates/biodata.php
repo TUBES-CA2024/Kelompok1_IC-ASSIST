@@ -10,7 +10,7 @@ $jenisKelamin = ProfileController::viewBiodata() == null ? "Jenis Kelamin" : Pro
 $tempatLahir = ProfileController::viewBiodata() == null ? "Tempat Lahir" : ProfileController::viewBiodata()["tempatLahir"];
 $tanggalLahir = ProfileController::viewBiodata() == null ? "Tanggal Lahir" : ProfileController::viewBiodata()["tanggalLahir"];
 $noHp = ProfileController::viewBiodata() == null ? "No Telephone" : ProfileController::viewBiodata()["noHp"];
-?>Login
+?>
 <div>
     <h1 class="biodata">Biodata</h1>
 </div>

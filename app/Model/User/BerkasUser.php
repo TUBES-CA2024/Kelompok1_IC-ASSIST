@@ -51,9 +51,9 @@ class BerkasUser extends Model {
 
     public function save(BerkasUser $berkas) {
         $query = "INSERT INTO " . static::$table . " 
-            (id_mahasiswa, foto, cv, transkrip_nilai, surat_pernyataan, is_revisi, is_accepted) 
+            (id_mahasiswa, foto, cv, transkrip_nilai, surat_pernyataan) 
             VALUES 
-            (?, ?, ?, ?, ?, ?, ?)";
+            (?, ?, ?, ?, ?)";
     
         $stmt = self::getDB()->prepare($query);
     
@@ -88,9 +88,7 @@ class BerkasUser extends Model {
         $stmt->bindParam(3, $fileCv);
         $stmt->bindParam(4, $fileNilai);
         $stmt->bindParam(5, $filePernyataan);
-        $stmt->bindParam(6, $berkas->isRevisi, PDO::PARAM_BOOL);
-        $stmt->bindParam(7, $berkas->isAccepted, PDO::PARAM_BOOL);
-        
+    
         return $stmt->execute();
     }
 
@@ -227,12 +225,13 @@ class BerkasUser extends Model {
         if(!$stmt) {
             return null;
         }
-        $stmt = [
-            "foto" => $stmt["foto"],
-            "cv" => $stmt["cv"],
-            "transkrip_nilai" => $stmt["transkrip_nilai"],
-            "surat_pernyataan" => $stmt["surat_pernyataan"]
-        ];
         return $stmt;
+    }
+    public function isEmpty($id) {
+        $query = "SELECT * FROM " . static::$table . " WHERE id_mahasiswa = ?";
+        $idMahasiswa = $this->getIdMahasiswa($id);
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(1,$idMahasiswa['id']);
+        $stmt->execute();
     }
 } 

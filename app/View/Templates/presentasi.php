@@ -1,12 +1,16 @@
 
 <?php
+use App\Controllers\User\PresentasiUserController;
 
+$results = PresentasiUserController::viewAll() ?? [];
 ?>
     <main>
     <div>
     <h2 class="presentasi">Presentasi</h2>
-    <div class="form-container">
-        
+    <?php 
+    if($results['is_accepted'] == 0) {
+    ?>
+    <div class="form-container">    
         <form id="presentasiForm">
             <div class="mb-3">
                 <label for="judul" class="form-label">Judul</label>
@@ -16,7 +20,25 @@
                 <button type="submit" class="btn btn-submit">Submit</button>
             </div>
         </form>
+        </div>
+        <?php } else { ?>
+          <div class="form-container">    
+        <form id="presentasiFormAccepted" enctype="multipart/form-data">
+        <div class="mb-3">
+                <label for="ppt" class="form-label">Masukkan PPT</label>
+                <input class="form-control" type="file" id="ppt" name="ppt" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="makalah" class="form-label">Masukkan makalah anda</label>
+                <input class="form-control" type="file" id="makalah" name="makalah" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-submit">Submit</button>
+            </div>
+        </form>
     </div>
+    <?php } ?>
     </div>
     <div class="recent-judul">
       <h2 class="tahapan-presentasi">
@@ -29,20 +51,28 @@
             <th>Judul</th>
             <th>Status</th>
             <th>Waktu Pengiriman Judul</th>
-            <th>Abstract</th>
             <th>Keterangan</th>
           </tr>
         </thead>
         <tbody>
+          <?php
+          $i = 1; 
+          if(isset($results['judul'])) $results = [$results];
+          foreach($results as $row) { 
+            $revisi = !$row['is_accepted'] ? 'ditolak' : 'diterima';
+            $keterangan = !$row['is_accepted'] ? 'Belum Diterima' : 'Silahkan submit ppt dan makalahnya!';
+            $color = !$row['is_accepted'] ? 'danger' : 'success';
+            $judul = $row['judul'];
+            $created = $row['created_at']?>
           <tr>
-            <td>1</td>
-            <td>cnn</td>
-            <td class="danger">revisi</td>
-            <td>17-10-2024 - 19-12-2024</td>
-            <td><a href="#">download</a></td>
-            <td>gk ngerti AI SOK SOK PAKE DEEP LEARNING</td>
+            <td><?=$i?></td>
+            <td><?=$judul?></td>
+            <td class=<?=$color?>><?=$revisi?></td>
+            <td><?=$created?></td>
+            <td><?= $keterangan?></td>
           </tr>
           </tbody>
+          <?php $i+=1;} ?>
           </table>
           </div>
     </main>
