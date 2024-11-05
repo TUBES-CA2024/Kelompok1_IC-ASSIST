@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     const questions = document.querySelectorAll(".questions-container > .question");
+    const navButtons = document.querySelectorAll(".nav button");
     const timerElement = document.getElementById("timer");
 
-    // Set the navigation buttons for the current question dynamically
     let currentQuestion = 0;
     const initialDuration = 30 * 60; // 30 minutes in seconds
     let remainingTime;
 
-    // Check if there's a saved time in local storage
+    // Load remaining time from local storage if available
     if (localStorage.getItem("remainingTime")) {
         remainingTime = parseInt(localStorage.getItem("remainingTime"), 10);
     } else {
@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (remainingTime <= 0) {
                 clearInterval(countdown);
                 alert("Waktu habis! Ujian akan disubmit secara otomatis.");
+                // Submit the form or perform any necessary end-of-time action here
             } else {
                 remainingTime--;
                 updateTimerDisplay(remainingTime);
@@ -38,14 +39,13 @@ document.addEventListener("DOMContentLoaded", () => {
             question.style.display = i === index ? "block" : "none";
         });
         updateNavigationButtons();
+        updateActiveNavButton();
     }
 
     function updateNavigationButtons() {
-        // Select or dynamically create Back and Next buttons for each question
         let backButton = questions[currentQuestion].querySelector(".nav-button.back");
         let nextButton = questions[currentQuestion].querySelector(".nav-button.next");
 
-        // Ensure Back and Next buttons are created if not already present
         if (!backButton) {
             backButton = document.createElement("button");
             backButton.classList.add("nav-button", "back");
@@ -62,11 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
             questions[currentQuestion].appendChild(nextButton);
         }
 
-        // Show or hide Back button based on the question index
         backButton.style.display = currentQuestion === 0 ? "none" : "inline-block";
         nextButton.textContent = currentQuestion === questions.length - 1 ? "Finish" : "Next";
 
-        // Add event listeners for the buttons
         backButton.onclick = () => {
             if (currentQuestion > 0) {
                 currentQuestion--;
@@ -84,7 +82,24 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
-    // Initialize by showing the first question and setting up the timer
+    function updateActiveNavButton() {
+        // Remove 'active' class from all navigation buttons
+        navButtons.forEach(button => button.classList.remove("active"));
+        // Add 'active' class to the button matching the current question index
+        if (navButtons[currentQuestion]) {
+            navButtons[currentQuestion].classList.add("active");
+        }
+    }
+
+    // Event listener to handle navigation button clicks
+    navButtons.forEach((button, index) => {
+        button.addEventListener("click", () => {
+            currentQuestion = index;
+            showQuestion(currentQuestion);
+        });
+    });
+
+    // Initialize by showing the first question, setting up the timer, and marking the first button as active
     showQuestion(currentQuestion);
     updateTimerDisplay(remainingTime);
     startCountdown();
