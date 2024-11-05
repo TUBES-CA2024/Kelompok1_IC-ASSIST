@@ -258,3 +258,9 @@ footer {
     color: #333;
 }
 
+.question-image {
+    max-width: 100%; 
+    height: auto;
+    margin-bottom: 15px; 
+}
+

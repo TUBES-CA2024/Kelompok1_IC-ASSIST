@@ -4,10 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const timerElement = document.getElementById("timer");
 
     let currentQuestion = 0;
-    const initialDuration = 30 * 60; // 30 minutes in seconds
+    const initialDuration = 30 * 60; 
     let remainingTime;
 
-    // Load remaining time from local storage if available
     if (localStorage.getItem("remainingTime")) {
         remainingTime = parseInt(localStorage.getItem("remainingTime"), 10);
     } else {
@@ -25,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (remainingTime <= 0) {
                 clearInterval(countdown);
                 alert("Waktu habis! Ujian akan disubmit secara otomatis.");
-                // Submit the form or perform any necessary end-of-time action here
             } else {
                 remainingTime--;
                 updateTimerDisplay(remainingTime);
@@ -83,28 +81,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateActiveNavButton() {
-        // Remove 'active' class from all navigation buttons
         navButtons.forEach(button => button.classList.remove("active"));
-        // Add 'active' class to the button matching the current question index
         if (navButtons[currentQuestion]) {
             navButtons[currentQuestion].classList.add("active");
         }
     }
 
-    // Event listener to handle navigation button clicks
     navButtons.forEach((button, index) => {
         button.addEventListener("click", () => {
-            currentQuestion = index;
-            showQuestion(currentQuestion);
+            currentQuestion = index;  
+            showQuestion(currentQuestion);  
         });
     });
 
-    // Initialize by showing the first question, setting up the timer, and marking the first button as active
     showQuestion(currentQuestion);
     updateTimerDisplay(remainingTime);
     startCountdown();
 
-    // Clear local storage when the user finishes the exam
     window.addEventListener("beforeunload", function () {
         if (remainingTime <= 0) {
             localStorage.removeItem("remainingTime");

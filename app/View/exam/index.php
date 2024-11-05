@@ -55,15 +55,18 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
         </div>
         <div class="main-content">
             <div class="timer">Time Remaining: <span id="timer">30:00</span></div>
-            <!-- Set initial time to 30 minutes -->
-
-            <!-- Modified Questions Container to Show Only One Question at a Time -->
             <div class="questions-container">
                 <?php foreach ($results as $index => $result): ?>
                     <div class="question" style="display: none;">
                         <h3>Question <?= $index + 1 ?></h3>
+
+                        <?php if (!empty($result['gambar'])): ?>
+                            <img src="/tubes_web/public/Assets/Img/soal/<?=$result['gambar']?>" alt="Gambar Soal <?= $index + 1 ?>"
+                                class="question-image">
+                        <?php endif; ?>
+
                         <p><?= $result['deskripsi'] ?></p>
-                        
+
                         <ul class="options">
                             <?php
                             $options = json_decode($result['pilihan']);
