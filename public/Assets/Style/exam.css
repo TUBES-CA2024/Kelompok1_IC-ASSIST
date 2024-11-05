@@ -18,7 +18,7 @@ body {
 
 header {
     width: 100%;
-    background-color: #00bcd4; /* Warna header sesuai dengan warna tombol */
+    background-color: #00bcd4; 
     padding: 10px 20px;
     display: flex;
     align-items: center;
