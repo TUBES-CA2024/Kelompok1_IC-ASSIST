@@ -2,10 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const questions = document.querySelectorAll(".questions-container > .question");
     const navButtons = document.querySelectorAll(".nav button");
     const timerElement = document.getElementById("timer");
-
+    const endpoint = "/tubes_web/public/hasil";
     let currentQuestion = 0;
     const initialDuration = 30 * 60; 
     let remainingTime;
+
+    const answers = {}; // Objek untuk menyimpan semua jawaban
 
     if (localStorage.getItem("remainingTime")) {
         remainingTime = parseInt(localStorage.getItem("remainingTime"), 10);
@@ -23,11 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const countdown = setInterval(() => {
             if (remainingTime <= 0) {
                 clearInterval(countdown);
-                alert("Waktu habis! Ujian akan disubmit secara otomatis.");
+                alert("Waktu habis! Jawaban akan dikirimkan secara otomatis.");
+                submitAllAnswers(); // Kirim semua jawaban jika waktu habis
             } else {
                 remainingTime--;
                 updateTimerDisplay(remainingTime);
-                localStorage.setItem("remainingTime", remainingTime); // Update local storage
+                localStorage.setItem("remainingTime", remainingTime);
             }
         }, 1000);
     }
@@ -75,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 currentQuestion++;
                 showQuestion(currentQuestion);
             } else {
-                alert("Ujian selesai! Jawaban Anda akan dikumpulkan.");
+                submitAllAnswers(); // Kirim semua jawaban saat tombol Finish ditekan
             }
         };
     }
@@ -87,10 +90,60 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function markAnsweredQuestion(index) {
+        if (navButtons[index]) {
+            navButtons[index].classList.add("answered");
+        }
+    }
+
+    function saveAnswer(idSoal, answer) {
+        answers[idSoal] = answer; // Simpan jawaban ke dalam objek JSON
+    }
+
+    function submitAllAnswers() {
+        const data = Object.entries(answers).map(([idSoal, jawaban]) => ({
+            id_soal: idSoal,
+            jawaban: jawaban,
+        }));
+        console.log("Data yang akan dikirim:" + JSON.stringify(data));
+
+        $.ajax({
+            url: endpoint,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+                if (response.status === "success") {
+                    alert("Semua jawaban berhasil disimpan.");
+                } else {
+                    alert("Gagal menyimpan beberapa jawaban.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("Error saat menyimpan jawaban:", error);
+                console.log("Response:", xhr.responseText);
+                console.log("Status:", status);
+            }
+        });
+    }
+
     navButtons.forEach((button, index) => {
         button.addEventListener("click", () => {
-            currentQuestion = index;  
-            showQuestion(currentQuestion);  
+            currentQuestion = index;
+            showQuestion(currentQuestion);
+        });
+    });
+
+    questions.forEach((question, index) => {
+        const options = question.querySelectorAll("input[type='radio']");
+        const idSoal = question.getAttribute("data-id-soal");
+
+        options.forEach(option => {
+            option.addEventListener("change", () => {
+                const answer = option.value;
+                saveAnswer(idSoal, answer); // Simpan jawaban
+                markAnsweredQuestion(index);
+            });
         });
     });
 
@@ -98,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTimerDisplay(remainingTime);
     startCountdown();
 
-    window.addEventListener("beforeunload", function () {
+    window.addEventListener("beforeunload", () => {
         if (remainingTime <= 0) {
             localStorage.removeItem("remainingTime");
         }

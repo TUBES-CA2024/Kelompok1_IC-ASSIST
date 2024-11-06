@@ -44,6 +44,6 @@ class PresentasiUserController extends Controller {
         $presentasi = new PresentasiUser();
         $id = $_SESSION['user']['id'];
         $presentasiUser = $presentasi->getValueForTable($id);
-        return $presentasiUser;
+        return $presentasiUser ?? [];
     }
 }

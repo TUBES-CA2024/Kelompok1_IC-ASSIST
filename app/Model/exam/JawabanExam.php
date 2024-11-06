@@ -23,7 +23,7 @@ class JawabanExam extends Model {
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(':id_soal', $id_soal, PDO::PARAM_INT);
         $stmt->bindParam(':id_mahasiswa', $id_mahasiswa, PDO::PARAM_INT);
-        $stmt->bindParam(':jawaban', $jawaban, PDO::PARAM_STR); // Ubah PDO::PARAM_INT ke PDO::PARAM_STR jika jawaban berupa teks
+        $stmt->bindParam(':jawaban', $jawaban, PDO::PARAM_STR); 
         
         return $stmt->execute();
     }

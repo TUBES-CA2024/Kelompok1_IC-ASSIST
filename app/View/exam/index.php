@@ -7,7 +7,6 @@ $results = ExamController::viewAllSoal();
 $profile = ProfileController::viewBiodata();
 $nama = ProfileController::viewBiodata() == null ? "Nama Lengkap" : ProfileController::viewBiodata()["namaLengkap"];
 $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto"] ?? "default.png");
-
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +22,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
 <body>
     <header>
         <div class="header-container">
-            <img src="logo.jpeg" alt="Logo" class="logo">
+            <img src="/tubes_web/public/Assets/Images/logo.jpeg" alt="Logo" class="logo">
             <h1>ICLabs - Ujian Akhir</h1>
         </div>
     </header>
@@ -31,41 +30,30 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
     <div class="container">
         <div class="sidebar">
             <div class="profile-section">
-                <img src="<?= $photo ?>" alt="foto" name="userphoto" id="userphoto" class="profile-picture">
-                <h3><?= $nama ?></h3>
-                <p><?= $stambuk ?></p>
+                <img src="<?= htmlspecialchars($photo) ?>" alt="User Photo" name="userphoto" id="userphoto"
+                    class="profile-picture">
+                <h3><?= htmlspecialchars($nama) ?></h3>
+                <p><?= htmlspecialchars($stambuk) ?></p>
             </div>
             <div class="nav">
-                <button class="active">1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>4</button>
-                <button>5</button>
-                <button>6</button>
-                <button>7</button>
-                <button>8</button>
-                <button>9</button>
-                <button>10</button>
-                <button>11</button>
-                <button>12</button>
-                <button>13</button>
-                <button>14</button>
-                <button>15</button>
+                <?php for ($i = 1; $i <= 15; $i++): ?>
+                    <button><?= $i ?></button>
+                <?php endfor; ?>
             </div>
         </div>
         <div class="main-content">
             <div class="timer">Time Remaining: <span id="timer">30:00</span></div>
             <div class="questions-container">
                 <?php foreach ($results as $index => $result): ?>
-                    <div class="question" style="display: none;">
+                    <div class="question" data-id-soal="<?= htmlspecialchars($result['id']) ?>" style="display: none;">
                         <h3>Question <?= $index + 1 ?></h3>
 
                         <?php if (!empty($result['gambar'])): ?>
-                            <img src="/tubes_web/public/Assets/Img/soal/<?=$result['gambar']?>" alt="Gambar Soal <?= $index + 1 ?>"
-                                class="question-image">
+                            <img src="/tubes_web/public/Assets/Img/soal/<?= htmlspecialchars($result['gambar']) ?>"
+                                alt="Gambar Soal <?= $index + 1 ?>" class="question-image">
                         <?php endif; ?>
 
-                        <p><?= $result['deskripsi'] ?></p>
+                        <p><?= htmlspecialchars($result['deskripsi']) ?></p>
 
                         <ul class="options">
                             <?php
@@ -73,7 +61,8 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
                             foreach ($options as $optionIndex => $option): ?>
                                 <li>
                                     <label>
-                                        <input type="radio" name="answer[<?= $index ?>]" value="<?= $optionIndex ?>">
+                                        <input type="radio" name="answer[<?= $index ?>]"
+                                            value="<?= htmlspecialchars($optionIndex) ?>">
                                         <?= htmlspecialchars($option) ?>
                                     </label>
                                 </li>
@@ -88,10 +77,12 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
                 <?php endforeach; ?>
             </div>
         </div>
-        <footer>
-            <p>Copyright © 2024 by ICLabs</p>
-        </footer>
+    </div>
+    <footer>
+        <p>&copy; 2024 by ICLabs</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/tubes_web/public/Assets/Script/exam/examScript.js"></script>
 </body>
-<script src="/tubes_web/public/Assets/Script/exam/examScript.js"></script>
 
 </html>

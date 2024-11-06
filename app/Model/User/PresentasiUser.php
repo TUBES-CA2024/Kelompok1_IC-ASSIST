@@ -171,7 +171,7 @@ class PresentasiUser extends Model {
         if(!$result) {
             return null;
         }
-        return $result;
+        return $result ?? [];
     }
     public function isAccepted($id) {
         $query = "SELECT is_accepted FROM " . static::$table . " WHERE id_mahasiswa = ?";
