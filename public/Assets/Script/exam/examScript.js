@@ -15,6 +15,33 @@ document.addEventListener("DOMContentLoaded", () => {
         remainingTime = initialDuration;
     }
 
+    async function submitAndFinish() {
+        const calculateEndpoint = "/tubes_web/public/calculate";
+    
+        try {
+            const response = await fetch(calculateEndpoint, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+    
+            const data = await response.json();
+    
+            if (data.status === "success") {
+                alert("Ujian selesai! Data Anda telah disimpan dan nilai telah dihitung.");
+                console.log("Nilai akhir Anda:", data.score);
+            } else {
+                alert("Terjadi kesalahan saat menghitung nilai. Silakan coba lagi.");
+            }
+        } catch (error) {
+            console.error("Error saat menghitung nilai akhir:", error);
+            alert("Terjadi kesalahan. Silakan coba lagi.");
+        }
+    }
+    
+    
+    
     function updateTimerDisplay(seconds) {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
@@ -42,6 +69,39 @@ document.addEventListener("DOMContentLoaded", () => {
         updateNavigationButtons();
         updateActiveNavButton();
     }
+    function submitAllAnswers() {
+        const data = Object.entries(answers).map(([idSoal, jawaban]) => ({
+            id_soal: idSoal,
+            jawaban: jawaban,
+        }));
+    
+        console.log("Mengirim jawaban ke backend:", JSON.stringify(data));
+    
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: endpoint,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log("Respons dari /hasil:", response);
+                    if (response.status === "success") {
+                        resolve(response); // Jawaban berhasil disimpan
+                    } else {
+                        reject(new Error("Gagal menyimpan beberapa jawaban: " + response.message));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error saat menyimpan jawaban:", error);
+                    reject(new Error("Error saat menyimpan jawaban."));
+                }
+            });
+        });
+    }
+    
+    
+    
+
 
     function updateNavigationButtons() {
         let backButton = questions[currentQuestion].querySelector(".nav-button.back");
@@ -78,9 +138,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 currentQuestion++;
                 showQuestion(currentQuestion);
             } else {
-                submitAllAnswers(); // Kirim semua jawaban saat tombol Finish ditekan
+                if (confirm("Apakah Anda yakin ingin menyelesaikan ujian?")) {
+                    submitAllAnswers()
+                        .then(() => {
+                            return submitAndFinish(); 
+                        })
+                        .catch(error => {
+                            console.error("Error saat menyimpan jawaban atau menghitung nilai:", error);
+                            alert("Terjadi kesalahan saat menyimpan data. Silakan coba lagi.");
+                        });
+                }
             }
         };
+            
     }
 
     function updateActiveNavButton() {
@@ -100,33 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
         answers[idSoal] = answer; // Simpan jawaban ke dalam objek JSON
     }
 
-    function submitAllAnswers() {
-        const data = Object.entries(answers).map(([idSoal, jawaban]) => ({
-            id_soal: idSoal,
-            jawaban: jawaban,
-        }));
-        console.log("Data yang akan dikirim:" + JSON.stringify(data));
-
-        $.ajax({
-            url: endpoint,
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (response) {
-                if (response.status === "success") {
-                    alert("Semua jawaban berhasil disimpan.");
-                } else {
-                    alert("Gagal menyimpan beberapa jawaban.");
-                }
-            },
-            error: function (xhr, status, error) {
-                console.log("Error saat menyimpan jawaban:", error);
-                console.log("Response:", xhr.responseText);
-                console.log("Status:", status);
-            }
-        });
-    }
-
+    
     navButtons.forEach((button, index) => {
         button.addEventListener("click", () => {
             currentQuestion = index;
