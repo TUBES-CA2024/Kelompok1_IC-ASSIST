@@ -17,7 +17,7 @@ class JawabanExam extends Model {
                   ON DUPLICATE KEY UPDATE jawaban = :jawaban, modified = NOW()";
     
         $stmt = self::getDB()->prepare($query);
-        $id_mahasiswa = $this->getIdMahasiswa($id_user);
+        $id_mahasiswa = $this->getIdMahasiswa($id_user)['id'];
         $stmt->bindParam(':id_soal', $id_soal, PDO::PARAM_INT);
         $stmt->bindParam(':id_mahasiswa', $id_mahasiswa, PDO::PARAM_INT);
         $stmt->bindParam(':jawaban', $jawaban, PDO::PARAM_STR);

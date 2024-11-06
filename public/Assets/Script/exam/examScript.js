@@ -29,16 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
     
             if (data.status === "success") {
-                alert("Ujian selesai! Data Anda telah disimpan dan nilai telah dihitung.");
-                console.log("Nilai akhir Anda:", data.score);
+                alert("Ujian selesai! Data Anda telah disimpan.");
+                window.location.href = "/public"; // Redirect ke URL /public
             } else {
-                alert("Terjadi kesalahan saat menghitung nilai. Silakan coba lagi.");
+                alert("Terjadi kesalahan saat menyimpan data. Silakan coba lagi.");
             }
         } catch (error) {
-            console.error("Error saat menghitung nilai akhir:", error);
+            console.error("Error saat menyelesaikan ujian:", error);
             alert("Terjadi kesalahan. Silakan coba lagi.");
+            window.location.href = "/public"; // Tetap redirect meskipun ada error
         }
     }
+    
     
     
     
@@ -52,8 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const countdown = setInterval(() => {
             if (remainingTime <= 0) {
                 clearInterval(countdown);
-                alert("Waktu habis! Jawaban akan dikirimkan secara otomatis.");
-                submitAllAnswers(); // Kirim semua jawaban jika waktu habis
+                alert("Waktu habis! Jawaban Anda akan dikirimkan secara otomatis.");
+                submitAllAnswers()
+                    .then(() => submitAndFinish()) 
+                    .catch((error) => {
+                        console.error("Error saat menyimpan jawaban:", error);
+                        alert("Terjadi kesalahan saat menyimpan jawaban. Silakan coba lagi.");
+                    });
             } else {
                 remainingTime--;
                 updateTimerDisplay(remainingTime);
@@ -61,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }, 1000);
     }
+    
 
     function showQuestion(index) {
         questions.forEach((question, i) => {

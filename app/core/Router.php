@@ -67,7 +67,7 @@ class Router
                     $found = true; 
                     return is_callable($handler) ? $handler($matches) : throw new Exception('Handler not callable.');
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 redirect('miscellaneous/404');
             }
         }

@@ -16,7 +16,7 @@ class NilaiAkhir extends Model {
 
     $query = "SELECT id_soal, jawaban FROM jawaban WHERE id_mahasiswa = :id_mahasiswa";
     $stmt = self::getDB()->prepare($query);
-    $id_user = $this->getIdMahasiswa($id);
+    $id_user = $this->getIdMahasiswa($id)['id'];
     $stmt->bindParam(':id_mahasiswa', $id_user, PDO::PARAM_INT);
     $stmt->execute();
     $user_answers = $stmt->fetchAll(PDO::FETCH_ASSOC);
