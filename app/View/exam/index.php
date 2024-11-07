@@ -1,9 +1,8 @@
 <?php
-use App\Controllers\exam\ExamController;
 use App\Controllers\Profile\ProfileController;
 use App\Controllers\user\BerkasUserController;
+
 $stambuk = ProfileController::viewUser()["stambuk"];
-$results = ExamController::viewAllSoal();
 $profile = ProfileController::viewBiodata();
 $nama = ProfileController::viewBiodata() == null ? "Nama Lengkap" : ProfileController::viewBiodata()["namaLengkap"];
 $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto"] ?? "default.png");
@@ -30,13 +29,12 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
     <div class="container">
         <div class="sidebar">
             <div class="profile-section">
-                <img src="<?= htmlspecialchars($photo) ?>" alt="User Photo" name="userphoto" id="userphoto"
-                    class="profile-picture">
+                <img src="<?= htmlspecialchars($photo) ?>" alt="User Photo" name="userphoto" id="userphoto" class="profile-picture">
                 <h3><?= htmlspecialchars($nama) ?></h3>
                 <p><?= htmlspecialchars($stambuk) ?></p>
             </div>
             <div class="nav">
-                <?php for ($i = 1; $i <= 15; $i++): ?>
+                <?php for ($i = 1; $i <= count($results); $i++): ?>
                     <button><?= $i ?></button>
                 <?php endfor; ?>
             </div>
@@ -49,8 +47,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
                         <h3>Question <?= $index + 1 ?></h3>
 
                         <?php if (!empty($result['gambar'])): ?>
-                            <img src="/tubes_web/public/Assets/Img/soal/<?= htmlspecialchars($result['gambar']) ?>"
-                                alt="Gambar Soal <?= $index + 1 ?>" class="question-image">
+                            <img src="/tubes_web/public/Assets/Img/soal/<?= htmlspecialchars($result['gambar']) ?>" alt="Gambar Soal <?= $index + 1 ?>" class="question-image">
                         <?php endif; ?>
 
                         <p><?= htmlspecialchars($result['deskripsi']) ?></p>
@@ -61,8 +58,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
                             foreach ($options as $optionIndex => $option): ?>
                                 <li>
                                     <label>
-                                        <input type="radio" name="answer[<?= $index ?>]"
-                                            value="<?= htmlspecialchars($optionIndex) ?>">
+                                        <input type="radio" name="answer[<?= $index ?>]" value="<?= htmlspecialchars($optionIndex) ?>">
                                         <?= htmlspecialchars($option) ?>
                                     </label>
                                 </li>

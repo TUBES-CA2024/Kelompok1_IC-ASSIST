@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const initialDuration = 30 * 60; 
     let remainingTime;
 
-    const answers = {}; // Objek untuk menyimpan semua jawaban
+    const answers = {}; 
 
     if (localStorage.getItem("remainingTime")) {
         remainingTime = parseInt(localStorage.getItem("remainingTime"), 10);
@@ -22,27 +22,34 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch(calculateEndpoint, {
                 method: "GET",
                 headers: {
-                    "Content-Type": "application/json"
-                }
+                    "Content-Type": "application/json",
+                },
             });
     
-            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(`HTTP error: ${response.status}`);
+            }
     
-            if (data.status === "success") {
-                alert("Ujian selesai! Data Anda telah disimpan.");
-                window.location.href = "/public"; // Redirect ke URL /public
-            } else {
-                alert("Terjadi kesalahan saat menyimpan data. Silakan coba lagi.");
+            const textResponse = await response.text(); // Ambil respons sebagai teks
+            try {
+                const data = JSON.parse(textResponse); // Parsing JSON
+                console.log("Respons dari backend:", data);
+    
+                if (data.status === "success") {
+                    alert("Ujian selesai! Data Anda telah disimpan.");
+                    window.location.href = "/tubes_web/public";
+                } else {
+                    alert(`Terjadi kesalahan: ${data.message || "Kesalahan tidak diketahui"}`);
+                }
+            } catch (parseError) {
+                console.error("Gagal mem-parsing respons JSON:", textResponse);
+                throw new Error("Format respons tidak valid");
             }
         } catch (error) {
             console.error("Error saat menyelesaikan ujian:", error);
-            alert("Terjadi kesalahan. Silakan coba lagi.");
-            window.location.href = "/public"; // Tetap redirect meskipun ada error
+            alert("Terjadi kesalahan saat menyelesaikan ujian. Silakan coba lagi.");
         }
     }
-    
-    
-    
     
     function updateTimerDisplay(seconds) {
         const minutes = Math.floor(seconds / 60);
@@ -92,23 +99,36 @@ document.addEventListener("DOMContentLoaded", () => {
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
-                    console.log("Respons dari /hasil:", response);
-                    if (response.status === "success") {
-                        resolve(response); // Jawaban berhasil disimpan
-                    } else {
-                        reject(new Error("Gagal menyimpan beberapa jawaban: " + response.message));
+                    try {
+                        // Validasi respons dari backend
+                        if (typeof response !== "object" || !response.status) {
+                            throw new Error("Format respons tidak valid");
+                        }
+    
+                        if (response.status === "success") {
+                            console.log("Respons backend:", response);
+                            alert("Semua jawaban berhasil disimpan dan nilai telah dihitung!");
+                            resolve(response);
+                        } else {
+                            console.error("Error dari backend:", response.message || "Tidak ada pesan error");
+                            reject(new Error(`Backend error: ${response.message || "Tidak ada pesan error"}`));
+                        }
+                    } catch (error) {
+                        console.error("Kesalahan saat memproses respons backend:", error);
+                        reject(error);
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error("Error saat menyimpan jawaban:", error);
+                    console.log("Respons backend:", xhr.responseText);
                     reject(new Error("Error saat menyimpan jawaban."));
-                }
+                },
             });
         });
     }
     
     
-    
+
 
 
     function updateNavigationButtons() {

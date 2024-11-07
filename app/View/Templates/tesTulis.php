@@ -66,12 +66,35 @@
 
 .exam-container b {
     color: #333;
+    .exam-container input[type="text"] {
+    display: block;
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.exam-container input[type="text"]:focus {
+    border-color: #3DC2EC;
+    outline: none;
+    box-shadow: 0 0 5px rgba(61, 194, 236, 0.5);
+}
+
+.exam-container .error {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
 }
 
 </style>
-<div class="exam-container">
+<<div class="exam-container">
     <h2>Test Exam</h2>
-    <p>Pada Tahap kali ini kalian akan melaksanakan ujian pilihan ganda.</p>
+    <p>Pada tahap kali ini kalian akan melaksanakan ujian pilihan ganda.</p>
     <p>Tata tertib sebelum ujian meliputi:</p>
     <ul>
         <li><b>Dilarang menghadap kiri kanan. Silahkan fokus di komputernya saja</b></li>
@@ -79,6 +102,38 @@
         <li><b>Kerjakan dengan jujur</b></li>
     </ul>
     <p>Ujian kali ini memiliki durasi waktu <b>80 Menit</b>. Sebelum dimulai dipersilahkan untuk membaca doa terlebih dahulu.</p>
-    <p><b>Tekan tombol start</b> untuk memulai <b>ujian</b></p>
-    <a href="<?=APP_URL."/soal" ?>"><button><b>Start Test</b></a></button>
+    <p>Masukkan nomor meja Anda sebelum memulai ujian:</p>
+    
+    <input type="text" id="nomorMeja" placeholder="Masukkan nomor meja Anda" />
+    <div id="errorMessage" class="error"></div>
+    <button id="startTestButton">Start Test</button>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+  try {
+    console.log("Inisialisasi tombol...");
+    $('#startTestButton').on('click', function () {
+      console.log("Tombol Start Test diklik.");
+      const nomorMejaInput = $('#nomorMeja').val().trim();
+
+      if (!nomorMejaInput || isNaN(nomorMejaInput) || parseInt(nomorMejaInput) <= 0) {
+        $('#errorMessage').text('Nomor meja tidak valid!');
+        return;
+      }
+
+      $('#errorMessage').text('');
+      const targetURL = `${APP_URL}/soal?nomorMeja=${encodeURIComponent(nomorMejaInput)}`;
+      console.log("Redirecting to:", targetURL);
+      window.location.href = targetURL;
+    });
+  } catch (error) {
+    console.error("Terjadi error saat inisialisasi:", error);
+  }
+});
+
+</script>
+
+
+
+

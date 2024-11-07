@@ -11,6 +11,9 @@ use App\Controllers\user\BiodataUserController;
 use App\Controllers\user\PresentasiUserController;
 use App\Core\Router;
 
+
+
+
 Router::get('/soal', [new ExamController, 'index']);
 Router::get('/login', [new LoginController, 'index']);
 Router::get('/Login', [new LoginController, 'index']);
