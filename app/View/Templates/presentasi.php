@@ -11,7 +11,7 @@ $results = PresentasiUserController::viewAll() ?? [];
     if($results['is_accepted'] == 0) {
     ?>
     <div class="form-container">    
-        <form id="presentasiForm">
+        <form id="berkasPresentasiForm">
             <div class="mb-3">
                 <label for="judul" class="form-label">Judul</label>
                 <input type="text" class="form-control" id="judul" name="judul" placeholder="Masukkan Judul" required>

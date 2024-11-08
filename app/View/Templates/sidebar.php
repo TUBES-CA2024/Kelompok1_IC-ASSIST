@@ -93,7 +93,7 @@ if($role === "User") {
     </div>
     <ul>
         <li>
-            <a href="#" data-page="dashboard">
+            <a href="#" data-page="dashboardAdmin">
                 <i class="bx bx-home"></i>
                 <span class="nav-item">Dashboard</span>
             </a>
@@ -101,7 +101,7 @@ if($role === "User") {
         </li>
         <li>
             <a href="#" data-page="biodata">
-                <i class="bx bxs-id-card"></i>
+                <i classt="bx bxs-id-card"></i>
                 <span class="nav-item">Lengkapi Biodata</span>
             </a>
             <span class="tooltip">Lengkapi Biodata</span>

@@ -16,6 +16,10 @@ class PresentasiUser extends Model {
     protected $absensi;
     protected $pptSize;
     protected $makalahSize;
+    protected $fileMakalahAcc = ".pdf";
+    protected $filePptAcc = ".pptx";
+    protected $maxMakalahSize = 1024 * 1024;
+    protected $maxPptSize = 1024 * 1024 * 4;
     public function __construct(
         $id_mahasiswa = null,
         $judul = null,
@@ -78,51 +82,22 @@ class PresentasiUser extends Model {
         }
 
         $idMahasiswa = $idMahasiswa['id'];
-        $stmt->bindParam(1, $presentasiUser->makalah, PDO::PARAM_STR);
-        $stmt->bindParam(2, $fileMakalah, PDO::PARAM_STR);
-        $stmt->bindParam(3, $filePpt, PDO::PARAM_INT);
+        $stmt->bindParam(1, $fileMakalah, PDO::PARAM_STR);
+        $stmt->bindParam(2, $filePpt, PDO::PARAM_STR);
+        $stmt->bindParam(3, $idMahasiswa, PDO::PARAM_STR);
     }
     
     private function getFilePpt($berkas, $berkasSize) {
         $fileExt = strtolower(pathinfo($_FILES['ppt']['name'], PATHINFO_EXTENSION));
-        if ($fileExt !== $this->fileAccepted) {
-            throw new Exception("Gunakan ekstensi pdf untuk file.");
+        if ($fileExt !== $this->filePptAcc) {
+            throw new Exception("Gunakan ekstensi PPTX untuk file ppt.");
         }
     
-        if ($berkasSize > $this->maxFileSize) {
+        if ($berkasSize > $this->maxPptSize) {
             throw new Exception("Ukuran file terlalu besar.");
         }
     
-        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/berkasUser/';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true); // Membuat direktori jika tidak ada
-        }
-    
-        $newFileName = uniqid() . '.' . $fileExt;
-    
-        if (empty($berkas)) {
-            throw new Exception("Path file sementara untuk CV kosong.");
-        }
-    
-        $destination = $uploadDir . $newFileName;
-        if (!move_uploaded_file($berkas, $destination)) {
-            throw new Exception("Gagal memindahkan file CV. Pastikan folder tujuan dapat diakses.");
-        }
-    
-        return $newFileName;
-    }
-
-    private function getFileMakalah($berkas, $berkasSize) {
-        $fileExt = strtolower(pathinfo($_FILES['makalah']['name'], PATHINFO_EXTENSION));
-        if ($fileExt !== $this->fileAccepted) {
-            throw new Exception("Gunakan ekstensi pdf untuk file.");
-        }
-    
-        if ($berkasSize > $this->maxFileSize) {
-            throw new Exception("Ukuran file terlalu besar.");
-        }
-    
-        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/berkasUser/';
+        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/pptUser/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true); 
         }
@@ -130,12 +105,41 @@ class PresentasiUser extends Model {
         $newFileName = uniqid() . '.' . $fileExt;
     
         if (empty($berkas)) {
-            throw new Exception("Path file sementara untuk CV kosong.");
+            throw new Exception("Path file sementara untuk ppt kosong.");
         }
     
         $destination = $uploadDir . $newFileName;
         if (!move_uploaded_file($berkas, $destination)) {
-            throw new Exception("Gagal memindahkan file CV. Pastikan folder tujuan dapat diakses.");
+            throw new Exception("Gagal memindahkan file ppt. Pastikan folder tujuan dapat diakses.");
+        }
+    
+        return $newFileName;
+    }
+
+    private function getFileMakalah($berkas, $berkasSize) {
+        $fileExt = strtolower(pathinfo($_FILES['makalah']['name'], PATHINFO_EXTENSION));
+        if ($fileExt !== $this->fileMakalahAcc) {
+            throw new Exception("Gunakan ekstensi pdf untuk file.");
+        }
+    
+        if ($berkasSize > $this->maxMakalahSize) {
+            throw new Exception("Ukuran file terlalu besar.");
+        }
+    
+        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/makalahUser/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true); 
+        }
+    
+        $newFileName = uniqid() . '.' . $fileExt;
+    
+        if (empty($berkas)) {
+            throw new Exception("Path file sementara untuk makalah kosong.");
+        }
+    
+        $destination = $uploadDir . $newFileName;
+        if (!move_uploaded_file($berkas, $destination)) {
+            throw new Exception("Gagal memindahkan file makalah. Pastikan folder tujuan dapat diakses.");
         }
     
         return $newFileName;

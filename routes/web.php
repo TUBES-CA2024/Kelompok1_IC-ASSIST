@@ -26,6 +26,7 @@ Router::post('/logout', [new LogoutController, 'logout']);
 Router::post("/store", [new BiodataUserController, 'saveBiodata']);
 Router::post("/berkas", [new BerkasUserController, 'saveBerkas']);
 Router::post("/judul", [new PresentasiUserController, 'saveJudul']);
+Router::post("/presentasi", [new PresentasiUserController, 'saveMakalahAndPpt']);
 Router::post("/hasil",[new AnswersController, 'saveAnswer']);
 
 
