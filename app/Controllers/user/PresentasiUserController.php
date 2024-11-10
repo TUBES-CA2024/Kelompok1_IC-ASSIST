@@ -41,51 +41,65 @@ class PresentasiUserController extends Controller {
     }
 
     public function saveMakalahAndPpt() {
+        // Mulai session jika belum ada
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
 
+        // Cek metode request POST
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Content-Type: application/json');
             echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
             return;
         }
 
+        // Cek apakah user sudah login
         if (!isset($_SESSION['user']['id'])) {
             header('Content-Type: application/json');
             echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
             return;
         }
+
         $idUser = $_SESSION['user']['id'];
         $makalah = $_FILES['makalah']['tmp_name'] ?? '';
         $ppt = $_FILES['ppt']['tmp_name'] ?? '';
 
-        if(!$makalah || !$ppt) {
+        // Cek jika file tidak ada atau ada error saat upload
+        if (!$makalah || !$ppt || $_FILES['makalah']['error'] !== UPLOAD_ERR_OK || $_FILES['ppt']['error'] !== UPLOAD_ERR_OK) {
             header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'All fields are required']);
+            echo json_encode(['status' => 'error', 'message' => 'All fields are required or file upload error']);
             return;
         }
+
         $makalahSize = $_FILES['makalah']['size'] ?? 0;
         $pptSize = $_FILES['ppt']['size'] ?? 0;
         $isRevisi = 0;
         $isAccepted = 0;
-        $presentasiUser = new PresentasiUser(
-            $idUser,
-            $makalah,
-            $ppt,
-            $isRevisi,
-            $isAccepted,
-            $makalahSize,
-            $pptSize
-        );
-        if($presentasiUser->updateMakalahAndPpt($presentasiUser)) {
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'success', 'message' => 'Makalah dan PPT berhasil disimpan']);
-        } else {
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'Makalah dan PPT gagal disimpan']);
-        }
 
+        try {
+            // Validasi dan proses file
+            $presentasiUser = new PresentasiUser(
+                $idUser,
+                $makalah,
+                $ppt,
+                $isRevisi,
+                $isAccepted,
+                $makalahSize,
+                $pptSize
+            );
+            
+            if ($presentasiUser->updateMakalahAndPpt($presentasiUser)) {
+                header('Content-Type: application/json');
+                echo json_encode(['status' => 'success', 'message' => 'Makalah dan PPT berhasil disimpan']);
+            } else {
+                header('Content-Type: application/json');
+                echo json_encode(['status' => 'error', 'message' => 'Makalah dan PPT gagal disimpan']);
+            }
+        } catch (Exception $e) {
+            // Tangani error jika terjadi pengecualian
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
     }
     public static function viewAll(){
         $presentasi = new PresentasiUser();

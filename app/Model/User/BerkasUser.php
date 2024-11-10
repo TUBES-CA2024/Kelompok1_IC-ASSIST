@@ -21,7 +21,7 @@ class BerkasUser extends Model {
     protected $suratPernyataanSize;
     private $imageAccepted = ['jpg', 'jpeg', 'png'];
     private $fileAccepted = 'pdf';
-    private $maxFileSize = 1024 * 1024; // 1mb 
+    private $maxFileSize = 1024 * 1024 * 5; // 5mb 
 
     public function __construct(
         $id_mahasiswa = null,

@@ -16,7 +16,6 @@ use App\Core\Router;
 
 Router::get('/soal', [new ExamController, 'index']);
 Router::get('/login', [new LoginController, 'index']);
-Router::get('/Login', [new LoginController, 'index']);
 Router::get('/',[new HomeController, 'index']);
 Router::get('/{page}', [new HomeController, 'loadContent']);
 
@@ -26,7 +25,7 @@ Router::post('/logout', [new LogoutController, 'logout']);
 Router::post("/store", [new BiodataUserController, 'saveBiodata']);
 Router::post("/berkas", [new BerkasUserController, 'saveBerkas']);
 Router::post("/judul", [new PresentasiUserController, 'saveJudul']);
-Router::post("/presentasi", [new PresentasiUserController, 'saveMakalahAndPpt']);
+Router::post("/submit/presentasi", [new PresentasiUserController, 'saveMakalahAndPpt']);
 Router::post("/hasil",[new AnswersController, 'saveAnswer']);
 
 

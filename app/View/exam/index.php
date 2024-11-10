@@ -21,8 +21,8 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
 <body>
     <header>
         <div class="header-container">
-            <img src="/tubes_web/public/Assets/Img/logo.jpeg" alt="Logo" class="logo">
-            <h1>ICLabs - Ujian Akhir</h1>
+            <img src="/tubes_web/public/Assets/Img/iclabs.png" alt="Logo" class="logo">
+            <h1>ICLabs - Tes Tertulis</h1>
         </div>
     </header>
 

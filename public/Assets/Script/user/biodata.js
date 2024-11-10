@@ -6,7 +6,7 @@ $('#logoutButton').click(function(e) {
         success: function(response) {
             if (response.status === 'success') {
                 alert(response.message || 'Logout berhasil');
-                window.location.href = 'tubes_web/public/login';
+                window.location.href = '/tubes_web/public';
             } else {
                 alert(response.message || 'Logout gagal');
             }

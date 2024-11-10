@@ -8,7 +8,7 @@ $results = PresentasiUserController::viewAll() ?? [];
     <div>
     <h2 class="presentasi">Presentasi</h2>
     <?php 
-    if($results['is_accepted'] == 0) {
+    if($results['is_accepted'] == 0 && isset($results['is_accepted'])) {
     ?>
     <div class="form-container">    
         <form id="berkasPresentasiForm">

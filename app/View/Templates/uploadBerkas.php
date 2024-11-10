@@ -1,7 +1,7 @@
 <?php
 use App\Controllers\User\BerkasUserController;
 $result = BerkasUserController::viewBerkas();
-$isAcc = $result['is_Accepted'];
+$isAcc = $result['is_Accepted'] ?? '';
 ?>
 
 <main>
@@ -39,4 +39,5 @@ $isAcc = $result['is_Accepted'];
         </form>
     </div>
 </main>
+
 <script src="/tubes_web/public/Assets/Script/user/berkas.js"></script>

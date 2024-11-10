@@ -16,8 +16,8 @@ class PresentasiUser extends Model {
     protected $absensi;
     protected $pptSize;
     protected $makalahSize;
-    protected $fileMakalahAcc = ".pdf";
-    protected $filePptAcc = ".pptx";
+    protected $fileMakalahAcc = "pdf";
+    protected $filePptAcc = "pptx";
     protected $maxMakalahSize = 1024 * 1024;
     protected $maxPptSize = 1024 * 1024 * 4;
     public function __construct(
@@ -88,34 +88,49 @@ class PresentasiUser extends Model {
     }
     
     private function getFilePpt($berkas, $berkasSize) {
+        // Mengecek ekstensi file
         $fileExt = strtolower(pathinfo($_FILES['ppt']['name'], PATHINFO_EXTENSION));
+        var_dump($fileExt); // Tambahkan untuk mengecek ekstensi file
         if ($fileExt !== $this->filePptAcc) {
             throw new Exception("Gunakan ekstensi PPTX untuk file ppt.");
         }
     
+        // Mengecek ukuran file
+        var_dump($berkasSize); // Tambahkan untuk mengecek ukuran file
         if ($berkasSize > $this->maxPptSize) {
             throw new Exception("Ukuran file terlalu besar.");
         }
     
+        // Mengecek folder upload
         $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/pptUser/';
+        var_dump($uploadDir); // Tambahkan untuk mengecek path upload directory
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true); 
         }
     
+        // Membuat nama file baru yang unik
         $newFileName = uniqid() . '.' . $fileExt;
+        var_dump($newFileName); // Tambahkan untuk mengecek nama file baru yang akan disimpan
     
+        // Mengecek apakah path file sementara kosong
         if (empty($berkas)) {
+            var_dump($berkas);
             throw new Exception("Path file sementara untuk ppt kosong.");
         }
+        var_dump($berkas); // Tambahkan untuk mengecek path file sementara
     
+        // Menentukan tujuan penyimpanan file
         $destination = $uploadDir . $newFileName;
+        var_dump($destination); // Tambahkan untuk mengecek path tujuan file
+    
+        // Pindahkan file ke folder tujuan
         if (!move_uploaded_file($berkas, $destination)) {
             throw new Exception("Gagal memindahkan file ppt. Pastikan folder tujuan dapat diakses.");
         }
     
         return $newFileName;
     }
-
+    
     private function getFileMakalah($berkas, $berkasSize) {
         $fileExt = strtolower(pathinfo($_FILES['makalah']['name'], PATHINFO_EXTENSION));
         if ($fileExt !== $this->fileMakalahAcc) {

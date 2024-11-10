@@ -2,6 +2,7 @@ $(document).ready(function() {
     $('#berkasForm').submit(function(e) {
         e.preventDefault();
         var formData = new FormData(this);
+        console.log("Data lagi di process");
         $.ajax({
             url: '/tubes_web/public/berkas',
             type: 'POST',
@@ -18,9 +19,12 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr, status, error) {
-                console.log('Error:', xhr.responseText + " " + status + " " + error);
+                console.log('Error Status:', status);
+                console.log('Error Details:', error);
+                console.log('Server Response:', xhr.responseText);
                 alert('Terjadi kesalahan: ' + error);
             }
+            
         });
     });
 });

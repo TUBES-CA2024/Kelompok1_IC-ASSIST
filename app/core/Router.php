@@ -31,9 +31,8 @@ class Router
 
     public static function route($method, $path)
     {
-        $routes = array();
-
-        switch ($method) {
+        $routes = [];
+        switch (strtoupper($method)) {
             case 'GET':
                 $routes = self::$getRoutes;
                 break;
@@ -48,35 +47,31 @@ class Router
                 break;
         }
 
-        $found = false; 
+        $found = false;
 
         foreach ($routes as $route) {
+            // Konversi path dengan parameter ke regex
             $pattern = str_replace("/", "\/", $route['path']);
             $pattern = preg_replace('/\{(\w+)\}/', '(?P<$1>[^\/]+)', $pattern);
-            $pattern = '/^' . $pattern . '$/';
+            $pattern = '/^' . $pattern . '\/?$/'; // Tambahkan trailing slash opsional
 
-            try {
-                if (isset($route['handler']) && $path === $route['path']) {
-                    $handler = $route['handler'];
-                    $found = true; 
-                    return is_callable($handler) ? $handler() : throw new Exception('Handler not callable.');
+            if (preg_match($pattern, $path, $matches)) {
+                $handler = $route['handler'];
+                $found = true;
+
+                if (is_callable($handler)) {
+                    // Jalankan handler dengan parameter regex jika cocok
+                    return $handler(array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY));
                 }
 
-                if (isset($route['handler']) && preg_match($pattern, $path, $matches)) {
-                    $handler = $route['handler'];
-                    $found = true; 
-                    return is_callable($handler) ? $handler($matches) : throw new Exception('Handler not callable.');
-                }
-            } catch (\Exception $e) {
-                redirect('miscellaneous/404');
+                throw new \Exception('Handler not callable.');
             }
         }
 
+        // Jika rute tidak ditemukan
         if (!$found) {
-            echo "404 Not Found";
-            redirect('miscellaneous/404');
+            http_response_code(404);
+            exit;
         }
-
-
     }
 }

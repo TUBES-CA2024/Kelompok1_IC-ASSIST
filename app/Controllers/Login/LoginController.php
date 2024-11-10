@@ -12,7 +12,7 @@ class LoginController extends Controller {
     }
 
     public function index() {
-        View::render('index', 'Login');
+        View::render('index', 'login');
     }
 
     public function authenticate() {

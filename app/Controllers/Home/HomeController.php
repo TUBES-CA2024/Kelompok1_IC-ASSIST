@@ -11,7 +11,7 @@ class HomeController extends Controller {
         if ($this->isLoggedIn()) {
             View::render('main', 'Templates');
         } else {
-            header('Location: '.APP_URL.'/login');
+            View::render('index', 'login');
             exit();
         }
     }
