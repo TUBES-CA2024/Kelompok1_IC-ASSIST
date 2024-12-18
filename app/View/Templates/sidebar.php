@@ -5,7 +5,7 @@ $role = ProfileController::viewUser()["role"];
 $userName = ProfileController::viewUser()["username"];
 $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto"] ?? "default.png");
 
-if($role === "User") {
+
 
 ?>
 <div class="sidebar" id="sidebar">
@@ -74,10 +74,7 @@ if($role === "User") {
         </li>
     </ul>
 </div>
-<?php 
-    } else {
 
-?>
 <div class="sidebar" id="sidebar">
     <div class="top">
         <div class="logo">
@@ -143,4 +140,3 @@ if($role === "User") {
         </li>
     </ul>
 </div>
-<?php }?>

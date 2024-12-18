@@ -34,7 +34,7 @@ class UserModel extends Model {
 
     
 
-    public function     save() {
+    public function save() {
         $query = "INSERT INTO user (username, stambuk, password) VALUES (?, ?, ?)";
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(1, $this->username);
@@ -105,6 +105,7 @@ class UserModel extends Model {
         ];
         return $stmt;
     }
+    
     public function isStambukExists($stambuk) {
         $query = "SELECT COUNT(*) FROM " . static::$table . " WHERE stambuk = :stambuk";
         $stmt = self::getDB()->prepare($query);

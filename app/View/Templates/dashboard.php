@@ -1,3 +1,7 @@
+<?php
+
+?>
+
 <main>
   <h1 class="dashboard">Dashboard</h1>
   <div class="insights">

@@ -8,8 +8,12 @@ use App\Core\View;
 
 class HomeController extends Controller {
     public function index() {
-        if ($this->isLoggedIn()) {
+        if ($this->isLoggedIn() && $this->getRole() == "User") {
             View::render('main', 'Templates');
+
+        } else if ($this->isLoggedIn() && $this->getRole() == "Admin") {
+            View::render('mainAdmin', 'Templates');
+            
         } else {
             View::render('index', 'login');
             exit();
@@ -57,5 +61,8 @@ class HomeController extends Controller {
 
     private function isLoggedIn() {
         return isset($_SESSION['user']);
+    }
+    private function getRole() {
+        return $_SESSION['user']['role'];
     }
 }

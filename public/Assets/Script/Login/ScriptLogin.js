@@ -79,7 +79,9 @@ $(document).ready(function(){
             dataType: 'json',
             success: function(response){
                 if(response.status === 'success'){
-                    window.location.href = '/tubes_web/public/';
+                    alert(response.role);
+                    window.location.href = response.redirect;
+
                 } else {
                     alert('stambuk atau password salah');
                 }

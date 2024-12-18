@@ -42,5 +42,3 @@
     <script src="/tubes_web/public/Assets/Script/sidebar/ScriptSidebar.js"></script>
     
 </body>
-
-</html>
