@@ -17,7 +17,7 @@ class SoalExam extends Model {
         return $stmt->fetchAll();
     }
     public function getAllByParity($isGanjil) {
-        $parity = $isGanjil ? 1 : 0; // 1 untuk ganjil, 0 untuk genap
+        $parity = $isGanjil ? 1 : 0; 
         $query = "SELECT * FROM " . self::$table . " WHERE id % 2 = :parity LIMIT 60";
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(':parity', $parity, PDO::PARAM_INT);

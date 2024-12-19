@@ -13,6 +13,7 @@ $tanggalLahir = ProfileController::viewBiodata() == null ? "Tanggal Lahir" : Pro
 $noHp = ProfileController::viewBiodata() == null ? "No Telephone" : ProfileController::viewBiodata()["noHp"];
 $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto"] ?? "default.png");
 ?>
+
 <div class="profile">
     <div class="form-container"
         style="display: flex; align-items: center; justify-content: space-between; padding: 30px; height: 250px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; background-color: #fff;">

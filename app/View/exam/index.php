@@ -14,7 +14,6 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Exam Layout</title>
     <link rel="stylesheet" href="/tubes_web/public/Assets/Style/exam.css" />
 </head>
 

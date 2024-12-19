@@ -1,5 +1,4 @@
 $(document).ready(function () {
-  // Menangani klik pada elemen menu dalam SPA
   $('.sidebar a, .profile a, .dashboard a').on('click', function (e) {
     if (this.id === "startTestButton") return; // Jangan tangani tombol "Start Test"
     e.preventDefault();
@@ -26,7 +25,6 @@ $(document).ready(function () {
     });
   });
 
-  // Variabel untuk mendeteksi arah scroll
   var lastScrollTop = 0;
   var scrollTimeout;
 
@@ -80,3 +78,4 @@ $(document).ready(function () {
     window.location.href = targetURL;
   });
 });
+

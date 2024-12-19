@@ -111,7 +111,6 @@ class BiodataUser extends Model {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
-        // Periksa apakah $result adalah array, jika tidak kembalikan true
         if (!$result) {
             return true;
         }

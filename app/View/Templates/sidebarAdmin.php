@@ -8,30 +8,23 @@
     </div>
     <div class="user">
         <div>
-            <p class="bold" id="username"><?=$userName?></p>
+            <p class="bold" id="username"><?= $userName ?></p>
         </div>
     </div>
     <ul>
         <li>
-            <a href="#" data-page="dashboardAdmin">
-                <i class="bx bx-home"></i>
-                <span class="nav-item">Dashboard</span>
+            <a href="#" data-page="lihatPeserta">
+                <i class='bx bxs-user-check'></i>
+                <span class="nav-item">Lihat Peserta</span>
             </a>
-            <span class="tooltip">Dashboard</span>
+            <span class="tooltip">Lihat Peserta</span>
         </li>
         <li>
-            <a href="#" data-page="biodata">
-                <i classt="bx bxs-id-card"></i>
-                <span class="nav-item">Lengkapi Biodata</span>
+            <a href="#" data-page="presentasi">
+            <i class='bx bx-slideshow' ></i>
+                <span class="nav-item">Presentasi</span>
             </a>
-            <span class="tooltip">Lengkapi Biodata</span>
-        </li>
-        <li>
-            <a href="#" data-page="uploadBerkas">
-                <i class="bx bx-file"></i>
-                <span class="nav-item">Upload Berkas</span>
-            </a>
-            <span class="tooltip">Upload Berkas</span>
+            <span class="tooltip">Presentasi</span>
         </li>
         <li>
             <a href="#" data-page="tesTulis">
@@ -39,13 +32,6 @@
                 <span class="nav-item">Tes Tulis</span>
             </a>
             <span class="tooltip">Tes Tulis</span>
-        </li>
-        <li>
-            <a href="#" data-page="presentasi">
-                <i class="bx bx-chalkboard"></i>
-                <span class="nav-item">Presentasi</span>
-            </a>
-            <span class="tooltip">Presentasi</span>
         </li>
         <li>
             <a href="#" data-page="wawancara">

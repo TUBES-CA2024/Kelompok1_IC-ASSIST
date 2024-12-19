@@ -24,39 +24,76 @@ class HomeController extends Controller {
         if (is_array($page)) {
             $page = $page['page'];  
         }
-        switch ($page) {
-            case 'dashboard':
-                View::render('dashboard', 'Templates');  
-                break;
-            case 'biodata':
-                View::render('biodata', 'Templates');
-                break;
-            case 'pengumuman':
-                View::render('pengumuman', 'Templates');
-                break;
-            case 'presentasi' :
-                View::render('presentasi', 'Templates');
-                break;
-            case 'tesTulis' :
-                View::render('tesTulis', 'Templates');
-                break;
-            case 'uploadBerkas' :
-                View::render('uploadBerkas', 'Templates');
-                break;
-            case 'wawancara' :
-                View::render('wawancara', 'Templates');
-                break;
-            case 'profile':
-                View::render('profile', 'Templates');
-                break;
-            case 'editprofile':
-                View::render('editprofile', 'Templates');
-                break;
-            case 'notifcation' :
-                View::render('notification', 'Templates');
-                break;
-                    
+
+        if($this->getRole() == "Admin") {
+            switch ($page) {
+
+                case 'lihatPeserta':
+                    View::render('daftarPeserta', 'Templates');
+                    break;
+                case 'pengumuman':
+                    View::render('pengumumanAdmin', 'Templates');
+                    break;
+                case 'presentasi' :
+                    View::render('presentasiAdmin', 'Templates');
+                    break;
+                case 'tesTulis' :
+                    View::render('tesTulisAdmin', 'Templates');
+                    break;
+                case 'uploadBerkas' :
+                    View::render('uploadBerkasAdmin', 'Templates');
+                    break;
+                case 'wawancara' :
+                    View::render('wawancaraAdmin', 'Templates');
+                    break;
+                case 'profile':
+                    View::render('profileAdmin', 'Templates');
+                    break;
+                case 'editprofile':
+                    View::render('editprofileAdmin', 'Templates');
+                    break;
+                case 'notifcation' :
+                    View::render('notificationAdmin', 'Templates');
+                    break;
+            }
+
+        } else {
+            switch ($page) {
+                case 'dashboard':
+                    View::render('dashboard', 'Templates');  
+                    break;
+                case 'biodata':
+                    View::render('biodata', 'Templates');
+                    break;
+                case 'pengumuman':
+                    View::render('pengumuman', 'Templates');
+                    break;
+                case 'presentasi' :
+                    View::render('presentasi', 'Templates');
+                    break;
+                case 'tesTulis' :
+                    View::render('tesTulis', 'Templates');
+                    break;
+                case 'uploadBerkas' :
+                    View::render('uploadBerkas', 'Templates');
+                    break;
+                case 'wawancara' :
+                    View::render('wawancara', 'Templates');
+                    break;
+                case 'profile':
+                    View::render('profile', 'Templates');
+                    break;
+                case 'editprofile':
+                    View::render('editprofile', 'Templates');
+                    break;
+                case 'notifcation' :
+                    View::render('notification', 'Templates');
+                    break;
+                        
+            }
         }
+       
+        
     }
 
     private function isLoggedIn() {
