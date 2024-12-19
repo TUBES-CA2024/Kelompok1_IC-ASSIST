@@ -73,4 +73,13 @@ class BerkasUserController extends Controller
         }
         return $berkas;
     }
+    
+    public static function getBerkasAdmin() {
+        $user = new BerkasUser();
+        $berkas = $user->getBerkasAdmin();
+        if (!$berkas) {
+            return null;
+        }
+        return $berkas;
+    }
 }

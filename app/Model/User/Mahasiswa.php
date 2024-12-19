@@ -55,20 +55,41 @@ class Mahasiswa extends Model {
     
         $data = [];
         foreach ($result as $stmt) {
+            $berkas = $this->getBerkasMahasiswa($stmt['id']);
+    
             $data[] = [
                 'id' => $stmt['id'],
                 'nama_lengkap' => $stmt['nama_lengkap'],
                 'stambuk' => $stmt['stambuk'],
                 'jurusan' => $this->getJurusan($stmt['id_jurusan'])['nama'] ?? null,
                 'kelas' => $this->getKelas($stmt['id_kelas'])['nama'] ?? null,
-                'alamat' => $stmt['alamat']
+                'alamat' => $stmt['alamat'],
+                'notelp' => $stmt['no_telp'],
+                'tempat_lahir' => $stmt['tempat_lahir'],
+                'tanggal_lahir' => $stmt['tanggal_lahir'],
+                'jenis_kelamin' => $stmt['jenis_kelamin'],
+                'berkas' => $berkas
             ];
         }
     
         return $data;
     }
     
-
+    public function getBerkasMahasiswa($mahasiswaId) {
+        $query = "SELECT foto, cv, transkrip_nilai, surat_pernyataan FROM berkas WHERE mahasiswa_id = :mahasiswa_id";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(':mahasiswa_id', $mahasiswaId);
+        $stmt->execute();
+        $result = $stmt->fetch();
+    
+        return $result ?: [
+            'foto' => null,
+            'cv' => null,
+            'transkrip_nilai' => null,
+            'surat_pernyataan' => null
+        ];
+    }
+    
     private function getJurusan($id) {
         $query = "SELECT nama FROM jurusan WHERE id = :id";
         $stmt = self::getDB()->prepare($query);

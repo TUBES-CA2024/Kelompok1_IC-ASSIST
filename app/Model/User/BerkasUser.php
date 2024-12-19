@@ -227,6 +227,17 @@ class BerkasUser extends Model {
         }
         return $stmt;
     }
+    
+    public function getBerkasAdmin() {
+        $query = "SELECT * FROM " . static::$table;
+        $stmt = self::getDB()->prepare($query);
+        $stmt->execute();
+        $stmt = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if(!$stmt) {
+            return null;
+        }
+        return $stmt;
+    }
     public function isEmpty($id) {
         $query = "SELECT * FROM " . static::$table . " WHERE id_mahasiswa = ?";
         $idMahasiswa = $this->getIdMahasiswa($id);

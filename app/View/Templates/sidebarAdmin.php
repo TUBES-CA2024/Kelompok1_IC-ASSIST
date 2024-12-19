@@ -19,6 +19,15 @@
             </a>
             <span class="tooltip">Lihat Peserta</span>
         </li>
+
+        <li>
+            <a href="#" data-page="berkasPeserta">
+            <i class='bx bx-spreadsheet'></i>                
+            <span class="nav-item">Berkas Peserta</span>
+            </a>
+            <span class="tooltip">Berkas Peserta</span>
+        </li>
+
         <li>
             <a href="#" data-page="presentasi">
             <i class='bx bx-slideshow' ></i>
