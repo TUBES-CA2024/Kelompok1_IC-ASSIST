@@ -24,7 +24,7 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
                 data-kelas="<?= $row['kelas'] ?>" data-alamat="<?= $row['alamat'] ?>"
                 data-tempat_lahir="<?= $row['tempat_lahir'] ?>" data-notelp="<?= $row['notelp'] ?>"
                 data-tanggal_lahir="<?= $row['tanggal_lahir'] ?>" data-jenis_kelamin="<?= $row['jenis_kelamin'] ?>"
-                data-berkas="<?= $row['berkas'] ?>"
+                data-foto="<?= $row['berkas']['foto'] ?>"
                 style="cursor: pointer;">
                 <td><?= $i ?></td>
                 <td><?= $row['nama_lengkap'] ?></td>
@@ -55,7 +55,7 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <img src="" alt="">
+                <img id="modalFoto" src="" alt="" style="width: 100%; max-height: 300px; object-fit: cover;">
                 <p><strong>Nama Lengkap:</strong> <span id="modalNama"></span></p>
                 <p><strong>Stambuk:</strong> <span id="modalStambuk"></span></p>
                 <p><strong>Jurusan:</strong> <span id="modalJurusan"></span></p>
@@ -92,8 +92,8 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
             const notelp = $(this).data('notelp');
             const tanggal_lahir = $(this).data('tanggal_lahir');
             const jenis_kelamin = $(this).data('jenis_kelamin');
-
-            console.log({ nama, stambuk, jurusan, kelas, alamat, tempat_lahir, notelp, tanggal_lahir, jenis_kelamin });
+            const foto = this.getAttribute('data-foto');
+            console.log({ nama, stambuk, jurusan, kelas, alamat, tempat_lahir, notelp, tanggal_lahir, jenis_kelamin,foto });
 
             // Masukkan data ke modal
             $('#modalNama').text(nama);
@@ -105,6 +105,9 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
             $('#modalNoTelp').text(notelp);
             $('#modalTanggal_lahir').text(tanggal_lahir);
             $('#modalJenis_kelamin').text(jenis_kelamin);
+
+            $('#modalFoto').attr('src', "/tubes_web/res/imageUser/" + foto || '/path/to/default-image.jpg');
+            $('#modalFoto').attr('alt', `Foto ${nama}`);
         });
     });
 

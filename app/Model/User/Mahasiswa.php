@@ -76,7 +76,7 @@ class Mahasiswa extends Model {
     }
     
     public function getBerkasMahasiswa($mahasiswaId) {
-        $query = "SELECT foto, cv, transkrip_nilai, surat_pernyataan FROM berkas WHERE mahasiswa_id = :mahasiswa_id";
+        $query = "SELECT foto, cv, transkrip_nilai, surat_pernyataan FROM berkas_mahasiswa WHERE id_mahasiswa = :mahasiswa_id";
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(':mahasiswa_id', $mahasiswaId);
         $stmt->execute();
