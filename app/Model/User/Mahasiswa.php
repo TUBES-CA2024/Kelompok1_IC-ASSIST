@@ -59,6 +59,7 @@ class Mahasiswa extends Model {
     
             $data[] = [
                 'id' => $stmt['id'],
+                'idUser' => $stmt['id_user'],
                 'nama_lengkap' => $stmt['nama_lengkap'],
                 'stambuk' => $stmt['stambuk'],
                 'jurusan' => $this->getJurusan($stmt['id_jurusan'])['nama'] ?? null,
@@ -73,6 +74,47 @@ class Mahasiswa extends Model {
         }
     
         return $data;
+    }
+    public function deleteMahasiswaById($mahasiswaId) {
+        $query = "DELETE FROM " . static::$table . " WHERE id = :id";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(':id', $mahasiswaId);
+        $stmt->execute();
+    }
+
+    public function updateBiodataMahasiswaById(
+        $id,
+        $nama,
+        $stambuk,
+        $jurusan,
+        $jenisKelamin,
+        $kelas,
+        $alamat,
+        $tempatLahir,
+        $tanggalLahir,
+        ) {
+        
+            $query = "UPDATE " . static::$table . 
+            " SET nama_lengkap = :nama, 
+            stambuk = :stambuk, 
+            id_jurusan = :jurusan, 
+            jenis_kelamin = :jenis_kelamin, 
+            id_kelas = :kelas, 
+            alamat = :alamat, 
+            tempat_lahir = :tempat_lahir, 
+            tanggal_lahir = :tanggal_lahir 
+            WHERE id = :id";
+            $stmt = self::getDB()->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':nama', $nama);
+            $stmt->bindParam(':stambuk', $stambuk);
+            $stmt->bindParam(':jurusan', $jurusan);
+            $stmt->bindParam(':jenis_kelamin', $jenisKelamin);
+            $stmt->bindParam(':kelas', $kelas);
+            $stmt->bindParam(':alamat', $alamat);
+            $stmt->bindParam(':tempat_lahir', $tempatLahir);
+            $stmt->bindParam(':tanggal_lahir', $tanggalLahir);
+            $stmt->execute();
     }
     
     public function getBerkasMahasiswa($mahasiswaId) {
@@ -105,4 +147,5 @@ class Mahasiswa extends Model {
         $stmt->execute();
         return $stmt->fetch();
     }
+    
 }

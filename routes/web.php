@@ -8,9 +8,10 @@ use App\Controllers\Login\RegisterController;
 use App\Controllers\Login\LogoutController;
 use App\Controllers\user\BerkasUserController;
 use App\Controllers\user\BiodataUserController;
+use App\Controllers\user\MahasiswaController;
 use App\Controllers\user\PresentasiUserController;
+use App\Controllers\notifications\NotificationControllers;
 use App\Core\Router;
-
 
 
 
@@ -27,6 +28,6 @@ Router::post("/berkas", [new BerkasUserController, 'saveBerkas']);
 Router::post("/judul", [new PresentasiUserController, 'saveJudul']);
 Router::post("/submit/presentasi", [new PresentasiUserController, 'saveMakalahAndPpt']);
 Router::post("/hasil",[new AnswersController, 'saveAnswer']);
+Router::post("/notification",[new NotificationControllers, 'sendMessage']);
 
-
-
+Router::post("/deletemhs",[new MahasiswaController,'deleteMahasiswa']);

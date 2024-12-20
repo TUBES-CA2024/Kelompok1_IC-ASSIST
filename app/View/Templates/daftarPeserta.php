@@ -19,31 +19,33 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
     <tbody>
         <?php $i = 1; ?>
         <?php foreach ($result as $row) { ?>
-            <tr data-bs-toggle="modal" data-bs-target="#detailModal" data-nama="<?= $row['nama_lengkap'] ?>"
-                data-stambuk="<?= $row['stambuk'] ?>" data-jurusan="<?= $row['jurusan'] ?>"
-                data-kelas="<?= $row['kelas'] ?>" data-alamat="<?= $row['alamat'] ?>"
-                data-tempat_lahir="<?= $row['tempat_lahir'] ?>" data-notelp="<?= $row['notelp'] ?>"
-                data-tanggal_lahir="<?= $row['tanggal_lahir'] ?>" data-jenis_kelamin="<?= $row['jenis_kelamin'] ?>"
-                data-foto="<?= $row['berkas']['foto'] ?>"
-                style="cursor: pointer;">
+            <tr data-id="<?= $row['id'] ?>" data-userid="<?= $row['idUser'] ?>" style="cursor: pointer;">
                 <td><?= $i ?></td>
-                <td><?= $row['nama_lengkap'] ?></td>
+                <td>
+                    <span data-bs-toggle="modal" data-bs-target="#detailModal" data-nama="<?= $row['nama_lengkap'] ?>"
+                        data-stambuk="<?= $row['stambuk'] ?>" data-jurusan="<?= $row['jurusan'] ?>"
+                        data-kelas="<?= $row['kelas'] ?>" data-alamat="<?= $row['alamat'] ?>"
+                        data-tempat_lahir="<?= $row['tempat_lahir'] ?>" data-notelp="<?= $row['notelp'] ?>"
+                        data-tanggal_lahir="<?= $row['tanggal_lahir'] ?>" data-jenis_kelamin="<?= $row['jenis_kelamin'] ?>"
+                        data-foto="<?= $row['berkas']['foto'] ?>">
+                        <?= $row['nama_lengkap'] ?>
+                    </span>
+                </td>
                 <td><?= $row['stambuk'] ?></td>
                 <td><?= $row['jurusan'] ?></td>
                 <td><?= $row['kelas'] ?></td>
                 <td><?= $row['alamat'] ?></td>
                 <td>
                     <div style="display: flex; gap:5%;">
-                        <img src="/tubes_web/public/Assets/Img/edit.svg" alt="edit" style="cursor: pointer;"
-                            onclick="editMahasiswa(<?= $row['id'] ?>)">
-                        <img src="/tubes_web/public/Assets/Img/delete.svg" alt="delete" style="cursor: pointer;"
-                            onclick="deleteMahasiswa(<?= $row['id'] ?>)">
+                        <img src="/tubes_web/public/Assets/Img/edit.svg" alt="edit" style="cursor: pointer;">
+                        <img src="/tubes_web/public/Assets/Img/delete.svg" alt="delete" style="cursor: pointer;">
                     </div>
                 </td>
             </tr>
-            <?php $i++;
-        } ?>
+            <?php $i++; ?>
+        <?php } ?>
     </tbody>
+
 </table>
 
 <!-- Modal -->
@@ -78,24 +80,65 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Apakah Anda yakin ingin menghapus data ini?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">Hapus</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Send Message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Pesan ke Mahasiswa:</label>
+                        <textarea id="message" name="message" class="form-control" rows="4" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary" form="editForm">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
         const table = $('#daftar').DataTable();
 
-        $('#daftar tbody').on('click', 'tr', function () {
-            const nama = $(this).data('nama');
-            const stambuk = $(this).data('stambuk');
-            const jurusan = $(this).data('jurusan');
-            const kelas = $(this).data('kelas');
-            const alamat = $(this).data('alamat');
-            const tempat_lahir = $(this).data('tempat_lahir');
-            const notelp = $(this).data('notelp');
-            const tanggal_lahir = $(this).data('tanggal_lahir');
-            const jenis_kelamin = $(this).data('jenis_kelamin');
-            const foto = this.getAttribute('data-foto');
-            console.log({ nama, stambuk, jurusan, kelas, alamat, tempat_lahir, notelp, tanggal_lahir, jenis_kelamin,foto });
+        $('#detailModal').on('show.bs.modal', function (event) {
+            const button = $(event.relatedTarget); // Elemen yang memicu modal
+            const nama = button.data('nama');
+            const stambuk = button.data('stambuk');
+            const jurusan = button.data('jurusan');
+            const kelas = button.data('kelas');
+            const alamat = button.data('alamat');
+            const tempat_lahir = button.data('tempat_lahir');
+            const notelp = button.data('notelp');
+            const tanggal_lahir = button.data('tanggal_lahir');
+            const jenis_kelamin = button.data('jenis_kelamin');
+            const foto = button.data('foto');
 
-            // Masukkan data ke modal
             $('#modalNama').text(nama);
             $('#modalStambuk').text(stambuk);
             $('#modalJurusan').text(jurusan);
@@ -109,6 +152,80 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
             $('#modalFoto').attr('src', "/tubes_web/res/imageUser/" + foto || '/path/to/default-image.jpg');
             $('#modalFoto').attr('alt', `Foto ${nama}`);
         });
-    });
 
+        $('#daftar tbody').on('click', 'img[alt="delete"]', function (event) {
+            event.stopPropagation(); // Hindari trigger event pada baris tabel
+            const id = $(this).closest('tr').data('id'); // Ambil ID mahasiswa dari data-id
+            const userid = $(this).closest('tr').data('userid'); // Ambil ID user dari data-userid
+
+            $('#deleteModal') // Simpan data ke modal
+                .data('id', id)
+                .data('userid', userid)
+                .modal('show');
+        });
+
+        $('#daftar tbody').on('click', 'img[alt="edit"]', function (event) {
+            event.stopPropagation();
+            const id = $(this).closest('tr').data('id');
+            $('#editModal').data('id', id).modal('show');
+        });
+
+        $('#confirmDelete').on('click', function (e) {
+            e.preventDefault();
+            const userid = $('#deleteModal').data('userid'); // Ambil data-userid dari modal
+            console.log(userid); // Untuk debugging
+
+            $.ajax({
+                url: '<?= APP_URL ?>/deletemhs',
+                type: 'POST',
+                data: { id: userid }, // Kirim userid ke server
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'success') {
+                        alert('Data berhasil dihapus!');
+                    } else {
+                        alert(response.message);
+                        console.log(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('error: ', xhr.responseText);
+                    console.error('status: ', status);
+                    console.error('error: ', error);
+                }     
+            });
+            alert('Berhasil Menghapus Data!');
+            $('#deleteModal').modal('hide'); // Tutup modal
+            location.reload();
+        });
+        $('#editForm').on('submit', function (e) {
+            e.preventDefault();
+            const id = $('#editModal').data('id');
+            const message = $('#message').val();
+
+            console.log(id, message);
+            $.ajax({
+                url: '<?= APP_URL ?>/notification',
+                type: 'POST',
+                data: { id: id, message: message },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'success') {
+                    } else {
+                        alert('Gagal mengirim pesan!');
+                        console.log(response.message);
+                    }
+                },
+                error: function (xhr, status, error, response) {
+                    console.log('error: ', xhr.responseText);
+                    console.log('status: ', status);
+                    console.log('error : ', error);
+                }
+            });
+            alert('Pesan berhasil dikirim!');
+            $('#editModal').modal('hide');
+
+        });
+
+    });
 </script>

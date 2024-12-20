@@ -8,7 +8,7 @@
     </div>
     <div class="user">
         <div>
-            <p class="bold" id="username"><?= $userName ?></p>
+            <p class="bold" id="username">Admin</p>
         </div>
     </div>
     <ul>

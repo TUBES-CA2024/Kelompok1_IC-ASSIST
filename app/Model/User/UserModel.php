@@ -114,5 +114,12 @@ class UserModel extends Model {
         
         return $stmt->fetchColumn() > 0;
     }
+
+    public static function deleteUser($id) {
+        $query = "DELETE FROM " . static::$table . " WHERE id = ?";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+    }
     
 }
