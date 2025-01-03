@@ -19,6 +19,8 @@ Router::get('/soal', [new ExamController, 'index']);
 Router::get('/login', [new LoginController, 'index']);
 Router::get('/',[new HomeController, 'index']);
 Router::get('/{page}', [new HomeController, 'loadContent']);
+Router::get('/download',[new BerkasUserController, 'downloadBerkas']);
+
 
 Router::post('/login/authenticate', [new LoginController, 'authenticate']);
 Router::post('/register/authenticate', [new RegisterController, 'register']);
@@ -29,5 +31,4 @@ Router::post("/judul", [new PresentasiUserController, 'saveJudul']);
 Router::post("/submit/presentasi", [new PresentasiUserController, 'saveMakalahAndPpt']);
 Router::post("/hasil",[new AnswersController, 'saveAnswer']);
 Router::post("/notification",[new NotificationControllers, 'sendMessage']);
-
 Router::post("/deletemhs",[new MahasiswaController,'deleteMahasiswa']);

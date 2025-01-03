@@ -3,8 +3,9 @@
 namespace App\Model\User;
 use App\Core\Model;
 
-class Mahasiswa extends Model {
-    
+class Mahasiswa extends Model
+{
+
 
     protected static $table = 'mahasiswa';
     protected static $tabelJurusan = 'jurusan';
@@ -23,18 +24,18 @@ class Mahasiswa extends Model {
     protected $tanggalLahir;
     protected $noHp;
 
-    public function __construct( 
-        $idUser = null, 
-        $jurusan = null, 
-        $stambuk = null, 
-        $kelas = null, 
-        $namaLengkap = null, 
-        $alamat = null, 
-        $jenisKelamin = null, 
-        $tempatLahir = null, 
-        $tanggalLahir = null, 
+    public function __construct(
+        $idUser = null,
+        $jurusan = null,
+        $stambuk = null,
+        $kelas = null,
+        $namaLengkap = null,
+        $alamat = null,
+        $jenisKelamin = null,
+        $tempatLahir = null,
+        $tanggalLahir = null,
         $noHp = null
-        ) {
+    ) {
         $this->idUser = $idUser;
         $this->jurusan = $jurusan;
         $this->stambuk = $stambuk;
@@ -47,16 +48,17 @@ class Mahasiswa extends Model {
         $this->noHp = $noHp;
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         $query = "SELECT * FROM " . static::$table;
         $stmt = self::getDB()->prepare($query);
         $stmt->execute();
         $result = $stmt->fetchAll();
-    
+
         $data = [];
         foreach ($result as $stmt) {
             $berkas = $this->getBerkasMahasiswa($stmt['id']);
-    
+
             $data[] = [
                 'id' => $stmt['id'],
                 'idUser' => $stmt['id_user'],
@@ -69,13 +71,19 @@ class Mahasiswa extends Model {
                 'tempat_lahir' => $stmt['tempat_lahir'],
                 'tanggal_lahir' => $stmt['tanggal_lahir'],
                 'jenis_kelamin' => $stmt['jenis_kelamin'],
-                'berkas' => $berkas
+                'berkas' => [
+                    'foto' => $berkas['foto'],
+                    'cv' => $berkas['cv'],
+                    'transkrip_nilai' => $berkas['transkrip_nilai'],
+                    'surat_pernyataan' => $berkas['surat_pernyataan']
+                ]
             ];
         }
-    
+
         return $data;
     }
-    public function deleteMahasiswaById($mahasiswaId) {
+    public function deleteMahasiswaById($mahasiswaId)
+    {
         $query = "DELETE FROM " . static::$table . " WHERE id = :id";
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(':id', $mahasiswaId);
@@ -92,9 +100,9 @@ class Mahasiswa extends Model {
         $alamat,
         $tempatLahir,
         $tanggalLahir,
-        ) {
-        
-            $query = "UPDATE " . static::$table . 
+    ) {
+
+        $query = "UPDATE " . static::$table .
             " SET nama_lengkap = :nama, 
             stambuk = :stambuk, 
             id_jurusan = :jurusan, 
@@ -104,26 +112,27 @@ class Mahasiswa extends Model {
             tempat_lahir = :tempat_lahir, 
             tanggal_lahir = :tanggal_lahir 
             WHERE id = :id";
-            $stmt = self::getDB()->prepare($query);
-            $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':nama', $nama);
-            $stmt->bindParam(':stambuk', $stambuk);
-            $stmt->bindParam(':jurusan', $jurusan);
-            $stmt->bindParam(':jenis_kelamin', $jenisKelamin);
-            $stmt->bindParam(':kelas', $kelas);
-            $stmt->bindParam(':alamat', $alamat);
-            $stmt->bindParam(':tempat_lahir', $tempatLahir);
-            $stmt->bindParam(':tanggal_lahir', $tanggalLahir);
-            $stmt->execute();
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':nama', $nama);
+        $stmt->bindParam(':stambuk', $stambuk);
+        $stmt->bindParam(':jurusan', $jurusan);
+        $stmt->bindParam(':jenis_kelamin', $jenisKelamin);
+        $stmt->bindParam(':kelas', $kelas);
+        $stmt->bindParam(':alamat', $alamat);
+        $stmt->bindParam(':tempat_lahir', $tempatLahir);
+        $stmt->bindParam(':tanggal_lahir', $tanggalLahir);
+        $stmt->execute();
     }
-    
-    public function getBerkasMahasiswa($mahasiswaId) {
+
+    public function getBerkasMahasiswa($mahasiswaId)
+    {
         $query = "SELECT foto, cv, transkrip_nilai, surat_pernyataan FROM berkas_mahasiswa WHERE id_mahasiswa = :mahasiswa_id";
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(':mahasiswa_id', $mahasiswaId);
         $stmt->execute();
         $result = $stmt->fetch();
-    
+
         return $result ?: [
             'foto' => null,
             'cv' => null,
@@ -131,8 +140,9 @@ class Mahasiswa extends Model {
             'surat_pernyataan' => null
         ];
     }
-    
-    private function getJurusan($id) {
+
+    private function getJurusan($id)
+    {
         $query = "SELECT nama FROM jurusan WHERE id = :id";
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(':id', $id);
@@ -140,12 +150,20 @@ class Mahasiswa extends Model {
         return $stmt->fetch();
     }
 
-    private function getKelas($id) {
+    private function getKelas($id)
+    {
         $query = "SELECT nama FROM kelas WHERE id = :id";
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetch();
     }
-    
+    public function getMahasiswaId($id)
+    {
+        $query = "SELECT * FROM " . static::$table . " WHERE id_user = :id";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 }

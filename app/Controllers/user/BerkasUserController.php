@@ -3,6 +3,7 @@ namespace App\Controllers\user;
 
 use App\Core\Controller;
 use App\Model\User\BerkasUser;
+use App\Model\User\Mahasiswa;
 
 class BerkasUserController extends Controller
 {
@@ -73,13 +74,60 @@ class BerkasUserController extends Controller
         }
         return $berkas;
     }
-    
-    public static function getBerkasAdmin() {
+
+    public static function getBerkasAdmin()
+    {
         $user = new BerkasUser();
         $berkas = $user->getBerkasAdmin();
         if (!$berkas) {
             return null;
         }
         return $berkas;
+    }
+    public function downloadBerkas()
+    {
+        try {
+            if (!isset($_GET['type'])) {
+                throw new \Exception('Jenis berkas tidak disediakan');
+            }
+
+            $type = $_GET['type']; 
+            $allowedTypes = ['foto', 'cv', 'transkrip_nilai', 'surat_pernyataan'];
+            if (!in_array($type, $allowedTypes)) {
+                throw new \Exception('Jenis berkas tidak valid');
+            }
+
+            $user = new Mahasiswa();
+            $mahasiswaId = $user->getMahasiswaId(['id_user' => $_SESSION['user']['id']])['id'];
+
+            if (!$mahasiswaId) {
+                throw new \Exception('Mahasiswa tidak ditemukan');
+            }
+
+            $berkas = $user->getBerkasMahasiswa($mahasiswaId);
+
+            if (!$berkas || !$berkas[$type]) {
+                throw new \Exception('Berkas tidak tersedia');
+            }
+
+            $basePath = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/';
+            $filePath = ($type === 'foto')
+                ? $basePath . 'imageUser/' . $berkas[$type]
+                : $basePath . 'berkasUser/' . $berkas[$type];
+
+            if (!file_exists($filePath)) {
+                throw new \Exception('File tidak ditemukan');
+            }
+
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($filePath) . '"');
+            header('Content-Length: ' . filesize($filePath));
+            readfile($filePath);
+            exit;
+
+        } catch (\Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
 }
