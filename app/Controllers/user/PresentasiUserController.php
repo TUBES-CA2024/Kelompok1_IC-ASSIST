@@ -3,7 +3,7 @@ namespace App\Controllers\User;
 
 use App\Core\Controller;
 use App\Model\User\PresentasiUser;
-
+use App\Model\presentasi\Presentasi;
 class PresentasiUserController extends Controller {
     public function saveJudul() {
         $presentasi = new PresentasiUser();
@@ -106,5 +106,10 @@ class PresentasiUserController extends Controller {
         $id = $_SESSION['user']['id'];
         $presentasiUser = $presentasi->getValueForTable($id);
         return $presentasiUser ?? [];
+    }
+    public static function viewAllForAdmin() {
+        $presentasi = new Presentasi();
+        $data = $presentasi->getAll();
+        return $data;
     }
 }
