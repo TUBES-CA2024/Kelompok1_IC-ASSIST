@@ -113,6 +113,12 @@ class PresentasiUserController extends Controller {
         $data = $presentasi->getAll();
         return $data;
     }
+
+    public static function viewAllAccStatusForAdmin() {
+        $presentasi = new Presentasi();
+        $data = $presentasi->getAllAccStatus();
+        return $data;
+    }
     public function updateStatusJudul() {
         $presentasi = new Presentasi();
         $id = $_POST['id'] ?? '';

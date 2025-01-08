@@ -2,6 +2,7 @@
 use App\Controllers\presentasi\RuanganController;
 use App\Controllers\User\PresentasiUserController;
 $mahasiswaList = PresentasiUserController::viewAllForAdmin();
+$mahasiswaAccStatus = PresentasiUserController::viewAllAccStatusForAdmin();
 $ruanganList = RuanganController::viewAllRuangan();
 ?>
 <table id="presentasiMahasiswa" class="table table-striped">
@@ -22,7 +23,8 @@ $ruanganList = RuanganController::viewAllRuangan();
                 <td>
                     <span class="open-detail" data-bs-toggle="modal" data-bs-target="#presentasiModal"
                         data-nama="<?= $row['nama'] ?>" data-stambuk="<?= $row['stambuk'] ?>"
-                        data-judul="<?= $row['judul'] ?>" data-ppt="<?= $row['berkas']['ppt'] ?>" data-makalah="<?= $row['berkas']['makalah'] ?>">
+                        data-judul="<?= $row['judul'] ?>" data-ppt="<?= $row['berkas']['ppt'] ?>"
+                        data-makalah="<?= $row['berkas']['makalah'] ?>">
                         <?= $row['nama'] ?>
                     </span>
                 </td>
@@ -42,7 +44,87 @@ $ruanganList = RuanganController::viewAllRuangan();
     </tbody>
 </table>
 
+<div  style="text-align: center;">
+    <h1  style="font-size: 2rem; color: #333;">Jadwal Presentasi</h1>
+
+    <button type="button" 
+            data-bs-toggle="modal" 
+            data-bs-target="#addJadwalModal" 
+            style="font-size: 1rem; padding: 10px 20px; margin-bottom: 1rem;">
+        Tambah Jadwal
+    </button>
+
+    <table class="table table-striped table-bordered" style="table-layout: auto; width: 100%; text-align: left;">
+        <thead class="table-dark">
+            <tr>
+                <th>No</th>
+                <th>Stambuk</th>
+                <th>Nama Lengkap</th>
+                <th>Ruangan</th>
+                <th>Tanggal</th>
+                <th>Waktu</th>
+            </tr>
+        </thead>
+        <tbody id="jadwalTableBody">
+        </tbody>
+    </table>
+</div>
+
+
 <!-- Modal -->
+
+<div class="modal fade" id="addJadwalModal" tabindex="-1" aria-labelledby="addJadwalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addJadwalModalLabel">Tambah Jadwal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addJadwalForm">
+                    <div class="mb-3">
+                        <label for="mahasiswa" class="form-label">Pilih Mahasiswa</label>
+                        <select class="form-select" id="mahasiswa" required>
+                            <option value="" disabled selected>-- Pilih Mahasiswa --</option>
+                            <?php foreach ($mahasiswaAccStatus as $mahasiswa): ?>
+                                <option value="<?= $mahasiswa['id'] ?>">
+                                    <?= $mahasiswa['stambuk'] ?> - <?= $mahasiswa['nama'] ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <button type="button" class="btn btn-secondary mt-2" id="addMahasiswaButton">Tambah mahasiswa</button>
+                    </div>
+                    <div class="mb-3">
+                        <label for="selectedMahasiswa" class="form-label">Mahasiswa Terpilih</label>
+                        <ul class="list-group" id="selectedMahasiswaList">
+                        </ul>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ruangan" class="form-label">Ruangan</label>
+                        <select class="form-select" id="ruangan" required>
+                            <option value="" disabled selected>-- Pilih Ruangan --</option>
+                            <?php foreach ($ruanganList as $ruangan): ?>
+                                <option value="<?= $ruangan['id'] ?>">
+                                    <?= $ruangan['nama'] ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tanggal" class="form-label">Tanggal</label>
+                        <input type="date" class="form-control" id="tanggal" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="waktu" class="form-label">Waktu</label>
+                        <input type="time" class="form-control" id="waktu" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Tambah Jadwal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="presentasiModal" tabindex="-1" aria-labelledby="presentasiModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -220,7 +302,7 @@ $ruanganList = RuanganController::viewAllRuangan();
             }
 
             $.ajax({
-                url:  '<?= APP_URL ?>/updatestatus',
+                url: '<?= APP_URL ?>/updatestatus',
                 type: 'POST',
                 data: { id: idMahasiswa },
                 dataType: 'json',
@@ -239,4 +321,108 @@ $ruanganList = RuanganController::viewAllRuangan();
             });
         });
     });
+
+    $(document).ready(() => {
+    const mahasiswaDropdown = document.getElementById("mahasiswa");
+    const addMahasiswaButton = document.getElementById("addMahasiswaButton");
+    const selectedMahasiswaList = document.getElementById("selectedMahasiswaList");
+    const addJadwalForm = document.getElementById("addJadwalForm");
+
+    console.log("addMahasiswaButton:", addMahasiswaButton); // Debugging
+
+    let selectedMahasiswa = [];
+
+    function renderSelectedMahasiswa() {
+        selectedMahasiswaList.innerHTML = ""; // Kosongkan daftar sebelum dirender ulang
+
+        selectedMahasiswa.forEach((mahasiswa) => {
+            const listItem = document.createElement("li");
+            listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+            listItem.textContent = mahasiswa.text;
+
+            // Tombol hapus
+            const removeButton = document.createElement("button");
+            removeButton.className = "btn btn-sm btn-danger";
+            removeButton.textContent = "Hapus";
+            removeButton.addEventListener("click", () => {
+                selectedMahasiswa = selectedMahasiswa.filter((item) => item.id !== mahasiswa.id);
+                renderSelectedMahasiswa();
+            });
+
+            listItem.appendChild(removeButton);
+            selectedMahasiswaList.appendChild(listItem);
+        });
+    }
+
+    // Tambahkan mahasiswa ke daftar
+    $(addMahasiswaButton).on("click", () => {
+        console.log("Button clicked");
+        const selectedOption = mahasiswaDropdown.options[mahasiswaDropdown.selectedIndex];
+        const mahasiswaId = mahasiswaDropdown.value;
+        const mahasiswaText = selectedOption ? selectedOption.text : null;
+
+        if (!mahasiswaId) {
+            alert("Pilih mahasiswa terlebih dahulu!");
+            return;
+        }
+
+        // Cegah duplikasi
+        if (selectedMahasiswa.some((item) => item.id === mahasiswaId)) {
+            alert("Mahasiswa sudah dipilih!");
+            return;
+        }
+
+        // Tambahkan ke daftar mahasiswa terpilih
+        selectedMahasiswa.push({ id: mahasiswaId, text: mahasiswaText });
+        console.log("Selected Mahasiswa:", selectedMahasiswa);
+        renderSelectedMahasiswa();
+
+        // Reset dropdown ke default
+        mahasiswaDropdown.selectedIndex = 0;
+    });
+
+    // Submit form
+    $(addJadwalForm).on("submit", (e) => {
+        e.preventDefault();
+
+        const ruangan = document.getElementById("ruangan").value;
+        const tanggal = document.getElementById("tanggal").value;
+        const waktu = document.getElementById("waktu").value;
+
+        if (selectedMahasiswa.length === 0) {
+            alert("Pilih setidaknya satu mahasiswa!");
+            return;
+        }
+
+        const jadwalData = {
+            ruangan,
+            tanggal,
+            waktu,
+            mahasiswa: selectedMahasiswa,
+        };
+
+        // Kirim data ke server menggunakan AJAX
+        $.ajax({
+            url: "/tambahjadwal",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(jadwalData),
+            success: (data) => {
+                // Reset form dan daftar mahasiswa
+                addJadwalForm.reset();
+                selectedMahasiswa = [];
+                renderSelectedMahasiswa();
+
+                alert("Jadwal berhasil ditambahkan!");
+            },
+            error: (xhr) => {
+                console.error("Error:", xhr.responseText);
+                alert("Gagal menyimpan jadwal. Silakan coba lagi.");
+            },
+        });
+    });
+});
+
+
+
 </script>
