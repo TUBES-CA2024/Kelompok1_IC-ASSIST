@@ -55,14 +55,14 @@ class BiodataUser extends Model {
     
         $idJurusanData = $this->getIdJurusan($biodata->jurusan);
         if (!$idJurusanData) {
-            throw new Exception("Jurusan tidak ditemukan: " . $biodata->jurusan);
+            throw new \Exception("Jurusan tidak ditemukan: " . $biodata->jurusan);
         }
         $biodata->idJurusan = $idJurusanData['id'];
         
         $jenisKelamin = ucfirst($biodata->jenisKelamin);
         $idKelasData = $this->getIdKelas($biodata->kelas);
         if (!$idKelasData) {
-            throw new Exception("Kelas tidak ditemukan: " . $biodata->kelas);
+            throw new \Exception("Kelas tidak ditemukan: " . $biodata->kelas);
         }
         $biodata->id_kelas = $idKelasData['id'];
         

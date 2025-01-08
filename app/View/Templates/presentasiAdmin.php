@@ -403,7 +403,7 @@ $ruanganList = RuanganController::viewAllRuangan();
 
         // Kirim data ke server menggunakan AJAX
         $.ajax({
-            url: "/tambahjadwal",
+            url: "<?= APP_URL ?>/tambahjadwal",
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify(jadwalData),

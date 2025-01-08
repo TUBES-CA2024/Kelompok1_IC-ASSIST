@@ -95,4 +95,5 @@ class Presentasi extends Model {
         $stmt->bindParam(':id', $_POST['id']);
         $stmt->execute();
     }
+
 }
