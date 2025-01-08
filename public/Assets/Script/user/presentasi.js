@@ -23,19 +23,20 @@ $(document).ready(function() {
     });
 
     // Handler untuk form #presentasiFormAccepted
-    $('#presentasiFormAccepted').submit(function(e) {
-        e.preventDefault(); // Mencegah pengiriman default
-
-        // Kirim data form sebagai FormData object (untuk file upload)
+    $('#presentasiFormAccepted').on('submit', function (e) {
+        e.preventDefault(); // Mencegah pengiriman form secara default
+    
+        // Ambil data form
         var formData = new FormData(this);
+    
         $.ajax({
-            url: '/tubes_web/public/presentasi', // Endpoint untuk #presentasiFormAccepted
+            url: '/tubes_web/public/presentasi', // Endpoint untuk memproses file
             type: 'POST',
             data: formData,
-            dataType: 'json',
-            processData: false, // Jangan proses data
-            contentType: false, // Jangan atur header Content-Type
-            success: function(response) {
+            processData: false, // Jangan ubah data menjadi string query
+            contentType: false, // Jangan atur Content-Type
+            dataType: 'json', // Harapkan respons JSON dari server
+            success: function (response) {
                 if (response.status === 'success') {
                     alert(response.message || 'Berkas berhasil disimpan');
                     window.location.href = '/tubes_web/public/';
@@ -43,12 +44,10 @@ $(document).ready(function() {
                     alert(response.message || 'Berkas gagal disimpan');
                 }
             },
-            error: function(xhr, status, error) {
-                console.log('Error:', xhr.responseText);
-                console.log('status:' + status );
-                console.log('error:' + error );
+            error: function (xhr, status, error) {
+                console.error('Error:', xhr.responseText);
                 alert('Terjadi kesalahan: ' + error);
             }
         });
-    });
+    });    
 });

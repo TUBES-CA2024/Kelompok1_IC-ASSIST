@@ -33,7 +33,15 @@ class PresentasiUser extends Model {
         if ($makalah === null && $makalahSize === null && $ppt === null && $pptSize === null) {
             $this->id_mahasiswa = $id_mahasiswa;
             $this->judul = $judul;
-        } else {
+        } else if($judul === null && $is_revisi === null && $is_accepted === null) {
+            $this->id_mahasiswa = $id_mahasiswa;
+            $this->makalah = $makalah;
+            $this->ppt = $ppt;
+            $this->makalahSize = $makalahSize;
+            $this->pptSize = $pptSize;
+
+        }
+         else {
             $this->id_mahasiswa = $id_mahasiswa;
             $this->makalah = $makalah;
             $this->ppt = $ppt;
@@ -85,6 +93,8 @@ class PresentasiUser extends Model {
         $stmt->bindParam(1, $fileMakalah, PDO::PARAM_STR);
         $stmt->bindParam(2, $filePpt, PDO::PARAM_STR);
         $stmt->bindParam(3, $idMahasiswa, PDO::PARAM_STR);
+
+        $stmt->execute();
     }
     
     private function getFilePpt($berkas, $berkasSize) {
@@ -110,7 +120,7 @@ class PresentasiUser extends Model {
     
         if (empty($berkas)) {
             var_dump($berkas);
-            throw new Exception("Path file sementara untuk ppt kosong.");
+            throw new Exception("Path file sementara untuk ppt kosong.". var_dump($berkas));
         }
         var_dump($berkas); 
     

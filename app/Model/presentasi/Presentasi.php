@@ -61,6 +61,12 @@ class Presentasi extends Model {
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetch();
+    }
 
+    public function updateJudulStatus($id) {
+        $sql = "UPDATE " . static::$table . " SET is_accepted = 1 WHERE id_mahasiswa = :id";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindParam(':id', $_POST['id']);
+        $stmt->execute();
     }
 }

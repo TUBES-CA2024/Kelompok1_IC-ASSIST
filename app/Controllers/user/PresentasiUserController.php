@@ -41,53 +41,53 @@ class PresentasiUserController extends Controller {
     }
 
     public function saveMakalahAndPpt() {
-        // Mulai session jika belum ada
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-
-        // Cek metode request POST
+    
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Content-Type: application/json');
             echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
             return;
         }
-
-        // Cek apakah user sudah login
+    
         if (!isset($_SESSION['user']['id'])) {
             header('Content-Type: application/json');
             echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
             return;
         }
-
-        $idUser = $_SESSION['user']['id'];
-        $makalah = $_FILES['makalah']['tmp_name'] ?? '';
-        $ppt = $_FILES['ppt']['tmp_name'] ?? '';
-
-        // Cek jika file tidak ada atau ada error saat upload
-        if (!$makalah || !$ppt || $_FILES['makalah']['error'] !== UPLOAD_ERR_OK || $_FILES['ppt']['error'] !== UPLOAD_ERR_OK) {
+    
+        if (!isset($_FILES['makalah']) || !is_array($_FILES['makalah']) || !isset($_FILES['ppt']) || !is_array($_FILES['ppt'])) {
             header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'All fields are required or file upload error']);
+            echo json_encode(['status' => 'error', 'message' => 'File uploads are invalid']);
             return;
         }
-
-        $makalahSize = $_FILES['makalah']['size'] ?? 0;
-        $pptSize = $_FILES['ppt']['size'] ?? 0;
-        $isRevisi = 0;
-        $isAccepted = 0;
-
+    
+        if ($_FILES['makalah']['error'] !== UPLOAD_ERR_OK || $_FILES['ppt']['error'] !== UPLOAD_ERR_OK) {
+            $errors = [
+                UPLOAD_ERR_INI_SIZE => 'File exceeds maximum size',
+                UPLOAD_ERR_FORM_SIZE => 'File exceeds form size limit',
+                UPLOAD_ERR_PARTIAL => 'File only partially uploaded',
+                UPLOAD_ERR_NO_FILE => 'No file uploaded',
+                UPLOAD_ERR_NO_TMP_DIR => 'Missing temporary folder',
+                UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
+                UPLOAD_ERR_EXTENSION => 'A PHP extension stopped the file upload'
+            ];
+            $errorCode = $_FILES['makalah']['error'] !== UPLOAD_ERR_OK ? $_FILES['makalah']['error'] : $_FILES['ppt']['error'];
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => $errors[$errorCode] ?? 'Unknown error']);
+            return;
+        }
+    
+        $idUser = $_SESSION['user']['id'];
+        $makalah = $_FILES['makalah']['tmp_name'];
+        $ppt = $_FILES['ppt']['tmp_name'];
+        $makalahSize = $_FILES['makalah']['size'];
+        $pptSize = $_FILES['ppt']['size'];
+    
         try {
-            // Validasi dan proses file
-            $presentasiUser = new PresentasiUser(
-                $idUser,
-                $makalah,
-                $ppt,
-                $isRevisi,
-                $isAccepted,
-                $makalahSize,
-                $pptSize
-            );
-            
+            $presentasiUser = new PresentasiUser(id_mahasiswa:$idUser, makalah:$makalah, ppt: $ppt, makalahSize: $makalahSize, pptSize:$pptSize);
+
             if ($presentasiUser->updateMakalahAndPpt($presentasiUser)) {
                 header('Content-Type: application/json');
                 echo json_encode(['status' => 'success', 'message' => 'Makalah dan PPT berhasil disimpan']);
@@ -95,12 +95,13 @@ class PresentasiUserController extends Controller {
                 header('Content-Type: application/json');
                 echo json_encode(['status' => 'error', 'message' => 'Makalah dan PPT gagal disimpan']);
             }
-        } catch (Exception $e) {
-            // Tangani error jika terjadi pengecualian
+        } catch (\Exception $e) {
             header('Content-Type: application/json');
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
+    
+    
     public static function viewAll(){
         $presentasi = new PresentasiUser();
         $id = $_SESSION['user']['id'];
@@ -112,4 +113,30 @@ class PresentasiUserController extends Controller {
         $data = $presentasi->getAll();
         return $data;
     }
+    public function updateStatusJudul() {
+        $presentasi = new Presentasi();
+        $id = $_POST['id'] ?? '';
+    
+        if (!empty($id)) {
+            try {
+                $presentasi->updateJudulStatus($id);
+    
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Status judul berhasil diperbarui.'
+                ]);
+            } catch (Exception $e) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Gagal memperbarui status judul: ' . $e->getMessage()
+                ]);
+            }
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'ID tidak ditemukan atau kosong.'
+            ]);
+        }
+    }
+   
 }

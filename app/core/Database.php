@@ -7,7 +7,7 @@ class Database {
     private static $DB_CONNECTION = "mysql";
     private static $DB_HOST = "localhost";
     private static $DB_USER = "root";
-    private static $DB_PORT = 3307;
+    private static $DB_PORT = 3306;
     private static $DB_NAME = "DB_TUBES";
     private static $DB_PASS = "";
 

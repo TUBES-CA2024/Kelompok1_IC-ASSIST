@@ -28,7 +28,9 @@ Router::post('/logout', [new LogoutController, 'logout']);
 Router::post("/store", [new BiodataUserController, 'saveBiodata']);
 Router::post("/berkas", [new BerkasUserController, 'saveBerkas']);
 Router::post("/judul", [new PresentasiUserController, 'saveJudul']);
-Router::post("/submit/presentasi", [new PresentasiUserController, 'saveMakalahAndPpt']);
+Router::post("/presentasi", [new PresentasiUserController, 'saveMakalahAndPpt']);
 Router::post("/hasil",[new AnswersController, 'saveAnswer']);
 Router::post("/notification",[new NotificationControllers, 'sendMessage']);
 Router::post("/deletemhs",[new MahasiswaController,'deleteMahasiswa']);
+
+Router::post("/updatestatus",[new PresentasiUserController, 'updateStatusJudul']);

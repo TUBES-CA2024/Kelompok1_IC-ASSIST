@@ -22,7 +22,7 @@ $ruanganList = RuanganController::viewAllRuangan();
                 <td>
                     <span class="open-detail" data-bs-toggle="modal" data-bs-target="#presentasiModal"
                         data-nama="<?= $row['nama'] ?>" data-stambuk="<?= $row['stambuk'] ?>"
-                        data-judul="<?= $row['judul'] ?>" data-ppt="<?= $row['berkas']['ppt'] ?>">
+                        data-judul="<?= $row['judul'] ?>" data-ppt="<?= $row['berkas']['ppt'] ?>" data-makalah="<?= $row['berkas']['makalah'] ?>">
                         <?= $row['nama'] ?>
                     </span>
                 </td>
@@ -118,6 +118,8 @@ $ruanganList = RuanganController::viewAllRuangan();
             const judul = button.data('judul');
             const ppt = button.data('ppt');
             const makalah = button.data('makalah');
+            const idMahasiswa = button.closest('tr').data('userid');
+
             console.log("makalah : " + makalah);
             console.log("PPt :s " + ppt);
             $('#modalNamaPresentasi').text(nama || 'Data tidak tersedia');
@@ -125,6 +127,8 @@ $ruanganList = RuanganController::viewAllRuangan();
             $('#modalJudulPresentasi').text(judul || 'Data tidak tersedia');
             $('#downloadMakalahPresentasi').attr('data-download-url', makalah ? `/tubes_web/res/makalahUser/${makalah}` : '#');
             $('#downloadPptPresentasi').attr('data-download-url', ppt ? `/tubes_web/res/pptUser/${ppt}` : '#');
+            $('#acceptButtonPresentasi').data('userid', idMahasiswa);
+
         });
 
         $('#downloadPptPresentasi').on('click', function () {
@@ -206,6 +210,33 @@ $ruanganList = RuanganController::viewAllRuangan();
             });
 
             $('#editModal').modal('hide');
+        });
+        $('#acceptButtonPresentasi').on('click', function () {
+            const idMahasiswa = $(this).data('userid');
+
+            if (!idMahasiswa) {
+                alert('ID mahasiswa tidak ditemukan.');
+                return;
+            }
+
+            $.ajax({
+                url:  '<?= APP_URL ?>/updatestatus',
+                type: 'POST',
+                data: { id: idMahasiswa },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'success') {
+                        alert('Status berhasil diperbarui!');
+                        location.reload();
+                    } else {
+                        alert('Gagal memperbarui status: ' + response.message);
+                    }
+                },
+                error: function (xhr) {
+                    console.error('Error:', xhr.responseText);
+                    alert('Terjadi kesalahan. Coba lagi nanti.');
+                }
+            });
         });
     });
 </script>
