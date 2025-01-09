@@ -131,7 +131,7 @@ class PresentasiUserController extends Controller {
                     'status' => 'success',
                     'message' => 'Status judul berhasil diperbarui.'
                 ]);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 echo json_encode([
                     'status' => 'error',
                     'message' => 'Gagal memperbarui status judul: ' . $e->getMessage()

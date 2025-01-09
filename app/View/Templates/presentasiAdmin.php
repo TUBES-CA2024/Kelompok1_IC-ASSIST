@@ -82,9 +82,9 @@ $ruanganList = RuanganController::viewAllRuangan();
             </div>
             <div class="modal-body">
                 <form id="addJadwalForm">
-                    <div class="mb-3">
+                    <div class="mb-3">  
                         <label for="mahasiswa" class="form-label">Pilih Mahasiswa</label>
-                        <select class="form-select" id="mahasiswa" required>
+                        <select class="form-select" id="mahasiswa">
                             <option value="" disabled selected>-- Pilih Mahasiswa --</option>
                             <?php foreach ($mahasiswaAccStatus as $mahasiswa): ?>
                                 <option value="<?= $mahasiswa['id'] ?>">
@@ -388,20 +388,25 @@ $ruanganList = RuanganController::viewAllRuangan();
         const ruangan = document.getElementById("ruangan").value;
         const tanggal = document.getElementById("tanggal").value;
         const waktu = document.getElementById("waktu").value;
-
+        const id =selectedMahasiswa.map((item) => item.id);
+        const mahasiswa = selectedMahasiswa.map((item) => item.text);
+        console.log("id : " + id);
+        console.log("ruangan : " + ruangan);
+        console.log("tanggal : " + tanggal);
+        console.log("waktu : " + waktu);
         if (selectedMahasiswa.length === 0) {
             alert("Pilih setidaknya satu mahasiswa!");
             return;
         }
 
         const jadwalData = {
+            id,
             ruangan,
             tanggal,
             waktu,
-            mahasiswa: selectedMahasiswa,
+            mahasiswa,
         };
 
-        // Kirim data ke server menggunakan AJAX
         $.ajax({
             url: "<?= APP_URL ?>/tambahjadwal",
             method: "POST",
