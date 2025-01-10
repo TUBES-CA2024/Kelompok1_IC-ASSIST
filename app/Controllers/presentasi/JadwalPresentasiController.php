@@ -42,4 +42,9 @@ class JadwalPresentasiController extends Controller
             echo json_encode(['status' => 'error', 'message' => 'Jadwal gagal disimpan']);
         }
     }
+    public static function getJadwalPresentasi() {
+        $jadwal = new JadwalPresentasi(0,0,0);
+        $data = $jadwal->getJadwalPresentasi();
+        return $data;
+    }
 }

@@ -1,9 +1,11 @@
 <?php
 use App\Controllers\presentasi\RuanganController;
 use App\Controllers\User\PresentasiUserController;
+use App\Controllers\presentasi\JadwalPresentasiController;
 $mahasiswaList = PresentasiUserController::viewAllForAdmin();
 $mahasiswaAccStatus = PresentasiUserController::viewAllAccStatusForAdmin();
 $ruanganList = RuanganController::viewAllRuangan();
+$jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
 ?>
 <table id="presentasiMahasiswa" class="table table-striped">
     <thead>
@@ -13,7 +15,7 @@ $ruanganList = RuanganController::viewAllRuangan();
             <th>Stambuk</th>
             <th>Judul Presentasi</th>
             <th>Aksi</th>
-        </tr>
+        </tr>s
     </thead>
     <tbody>
         <?php $i = 1; ?>
@@ -58,12 +60,26 @@ $ruanganList = RuanganController::viewAllRuangan();
                 <th>No</th>
                 <th>Stambuk</th>
                 <th>Nama Lengkap</th>
+                <th>Judul Presentasi</th>
                 <th>Ruangan</th>
                 <th>Tanggal</th>
                 <th>Waktu</th>
             </tr>
         </thead>
         <tbody id="jadwalTableBody">
+            <?php $i = 1; ?>
+            <?php foreach ($jadwalPresentasi as $jadwal) { ?>
+                <tr>
+                    <td><?= $i ?></td>
+                    <td><?= $jadwal['stambuk'] ?></td>
+                    <td><?= $jadwal['nama'] ?></td>
+                    <td><?= $jadwal['judul_presentasi'] ?></td>
+                    <td><?= $jadwal['ruangan'] ?></td>
+                    <td><?= $jadwal['tanggal'] ?></td>
+                    <td><?= $jadwal['waktu'] ?></td>
+                </tr>
+                <?php $i++; ?>
+            <?php } ?>
         </tbody>
     </table>
 </div>
@@ -415,9 +431,8 @@ $ruanganList = RuanganController::viewAllRuangan();
                     } else {
                         alert(response.message || 'Data gagal disimpan');
                         console.log(response.message);
-                    }
+                    }x
 
-                    // Reset form dan daftar mahasiswa
                     addJadwalForm.reset();
                     selectedMahasiswa = [];
                     renderSelectedMahasiswa();

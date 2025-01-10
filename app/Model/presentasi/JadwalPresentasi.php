@@ -20,7 +20,45 @@ class JadwalPresentasi extends Model
         $this->tanggal = $tanggal;
         $this->waktu = $waktu;
     }
+    public function getJadwalPresentasi()
+{
+    $sql = "SELECT 
+        m.stambuk AS stambuk,
+        m.nama_lengkap AS nama_lengkap,
+        p.judul AS judul_presentasi,
+        jp.id_ruangan AS id_ruangan,
+        jp.tanggal AS tanggal,
+        jp.waktu AS waktu
+    FROM 
+        mahasiswa m
+    JOIN 
+        presentasi p ON p.id_mahasiswa = m.id
+    JOIN 
+        jadwal_presentasi jp ON jp.id_presentasi = p.id";
+    
+    $stmt = self::getDB()->prepare($sql);
+    $stmt->execute();
+    $results = $stmt->fetchAll(\PDO::FETCH_ASSOC); // Ambil hasil sebagai array asosiatif
+    
+    $finalResults = [];
+    
+    foreach ($results as $result) {
+        $ruangan = $this->getRuangan($result['id_ruangan']);
+        $finalResults[] = [
+            'stambuk' => $result['stambuk'],
+            'nama' => $result['nama_lengkap'],
+            'judul_presentasi' => $result['judul_presentasi'],
+            'ruangan' => $ruangan['nama'],
+            'tanggal' => $result['tanggal'],
+            'waktu' => $result['waktu']
+        ];
+    }
 
+    return $finalResults; 
+}
+
+    
+    
     public function save(JadwalPresentasi $jadwalPresentasi, $mahasiswas)
     {
 
@@ -44,7 +82,13 @@ class JadwalPresentasi extends Model
         return true;
 
     }
-    function validateAndFormatDate($date)
+    private function getId() {
+        $sql = "SELECT id_presentasi FROM " . static::$table ;
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+    private function validateAndFormatDate($date)
     {
         if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
             $year = (int) substr($date, 0, 4);
@@ -56,7 +100,7 @@ class JadwalPresentasi extends Model
         return null;
     }
 
-    function validateAndFormatTime($time)
+    private function validateAndFormatTime($time)
     {
         if (preg_match('/^\d{2}:\d{2}(:\d{2})?$/', $time)) {
             if (strlen($time) === 5) {
@@ -67,4 +111,11 @@ class JadwalPresentasi extends Model
         return null;
     }
 
+    private function getRuangan($id) {
+        $sql = "SELECT nama FROM ruangan WHERE id = ? limit 1";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 }
