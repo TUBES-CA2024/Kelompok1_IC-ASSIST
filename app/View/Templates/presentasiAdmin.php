@@ -44,13 +44,11 @@ $ruanganList = RuanganController::viewAllRuangan();
     </tbody>
 </table>
 
-<div  style="text-align: center;">
-    <h1  style="font-size: 2rem; color: #333;">Jadwal Presentasi</h1>
+<div style="text-align: center;">
+    <h1 style="font-size: 2rem; color: #333;">Jadwal Presentasi</h1>
 
-    <button type="button" 
-            data-bs-toggle="modal" 
-            data-bs-target="#addJadwalModal" 
-            style="font-size: 1rem; padding: 10px 20px; margin-bottom: 1rem;">
+    <button type="button" data-bs-toggle="modal" data-bs-target="#addJadwalModal"
+        style="font-size: 1rem; padding: 10px 20px; margin-bottom: 1rem;">
         Tambah Jadwal
     </button>
 
@@ -82,7 +80,7 @@ $ruanganList = RuanganController::viewAllRuangan();
             </div>
             <div class="modal-body">
                 <form id="addJadwalForm">
-                    <div class="mb-3">  
+                    <div class="mb-3">
                         <label for="mahasiswa" class="form-label">Pilih Mahasiswa</label>
                         <select class="form-select" id="mahasiswa">
                             <option value="" disabled selected>-- Pilih Mahasiswa --</option>
@@ -92,7 +90,8 @@ $ruanganList = RuanganController::viewAllRuangan();
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <button type="button" class="btn btn-secondary mt-2" id="addMahasiswaButton">Tambah mahasiswa</button>
+                        <button type="button" class="btn btn-secondary mt-2" id="addMahasiswaButton">Tambah
+                            mahasiswa</button>
                     </div>
                     <div class="mb-3">
                         <label for="selectedMahasiswa" class="form-label">Mahasiswa Terpilih</label>
@@ -323,110 +322,116 @@ $ruanganList = RuanganController::viewAllRuangan();
     });
 
     $(document).ready(() => {
-    const mahasiswaDropdown = document.getElementById("mahasiswa");
-    const addMahasiswaButton = document.getElementById("addMahasiswaButton");
-    const selectedMahasiswaList = document.getElementById("selectedMahasiswaList");
-    const addJadwalForm = document.getElementById("addJadwalForm");
+        const mahasiswaDropdown = document.getElementById("mahasiswa");
+        const addMahasiswaButton = document.getElementById("addMahasiswaButton");
+        const selectedMahasiswaList = document.getElementById("selectedMahasiswaList");
+        const addJadwalForm = document.getElementById("addJadwalForm");
 
-    console.log("addMahasiswaButton:", addMahasiswaButton); // Debugging
+        console.log("addMahasiswaButton:", addMahasiswaButton); // Debugging
 
-    let selectedMahasiswa = [];
+        let selectedMahasiswa = [];
 
-    function renderSelectedMahasiswa() {
-        selectedMahasiswaList.innerHTML = ""; // Kosongkan daftar sebelum dirender ulang
+        function renderSelectedMahasiswa() {
+            selectedMahasiswaList.innerHTML = ""; // Kosongkan daftar sebelum dirender ulang
 
-        selectedMahasiswa.forEach((mahasiswa) => {
-            const listItem = document.createElement("li");
-            listItem.className = "list-group-item d-flex justify-content-between align-items-center";
-            listItem.textContent = mahasiswa.text;
+            selectedMahasiswa.forEach((mahasiswa) => {
+                const listItem = document.createElement("li");
+                listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+                listItem.textContent = mahasiswa.text;
 
-            // Tombol hapus
-            const removeButton = document.createElement("button");
-            removeButton.className = "btn btn-sm btn-danger";
-            removeButton.textContent = "Hapus";
-            removeButton.addEventListener("click", () => {
-                selectedMahasiswa = selectedMahasiswa.filter((item) => item.id !== mahasiswa.id);
-                renderSelectedMahasiswa();
+                // Tombol hapus
+                const removeButton = document.createElement("button");
+                removeButton.className = "btn btn-sm btn-danger";
+                removeButton.textContent = "Hapus";
+                removeButton.addEventListener("click", () => {
+                    selectedMahasiswa = selectedMahasiswa.filter((item) => item.id !== mahasiswa.id);
+                    renderSelectedMahasiswa();
+                });
+
+                listItem.appendChild(removeButton);
+                selectedMahasiswaList.appendChild(listItem);
+            });
+        }
+
+        // Tambahkan mahasiswa ke daftar
+        $(addMahasiswaButton).on("click", () => {
+            console.log("Button clicked");
+            const selectedOption = mahasiswaDropdown.options[mahasiswaDropdown.selectedIndex];
+            const mahasiswaId = mahasiswaDropdown.value;
+            const mahasiswaText = selectedOption ? selectedOption.text : null;
+
+            if (!mahasiswaId) {
+                alert("Pilih mahasiswa terlebih dahulu!");
+                return;
+            }
+
+            // Cegah duplikasi
+            if (selectedMahasiswa.some((item) => item.id === mahasiswaId)) {
+                alert("Mahasiswa sudah dipilih!");
+                return;
+            }
+
+            // Tambahkan ke daftar mahasiswa terpilih
+            selectedMahasiswa.push({ id: mahasiswaId, text: mahasiswaText });
+            console.log("Selected Mahasiswa:", selectedMahasiswa);
+            renderSelectedMahasiswa();
+
+            // Reset dropdown ke default
+            mahasiswaDropdown.selectedIndex = 0;
+        });
+
+        // Submit form
+        $(addJadwalForm).on("submit", (e) => {
+            e.preventDefault();
+
+            const ruangan = document.getElementById("ruangan").value;
+            const tanggal = document.getElementById("tanggal").value;
+            const waktu = document.getElementById("waktu").value;
+            console.log("selectedMahasiswa:", selectedMahasiswa);
+            console.log("ruangan : " + ruangan);
+            console.log("tanggal : " + tanggal);
+            console.log("waktu : " + waktu);
+            if (selectedMahasiswa.length === 0) {
+                alert("Pilih setidaknya satu mahasiswa!");
+                return;
+            }
+
+            const jadwalData = {
+                selectedMahasiswa,
+                ruangan,
+                tanggal,
+                waktu,
+            };
+
+            $.ajax({
+                url: "<?= APP_URL ?>/tambahjadwal",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(jadwalData),
+                success: function (response, data) {
+                    if (response.status === 'success') {
+                        alert(response.message || 'Data berhasil disimpan');
+                        window.location.href = '/tubes_web/public/';
+                    } else {
+                        alert(response.message || 'Data gagal disimpan');
+                        console.log(response.message);
+                    }
+
+                    // Reset form dan daftar mahasiswa
+                    addJadwalForm.reset();
+                    selectedMahasiswa = [];
+                    renderSelectedMahasiswa();
+
+                    alert("Jadwal berhasil ditambahkan!");
+                },
+                error: function (xhr) {
+                    console.error("Error:", xhr.responseText);
+                    alert("Gagal menyimpan jadwal. Silakan coba lagi.");
+                }
             });
 
-            listItem.appendChild(removeButton);
-            selectedMahasiswaList.appendChild(listItem);
-        });
-    }
-
-    // Tambahkan mahasiswa ke daftar
-    $(addMahasiswaButton).on("click", () => {
-        console.log("Button clicked");
-        const selectedOption = mahasiswaDropdown.options[mahasiswaDropdown.selectedIndex];
-        const mahasiswaId = mahasiswaDropdown.value;
-        const mahasiswaText = selectedOption ? selectedOption.text : null;
-
-        if (!mahasiswaId) {
-            alert("Pilih mahasiswa terlebih dahulu!");
-            return;
-        }
-
-        // Cegah duplikasi
-        if (selectedMahasiswa.some((item) => item.id === mahasiswaId)) {
-            alert("Mahasiswa sudah dipilih!");
-            return;
-        }
-
-        // Tambahkan ke daftar mahasiswa terpilih
-        selectedMahasiswa.push({ id: mahasiswaId, text: mahasiswaText });
-        console.log("Selected Mahasiswa:", selectedMahasiswa);
-        renderSelectedMahasiswa();
-
-        // Reset dropdown ke default
-        mahasiswaDropdown.selectedIndex = 0;
-    });
-
-    // Submit form
-    $(addJadwalForm).on("submit", (e) => {
-        e.preventDefault();
-
-        const ruangan = document.getElementById("ruangan").value;
-        const tanggal = document.getElementById("tanggal").value;
-        const waktu = document.getElementById("waktu").value;
-        const id =selectedMahasiswa.map((item) => item.id);
-        const mahasiswa = selectedMahasiswa.map((item) => item.text);
-        console.log("id : " + id);
-        console.log("ruangan : " + ruangan);
-        console.log("tanggal : " + tanggal);
-        console.log("waktu : " + waktu);
-        if (selectedMahasiswa.length === 0) {
-            alert("Pilih setidaknya satu mahasiswa!");
-            return;
-        }
-
-        const jadwalData = {
-            id,
-            ruangan,
-            tanggal,
-            waktu,
-            mahasiswa,
-        };
-
-        $.ajax({
-            url: "<?= APP_URL ?>/tambahjadwal",
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(jadwalData),
-            success: (data) => {
-                // Reset form dan daftar mahasiswa
-                addJadwalForm.reset();
-                selectedMahasiswa = [];
-                renderSelectedMahasiswa();
-
-                alert("Jadwal berhasil ditambahkan!");
-            },
-            error: (xhr) => {
-                console.error("Error:", xhr.responseText);
-                alert("Gagal menyimpan jadwal. Silakan coba lagi.");
-            },
         });
     });
-});
 
 
 

@@ -19,26 +19,24 @@ class JadwalPresentasiController extends Controller
             return;
         }
         $input = json_decode(file_get_contents('php://input'), true);
-        $id_presentasi = $input['id'] ?? "";
         $id_ruangan = $input['ruangan'] ?? "";
         $tanggal = $input['tanggal'] ?? "";
         $waktu = $input['waktu'] ?? "";
-        $mahasiswa = $input['mahasiswa'] ?? "";
-        if (empty($id_presentasi) || empty($id_ruangan) || empty($tanggal) || empty($waktu) || empty($mahasiswa)) {
+        $mahasiswa = $input['selectedMahasiswa'] ?? "";
+        if ( empty($id_ruangan) || empty($tanggal) || empty($waktu) || empty($mahasiswa)) {
             header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'All fields are required']);
+            echo json_encode(['status' => 'error', 'message' => 'All fields are required'. 'id ruangan : '.$id_ruangan.'tanggal : '.$tanggal.'waktu : '.$waktu.'Mahasiswa : '.$mahasiswa]);
             return;
         }
-
+        $sqltime = 
         $presentasi = new JadwalPresentasi(
-            $id_presentasi,
             $id_ruangan,
             $tanggal,
             $waktu
         );
         if ($presentasi->save($presentasi,$mahasiswa)) {
             header('Content-Type: application/json');
-            echo json_encode(['status' => 'success', 'message' => 'Jadwal dan mahasiswa berhasil disimpan' . $presentasi]);
+            echo json_encode(['status' => 'success', 'message' => 'Jadwal dan mahasiswa berhasil disimpan']);
         } else {
             header('Content-Type: application/json');
             echo json_encode(['status' => 'error', 'message' => 'Jadwal gagal disimpan']);
