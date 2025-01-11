@@ -30,8 +30,8 @@ class HomeController extends Controller
 
         if ($this->getRole() == "Admin") {
             switch ($page) {
-                case 'berkasPeserta':
-                    View::render('berkasMahasiswaAdmin', 'Templates');
+                case 'ruangan':
+                    View::render('ruangan', 'Templates');
                     break;
                 case 'lihatPeserta':
                     View::render('daftarPeserta', 'Templates');

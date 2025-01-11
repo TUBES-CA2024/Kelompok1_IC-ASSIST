@@ -21,11 +21,11 @@
         </li>
 
         <li>
-            <a href="#" data-page="berkasPeserta">
+            <a href="#" data-page="ruangan">
             <i class='bx bx-spreadsheet'></i>                
-            <span class="nav-item">Berkas Peserta</span>
+            <span class="nav-item">Ruangan</span>
             </a>
-            <span class="tooltip">Berkas Peserta</span>
+            <span class="tooltip">Ruangan</span>
         </li>
 
         <li>
