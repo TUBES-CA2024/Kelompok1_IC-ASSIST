@@ -3,7 +3,6 @@ use App\Controllers\exam\ExamController;
 $allSoal = ExamController::viewAllSoal();
 ?>
 <h1>Daftar Soal</h1>
-<!-- Button Tambah Soal -->
 <button type="button" data-bs-toggle="modal" data-bs-target="#addSoalModal" class="btn btn-primary mb-3">
     Tambah Soal
 </button>
@@ -44,7 +43,6 @@ $allSoal = ExamController::viewAllSoal();
     </tbody>
 </table>
 
-<!-- Modal Tambah Soal -->
 <div class="modal fade" id="addSoalModal" tabindex="-1" aria-labelledby="addSoalModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -54,19 +52,16 @@ $allSoal = ExamController::viewAllSoal();
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <!-- Deskripsi Soal -->
           <div class="mb-3">
             <label for="deskripsi" class="form-label">Deskripsi</label>
             <textarea class="form-control" id="deskripsi" name="deskripsi" required></textarea>
           </div>
 
-          <!-- Upload Gambar -->
           <div class="mb-3">
             <label for="gambar" class="form-label">Gambar Soal</label>
             <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*">
           </div>
 
-          <!-- Radio Button Pilihan Tipe Jawaban -->
           <div class="mb-3">
             <label class="form-label">Tipe Jawaban</label><br>
             <div class="form-check">
@@ -119,7 +114,6 @@ $allSoal = ExamController::viewAllSoal();
 
 <script>
 $(document).ready(function () {
-    // Handle row click
     $(".soal-row").on("click", function () {
         const id = $(this).data("id");
         const deskripsi = $(this).data("deskripsi");
@@ -138,7 +132,6 @@ $(document).ready(function () {
         $("#detailModal").modal("show");
     });
 
-    // Handle radio button change in add modal
     $('input[name="tipeJawaban"]').on("change", function () {
         if ($(this).val() === "pilihan_ganda") {
             $("#pilihanGandaInput").show();
@@ -150,7 +143,6 @@ $(document).ready(function () {
         }
     });
 
-    // Handle tambah soal form
     $("#addSoalForm").on("submit", function (e) {
         e.preventDefault();
         const formData = new FormData(this);
@@ -177,7 +169,6 @@ $(document).ready(function () {
         $('#addSoalModal').modal('hide');
     });
 
-    // Handle delete soal
     $("#deleteButton").on("click", function () {
         const id = $(this).data("id");
 
@@ -203,7 +194,6 @@ $(document).ready(function () {
         }
     });
 
-    // Handle edit soal (redirect to edit page or modal form)
     $("#editButton").on("click", function () {
         const id = $(this).data("id");
         window.location.href = `/tubes_web/public/soal/edit/${id}`;
