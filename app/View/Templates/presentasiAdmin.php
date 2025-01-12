@@ -369,7 +369,6 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
             });
         }
 
-        // Tambahkan mahasiswa ke daftar
         $(addMahasiswaButton).on("click", () => {
             console.log("Button clicked");
             const selectedOption = mahasiswaDropdown.options[mahasiswaDropdown.selectedIndex];
@@ -387,12 +386,10 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
                 return;
             }
 
-            // Tambahkan ke daftar mahasiswa terpilih
             selectedMahasiswa.push({ id: mahasiswaId, text: mahasiswaText });
             console.log("Selected Mahasiswa:", selectedMahasiswa);
             renderSelectedMahasiswa();
 
-            // Reset dropdown ke default
             mahasiswaDropdown.selectedIndex = 0;
         });
 

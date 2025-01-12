@@ -35,4 +35,19 @@ class ExamController extends Controller {
         return $soal == null ? [] : $soal;
     
     }
+    public function insertSoalWithoutImage() {
+
+    }
+    
+    public function insertSoalWithImage() {
+
+    }
+
+    public function insertWithoutImageAndAnswer() {
+
+    }
+
+    public function insertWithoutAnswer()  {
+        
+    }
 }
