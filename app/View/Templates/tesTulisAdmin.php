@@ -159,9 +159,9 @@ $allSoal = ExamController::viewAllSoal();
 
     $('input[name="tipeSoal"]').on("change", function () {
       if ($(this).val() === "iya") {
-        $("#gambar").closest(".mb-3").show(); 
+        $("#gambar").closest(".mb-3").show();
       } else {
-        $("#gambar").closest(".mb-3").hide(); 
+        $("#gambar").closest(".mb-3").hide();
       }
     });
 
@@ -178,62 +178,95 @@ $allSoal = ExamController::viewAllSoal();
       $("#pilihanGandaInput").hide();
       $("#jawabanGandaInput").hide();
     }
-  });
 
-  $("#addSoalForm").on("submit", function (e) {
-    e.preventDefault();
-    const formData = new FormData(this);
+    $("#addSoalForm").on("submit", function (e) {
+      e.preventDefault();
 
-    $.ajax({
-      url: '<?= APP_URL ?>/addsoal',
-      type: 'POST',
-      data: formData,
-      contentType: false,
-      processData: false,
-      success: function (response) {
-        if (response.status === 'success') {
-          alert('Soal berhasil ditambahkan!');
-          location.reload();
-        } else {
-          alert(response.message);
-        }
-      },
-      error: function (xhr) {
-        console.error('Error:', xhr.responseText);
+      const formData = new FormData();
+      formData.append("deskripsi", $("#deskripsi").val());
+      formData.append("tipeSoal", $('input[name="tipeSoal"]:checked').val());
+
+      const gambarInput = $("#gambar")[0].files[0];
+      if (gambarInput) {
+        formData.append("gambar", gambarInput);
       }
-    });
 
-    $('#addSoalModal').modal('hide');
-  });
+      formData.append("tipeJawaban", $('input[name="tipeJawaban"]:checked').val());
 
-  $("#deleteButton").on("click", function () {
-    const id = $(this).data("id");
+      if ($('input[name="tipeJawaban"]:checked').val() === "pilihan_ganda") {
+        formData.append("pilihan", $("#pilihan").val());
+        formData.append("jawaban", $("#jawaban").val());
+      }
 
-    if (confirm("Apakah Anda yakin ingin menghapus soal ini?")) {
+      console.log("deskripsi: ", formData.get("deskripsi"));
+      console.log("gambar: ", formData.get("gambar"));
+      console.log("pilihan: ", formData.get("pilihan"));
+      console.log("jawaban: ", formData.get("jawaban"));
+
       $.ajax({
-        url: '<?= APP_URL ?>/deletesoal',
+        url: '/tubes_web/public/addingsoal',
         type: 'POST',
-        data: { id },
+        data: formData,
+        contentType: false,
+        processData: false,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        },
         success: function (response) {
-          if (response.status === 'success') {
-            alert('Soal berhasil dihapus!');
-            location.reload();
-          } else {
-            alert(response.message);
+          try {
+            const jsonResponse = JSON.parse(response);
+            if (jsonResponse.status === 'testing') {
+              console.log(jsonResponse.message);
+            }
+            if (jsonResponse.status === 'success') {
+              alert('Soal berhasil ditambahkan!');
+              location.reload();
+            } else {
+              alert(jsonResponse.message);
+            }
+          } catch (error) {
+            console.error('Error parsing response:', error);
+            alert('Terjadi kesalahan, coba lagi.');
           }
         },
         error: function (xhr) {
           console.error('Error:', xhr.responseText);
+          alert('Terjadi kesalahan server. Silakan coba lagi.');
         }
       });
 
-      $('#detailModal').modal('hide');
-    }
-  });
+      $('#addSoalModal').modal('hide');
+    });
 
-  $("#editButton").on("click", function () {
-    const id = $(this).data("id");
-    window.location.href = `/tubes_web/public/soal/edit/${id}`;
-  });
 
+    $("#deleteButton").on("click", function () {
+      const id = $(this).data("id");
+
+      if (confirm("Apakah Anda yakin ingin menghapus soal ini?")) {
+        $.ajax({
+          url: '<?= APP_URL ?>/deletesoal',
+          type: 'POST',
+          data: { id },
+          success: function (response) {
+            if (response.status === 'success') {
+              alert('Soal berhasil dihapus!');
+              location.reload();
+            } else {
+              alert(response.message);
+            }
+          },
+          error: function (xhr) {
+            console.error('Error:', xhr.responseText);
+          }
+        });
+
+        $('#detailModal').modal('hide');
+      }
+    });
+
+    $("#editButton").on("click", function () {
+      const id = $(this).data("id");
+      window.location.href = `/tubes_web/public/soal/edit/${id}`;
+    });
+  });
 </script>

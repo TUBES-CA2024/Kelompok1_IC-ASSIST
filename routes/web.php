@@ -12,6 +12,7 @@ use App\Controllers\user\BiodataUserController;
 use App\Controllers\user\MahasiswaController;
 use App\Controllers\user\PresentasiUserController;
 use App\Controllers\notifications\NotificationControllers;
+use App\Controllers\exam\SoalController;
 use App\Core\Router;
 
 
@@ -36,3 +37,5 @@ Router::post("/deletemhs",[new MahasiswaController,'deleteMahasiswa']);
 
 Router::post("/updatestatus",[new PresentasiUserController, 'updateStatusJudul']);
 Router::post("/tambahjadwal",[new JadwalPresentasiController,'saveJadwal']);
+
+Router::post("/addingsoal",[new SoalController,'saveSoal']);
