@@ -189,9 +189,10 @@ class BerkasUser extends Model {
     
         $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/berkasUser/';
         if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true); // Membuat direktori jika tidak ada
+            mkdir($uploadDir, 0755, true); 
         }
     
+
         $newFileName = uniqid() . '.' . $fileExt;
     
         if (empty($berkas)) {
