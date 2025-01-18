@@ -16,13 +16,13 @@ class SoalController extends Controller {
             }
             $deskripsi = $_POST['deskripsi'] ?? '';
             $tipeJawaban = $_POST['tipeJawaban'] ?? '';
-            $pilihan = $_POST['pilihan'] ?? null;
+            $pilihan = $_POST['pilihan'] ?? 'bukan soal pilihan';
             $jawaban = $_POST['jawaban'] ?? null;
             $fotoSize = null;
     
             if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
-                $gambar = $_FILES['gambar']['tmp_name'];
-                $fotoSize = $_FILES['gambar']['size'];
+                $gambar = $_FILES['gambar']['tmp_name'] ?? '';
+                $fotoSize = $_FILES['gambar']['size'] ?? 0;
    
             }
           
@@ -40,11 +40,11 @@ class SoalController extends Controller {
                 $tipeJawaban
             );
     
-            if ($soalExam->getGambar() === null && $soalExam->getJawaban() === null) {
+            if (($soalExam->getGambar() === null )&& $soalExam->getJawaban() === null) {
                 $soalExam->saveWithoutImageAndAnswer($soalExam);
             } else if ($soalExam->getGambar() === null) {
                 $soalExam->saveWithoutImage($soalExam);
-            } else if ($soalExam->getJawaban() === null) {
+            } else if ($jawaban === null) {
                 $soalExam->saveWithoutAnswer($soalExam);
             } else {
                 $soalExam->saveWithImage($soalExam);

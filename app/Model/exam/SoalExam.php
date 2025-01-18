@@ -103,7 +103,7 @@ class SoalExam extends Model {
     }
 
     public function saveWithoutAnswer(SoalExam $soal) {
-        $sql = "INSERT INTO " . static::$table . " (deskripsi,gambar,pilihan,status_soal) VALUES (?,?,?)";
+        $sql = "INSERT INTO " . static::$table . " (deskripsi,gambar,pilihan,status_soal) VALUES (?,?,?,?)";
         $fileGambar = $this->getImageNama($soal->gambar, $soal->fotoSize);
         if(!$fileGambar) {
             throw new \Exception("Gagal memproses gambar");
