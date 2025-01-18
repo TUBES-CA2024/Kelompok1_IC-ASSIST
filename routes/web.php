@@ -39,3 +39,5 @@ Router::post("/updatestatus",[new PresentasiUserController, 'updateStatusJudul']
 Router::post("/tambahjadwal",[new JadwalPresentasiController,'saveJadwal']);
 
 Router::post("/addingsoal",[new SoalController,'saveSoal']);
+Router::post("/deletesoal",[new SoalController,'deleteSoal']);
+Router::post("/updatesoal",[new SoalController,'updateSoal']);

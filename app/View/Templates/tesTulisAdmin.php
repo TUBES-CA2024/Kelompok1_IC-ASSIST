@@ -104,6 +104,68 @@ $allSoal = ExamController::viewAllSoal();
   </div>
 </div>
 
+<div class="modal fade" id="updateSoalModal" tabindex="-1" aria-labelledby="updateSoalModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="updateSoalForm" enctype="multipart/form-data">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateSoalModalLabel">Update Soal</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="updateSoalId" name="id">
+          <div class="mb-3">
+            <label for="updateDeskripsi" class="form-label"><b>Deskripsi</b></label>
+            <textarea class="form-control" id="updateDeskripsi" name="deskripsi" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label"><b>Soal Bergambar?</b> </label><br>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="updateTipeSoal" id="updateIya" value="iya" checked>
+              <label class="form-check-label" for="updateIya">Iya</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="updateTipeSoal" id="updateTidak" value="tidak">
+              <label class="form-check-label" for="updateTidak">Tidak</label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="updateGambar" class="form-label"><b>Gambar Soal</b></label>
+            <input type="file" class="form-control" id="updateGambar" name="gambar" accept="image/*">
+          </div>
+          <div class="mb-3">
+            <label class="form-label"><b>Tipe Jawaban</b></label><br>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="updateTipeJawaban" id="updatePilihanGanda"
+                value="pilihan_ganda" checked>
+              <label class="form-check-label" for="updatePilihanGanda">Pilihan Ganda</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="updateTipeJawaban" id="updateTextBox" value="textbox">
+              <label class="form-check-label" for="updateTextBox">Textbox</label>
+            </div>
+          </div>
+          <div id="updatePilihanGandaInput" class="mb-3">
+            <label for="updatePilihan" class="form-label"><b>Pilihan</b></label>
+            <textarea class="form-control" id="updatePilihan" name="pilihan"
+              placeholder="Pisahkan dengan koma, contoh: A,B,C,D"></textarea>
+          </div>
+          <div id="updateJawabanGandaInput" class="mb-3">
+            <label for="updateJawaban" class="form-label"><b>Jawaban</b></label>
+            <textarea class="form-control" id="updateJawaban" name="jawaban"
+              placeholder="Masukkan jawaban yang benar dari pilihan"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -241,7 +303,7 @@ $allSoal = ExamController::viewAllSoal();
 
     $("#deleteButton").on("click", function () {
       const id = $(this).data("id");
-
+      console.log("id: ", id);
       if (confirm("Apakah Anda yakin ingin menghapus soal ini?")) {
         $.ajax({
           url: '<?= APP_URL ?>/deletesoal',
@@ -266,7 +328,48 @@ $allSoal = ExamController::viewAllSoal();
 
     $("#editButton").on("click", function () {
       const id = $(this).data("id");
-      window.location.href = `/tubes_web/public/soal/edit/${id}`;
+      const deskripsi = $("#modalDeskripsi").text();
+      const gambar = $("#modalGambar").attr("src");
+      const pilihan = $("#modalPilihan").text();
+      const jawaban = $("#modalJawaban").text();
+
+      // Isi data ke form update
+      $("#updateSoalId").val(id);
+      $("#updateDeskripsi").val(deskripsi);
+      if (gambar) {
+        $('input[name="updateTipeSoal"][value="iya"]').prop("checked", true);
+      } else {
+        $('input[name="updateTipeSoal"][value="tidak"]').prop("checked", true);
+      }
+      $("#updatePilihan").val(pilihan);
+      $("#updateJawaban").val(jawaban);
+      $("#detailModal").modal("hide");
+      $("#updateSoalModal").modal("show");
     });
+
+    $("#updateSoalForm").on("submit", function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+
+      $.ajax({
+        url: '<?=APP_URL?>/updatesoal',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          alert("Soal berhasil diperbarui!");
+          location.reload();
+        },
+        error: function (xhr) {
+          alert("Terjadi kesalahan saat memperbarui soal.");
+          console.error(xhr.responseText);
+        }
+      });
+
+      $("#updateSoalModal").modal("hide");
+    });
+
   });
 </script>

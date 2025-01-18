@@ -101,7 +101,13 @@ class SoalExam extends Model {
         $stmt->bindParam(3, $soal->status);
         return $stmt->execute();
     }
-
+    
+    public function deleteSoal($id) {
+        $sql = "DELETE FROM " . static::$table . " WHERE id = ?";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindParam(1, $id);
+        return $stmt->execute();
+    }
     public function saveWithoutAnswer(SoalExam $soal) {
         $sql = "INSERT INTO " . static::$table . " (deskripsi,gambar,pilihan,status_soal) VALUES (?,?,?,?)";
         $fileGambar = $this->getImageNama($soal->gambar, $soal->fotoSize);
@@ -116,6 +122,21 @@ class SoalExam extends Model {
         return $stmt->execute();
     }
 
+    public function updateSoal($id, SoalExam $soal) {
+        $sql = "UPDATE " . static::$table . " SET deskripsi = ?, pilihan = ?, jawaban = ?, gambar = ?, status_soal = ? WHERE id = ?";
+        $fileGambar = $this->getImageNama($soal->gambar, $soal->fotoSize);
+        if(!$fileGambar) {
+            throw new \Exception("Gagal memproses gambar");
+        }
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindParam(1, $soal->deskripsi);
+        $stmt->bindParam(2, $soal->pilihan);
+        $stmt->bindParam(3, $soal->jawaban);
+        $stmt->bindParam(4, $fileGambar);
+        $stmt->bindParam(5, $soal->status);
+        $stmt->bindParam(6, $id);
+        return $stmt->execute();
+    }
     private function getImageNama($berkas, $berkasSize) {
         $imageExt = strtolower(pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION));
         if (!in_array($imageExt, $this->imageAccepted)) {
