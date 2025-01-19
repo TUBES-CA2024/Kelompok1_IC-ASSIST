@@ -50,11 +50,11 @@
             <span class="tooltip">Wawancara</span>
         </li>
         <li>
-            <a href="#" data-page="pengumuman">
+            <a href="#" data-page="daftarKehadiran">
                 <i class="bx bx-notepad"></i>
-                <span class="nav-item">Pengumuman</span>
+                <span class="nav-item">Daftar Kehadiran</span>
             </a>
-            <span class="tooltip">Pengumuman</span>
+            <span class="tooltip">Daftar Kehadiran Peserta</span>
         </li>
         <li>
             <a href="#" data-page="logout">

@@ -36,8 +36,8 @@ class HomeController extends Controller
                 case 'lihatPeserta':
                     View::render('daftarPeserta', 'Templates');
                     break;
-                case 'pengumuman':
-                    View::render('pengumumanAdmin', 'Templates');
+                case 'daftarKehadiran':
+                    View::render('DaftarHadirPesertaAdmin', 'Templates');
                     break;
                 case 'presentasi':
                     View::render('presentasiAdmin', 'Templates');
@@ -96,8 +96,6 @@ class HomeController extends Controller
                     break;
             }
         }
-
-
     }
 
     private function isLoggedIn()

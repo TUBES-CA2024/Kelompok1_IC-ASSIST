@@ -84,9 +84,6 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
     </table>
 </div>
 
-
-<!-- Modal -->
-
 <div class="modal fade" id="addJadwalModal" tabindex="-1" aria-labelledby="addJadwalModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -343,19 +340,17 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
         const selectedMahasiswaList = document.getElementById("selectedMahasiswaList");
         const addJadwalForm = document.getElementById("addJadwalForm");
 
-        console.log("addMahasiswaButton:", addMahasiswaButton); // Debugging
-
+        console.log("addMahasiswaButton:", addMahasiswaButton); 
         let selectedMahasiswa = [];
 
         function renderSelectedMahasiswa() {
-            selectedMahasiswaList.innerHTML = ""; // Kosongkan daftar sebelum dirender ulang
+            selectedMahasiswaList.innerHTML = ""; 
 
             selectedMahasiswa.forEach((mahasiswa) => {
                 const listItem = document.createElement("li");
                 listItem.className = "list-group-item d-flex justify-content-between align-items-center";
                 listItem.textContent = mahasiswa.text;
 
-                // Tombol hapus
                 const removeButton = document.createElement("button");
                 removeButton.className = "btn btn-sm btn-danger";
                 removeButton.textContent = "Hapus";
