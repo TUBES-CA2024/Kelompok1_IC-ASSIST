@@ -241,6 +241,43 @@ $allSoal = ExamController::viewAllSoal();
       $("#jawabanGandaInput").hide();
     }
 
+    //update soal
+    // Update soal logic
+    $('input[name="updateTipeJawaban"]').on("change", function () {
+      if ($(this).val() === "pilihan_ganda") {
+        $("#updatePilihanGandaInput").show();
+        $("#updateJawabanGandaInput").show();
+      } else {
+        $("#updatePilihanGandaInput").hide();
+        $("#updateJawabanGandaInput").hide();
+      }
+    });
+
+    $('input[name="updateTipeSoal"]').on("change", function () {
+      if ($(this).val() === "iya") {
+        $("#updateGambar").closest(".mb-3").show();
+      } else {
+        $("#updateGambar").closest(".mb-3").hide();
+      }
+    });
+
+    // Initial state check for tipeSoal
+    if ($('input[name="updateTipeSoal"]:checked').val() === "iya") {
+      $("#updateGambar").closest(".mb-3").show();
+    } else {
+      $("#updateGambar").closest(".mb-3").hide();
+    }
+
+    // Initial state check for tipeJawaban
+    if ($('input[name="updateTipeJawaban"]:checked').val() === "pilihan_ganda") {
+      $("#updatePilihanGandaInput").show();
+      $("#updateJawabanGandaInput").show();
+    } else {
+      $("#updatePilihanGandaInput").hide();
+      $("#updateJawabanGandaInput").hide();
+    }
+
+
     $("#addSoalForm").on("submit", function (e) {
       e.preventDefault();
 
@@ -353,7 +390,7 @@ $allSoal = ExamController::viewAllSoal();
       const formData = new FormData(this);
 
       $.ajax({
-        url: '<?=APP_URL?>/updatesoal',
+        url: '<?= APP_URL ?>/updatesoal',
         type: 'POST',
         data: formData,
         processData: false,

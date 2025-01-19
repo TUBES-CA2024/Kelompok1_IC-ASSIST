@@ -123,21 +123,26 @@ class SoalExam extends Model {
     }
 
     public function updateSoal($id, SoalExam $soal) {
-        $sql = "UPDATE " . static::$table . " SET deskripsi = ?, pilihan = ?, jawaban = ?, gambar = ?, status_soal = ? WHERE id = ?";
+        $sql = "UPDATE " . static::$table . " SET deskripsi = ?, pilihan = ?, jawaban = ?, gambar = ?, status_soal = ?, modified = ? WHERE id = ?";
         $fileGambar = $this->getImageNama($soal->gambar, $soal->fotoSize);
         if(!$fileGambar) {
             throw new \Exception("Gagal memproses gambar");
         }
+        $date = date('Y-m-d H:i:s');
         $stmt = self::getDB()->prepare($sql);
         $stmt->bindParam(1, $soal->deskripsi);
         $stmt->bindParam(2, $soal->pilihan);
         $stmt->bindParam(3, $soal->jawaban);
         $stmt->bindParam(4, $fileGambar);
         $stmt->bindParam(5, $soal->status);
-        $stmt->bindParam(6, $id);
+        $stmt->bindParam(6, $date);
+        $stmt->bindParam(7, $id);
         return $stmt->execute();
     }
     private function getImageNama($berkas, $berkasSize) {
+        if($berkas === '' || $berkasSize === 0 || $berkas == null) {
+            return '';
+        }
         $imageExt = strtolower(pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION));
         if (!in_array($imageExt, $this->imageAccepted)) {
             throw new \Exception("Gunakan ekstensi jpg, jpeg, atau png untuk gambar.");
