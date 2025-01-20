@@ -28,7 +28,6 @@ class JadwalPresentasiController extends Controller
             echo json_encode(['status' => 'error', 'message' => 'All fields are required'. 'id ruangan : '.$id_ruangan.'tanggal : '.$tanggal.'waktu : '.$waktu.'Mahasiswa : '.$mahasiswa]);
             return;
         }
-        $sqltime = 
         $presentasi = new JadwalPresentasi(
             $id_ruangan,
             $tanggal,

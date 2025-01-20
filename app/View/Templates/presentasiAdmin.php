@@ -15,7 +15,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
             <th>Stambuk</th>
             <th>Judul Presentasi</th>
             <th>Aksi</th>
-        </tr>s
+        </tr>
     </thead>
     <tbody>
         <?php $i = 1; ?>
@@ -419,7 +419,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
                 success: function (response, data) {
                     if (response.status === 'success') {
                         alert(response.message || 'Data berhasil disimpan');
-                        window.location.href = '/tubes_web/public/';
+                        location.reload();
                     } else {
                         alert(response.message || 'Data gagal disimpan');
                         console.log(response.message);

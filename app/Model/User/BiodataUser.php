@@ -76,8 +76,8 @@ class BiodataUser extends Model {
         $stmt->bindParam(8, $biodata->tempatLahir);
         $stmt->bindParam(9, $biodata->tanggalLahir);
         $stmt->bindParam(10, $biodata->noHp);
-    
-        return $stmt->execute();
+        $stmt->execute();
+
     }
     
 
