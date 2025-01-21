@@ -99,30 +99,66 @@
 <div class="right">
   <div class="top">
     <div class="notification">
-    <h2>Notification</h2>
-    <span class="material-symbols-outlined">inbox</span>
-    <div class="updates">
-      <div class="update">
-        <div class="profile-photo">
-          <img src="/tubes_web/public/Assets/Img/dummy.jpeg" alt="foto dummy" style="width:100%; height:100%;" />
+      <h2>Notification</h2>
+      <span class="material-symbols-outlined">inbox</span>
+      <div class="updates">
+        <div class="update">
+          <div class="profile-photo">
+            <img src="/tubes_web/public/Assets/Img/dummy.jpeg" alt="foto dummy" style="width:100%; height:100%;" />
+          </div>
+          <div class="message">
+            <p><b>Tim Iclabs</b> selamat kamu telah berhasil mendaftar di web IC-ASSIST</p>
+            <small class="text_muted">10 hours ago</small>
+          </div>
         </div>
-        <div class="message">
-          <p><b>Tim Iclabs</b> selamat kamu telah berhasil mendaftar di web IC-ASSIST</p>
-          <small class="text_muted">10 hours ago</small>
+        <div class="dashboard" id="dashboard">
+          <button type="button" class="btn btn-primary" id="viewMessageButton">
+            Lihat Pesan
+          </button>
         </div>
       </div>
-      <div class ="dashboard" id="dashboard">
-      <a href="#" data-page="notification"><button type="button" class="btn btn-primary" data-page="notification">
-        Lihat Pesan
-      </button></a>
-      </div>
-    </div>
-    <div id="content" style="margin-top: 20px;">
+      <div id="content" style="margin-top: 20px;"></div>
     </div>
   </div>
 </div>
+
+<div id="customMessageModal" class="custom-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
+  <div class="custom-modal-content" style="background: white; padding: 20px; border-radius: 8px; width: 400px;">
+    <div class="custom-modal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+      <h5 class="custom-modal-title">Pesan</h5>
+      <button id="closeModalButton" style="background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+    </div>
+    <div class="custom-modal-body" style="margin-top: 10px;">
+      <p><b>Tim Iclabs</b>: Selamat kamu telah berhasil mendaftar di web IC-ASSIST</p>
+      <small class="text-muted">10 hours ago</small>
+    </div>
+    <div class="custom-modal-footer" style="margin-top: 20px; text-align: right;">
+      <button id="closeModalFooterButton" class="btn btn-secondary">Tutup</button>
+    </div>
+  </div>
 </div>
 
-</div>
-</div>
-</div>
+<script>
+  const viewMessageButton = document.getElementById("viewMessageButton");
+  const customMessageModal = document.getElementById("customMessageModal");
+  const closeModalButton = document.getElementById("closeModalButton");
+  const closeModalFooterButton = document.getElementById("closeModalFooterButton");
+
+  viewMessageButton.addEventListener("click", function () {
+    customMessageModal.style.display = "flex";
+  });
+
+  closeModalButton.addEventListener("click", function () {
+    customMessageModal.style.display = "none";
+  });
+
+  closeModalFooterButton.addEventListener("click", function () {
+    customMessageModal.style.display = "none";
+  });
+
+  customMessageModal.addEventListener("click", function (event) {
+    if (event.target === customMessageModal) {
+      customMessageModal.style.display = "none";
+    }
+  });
+</script>
