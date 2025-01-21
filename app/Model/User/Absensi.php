@@ -83,7 +83,7 @@ class Absensi extends Model {
         $sql = "UPDATE ". self::$table . " SET absensi_wawancara_I = Hadir, absensi_wawancara_II = Hadir, absensi_wawancara_III = Hadir, absensi_tes_tertulis = Hadir, absensi_presentasi = Hadir WHERE id_mahasiswa = :id";
         $stmt = self::getDB()->prepare($sql);
         $stmt->bindParam(':id', $id);
-        $stmt->execute();
+        return $stmt->execute();
     }
     public function addMahasiswa(Absensi $absensi, $id) {
         if (!is_array($id) || empty($id)) {

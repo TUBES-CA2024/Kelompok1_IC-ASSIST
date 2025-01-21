@@ -12,13 +12,11 @@ class Wawancara extends Model
     protected $waktu;
     protected $tanggal;
     public function __construct(
-        $id_mahasiswa = null,
         $id_ruangan = null,
         $jenis_wawancara = null,
         $waktu = null,
         $tanggal = null,
     ) {
-        $this->id_mahasiswa = $id_mahasiswa;
         $this->id_ruangan = $id_ruangan;
         $this->jenis_wawancara = $jenis_wawancara;
         $this->waktu = $waktu;
@@ -45,15 +43,18 @@ class Wawancara extends Model
             return [];
         }
     }
-    public function save(Wawancara $wawancara)
-    {
+    public function save(Wawancara $wawancara, $id) {
         $sql = "INSERT INTO " . self::$table . " (id_mahasiswa, id_ruangan, jenis_wawancara, waktu, tanggal) VALUES (?, ?, ?, ?, ?)";
         $stmt = self::getDB()->prepare($sql);
-        $stmt->bindParam(1, $wawancara->id_mahasiswa);
-        $stmt->bindParam(2, $wawancara->id_ruangan);
-        $stmt->bindParam(3, $wawancara->jenis_wawancara);
-        $stmt->bindParam(4, $wawancara->waktu);
-        $stmt->bindParam(5, $wawancara->tanggal);
-        return $stmt->execute();
+        foreach ($id as $idmahasiswa) {
+            $stmt->bindValue(1, $idmahasiswa);
+            $stmt->bindValue(2, $wawancara->id_ruangan);
+            $stmt->bindValue(3, $wawancara->jenis_wawancara);
+            $stmt->bindValue(4, $wawancara->waktu);
+            $stmt->bindValue(5, $wawancara->tanggal);
+            $stmt->execute();
+        }
+        return true;
     }
+    
 }

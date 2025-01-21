@@ -14,6 +14,7 @@ use App\Controllers\user\MahasiswaController;
 use App\Controllers\user\PresentasiUserController;
 use App\Controllers\notifications\NotificationControllers;
 use App\Controllers\exam\SoalController;
+use App\Controllers\user\WawancaraController;
 use App\Core\Router;
 
 
@@ -43,3 +44,4 @@ Router::post("/addingsoal",[new SoalController,'saveSoal']);
 Router::post("/deletesoal",[new SoalController,'deleteSoal']);
 Router::post("/updatesoal",[new SoalController,'updateSoal']);
 Router::post("/absensi",[new AbsensiUserController, 'saveData']);
+Router::post("/wawancara",[new WawancaraController, 'save']);
