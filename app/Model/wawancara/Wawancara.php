@@ -56,5 +56,22 @@ class Wawancara extends Model
         }
         return true;
     }
-    
+    public function updateWawancara($id, Wawancara $wawancara) {
+        $sql = "UPDATE " . self::$table . " SET id_ruangan = ?, jenis_wawancara = ?, waktu = ?, tanggal = ? WHERE id = ?";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindValue(1, $this->id_ruangan);
+        $stmt->bindValue(2, $this->jenis_wawancara);
+        $stmt->bindValue(3, $this->waktu);
+        $stmt->bindValue(4, $this->tanggal);
+        $stmt->bindValue(5, $id);
+        $stmt->execute();
+        return true;
+    }
+    public function deleteWawancara($id) {
+        $sql = "DELETE FROM " . self::$table . " WHERE id = ?";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+        return true;
+    }
 }

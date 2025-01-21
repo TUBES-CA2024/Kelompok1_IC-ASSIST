@@ -11,7 +11,7 @@ $ruanganList = RuanganController::viewAllRuangan();
     Tambah mahasiswa
 </button>
 
-<table id="presentasiMahasiswa" class="table table-striped">
+<table id="wawancaraMahasiswa" class="table table-striped">
     <thead>
         <tr>
             <th>No</th>
@@ -29,7 +29,7 @@ $ruanganList = RuanganController::viewAllRuangan();
             <tr data-id="<?= $row['id'] ?>" data-userid="<?= $row['id_mahasiswa'] ?>">
                 <td><?= $i ?></td>
                 <td>
-                    <span class="open-detail" data-bs-toggle="modal" data-bs-target="#presentasiModal"
+                    <span class="open-detail" data-bs-toggle="modal" data-bs-target="#wawancaraModal"
                         data-nama="<?= $row['nama_lengkap'] ?>" data-stambuk="<?= $row['stambuk'] ?>"
                         data-ruangan="<?= $row['ruangan'] ?>" data-jeniswawancara="<?= $row['jenis_wawancara'] ?>"
                         data-waktu="<?= $row['waktu'] ?>" data-tanggal="<?= $row['tanggal'] ?>">
@@ -108,8 +108,50 @@ $ruanganList = RuanganController::viewAllRuangan();
     </div>
 </div>
 
+<div class="modal fade" id="wawancaraModal" tabindex="-1" aria-labelledby="presentasiModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="presentasiModalLabel">Detail Wawancara</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Nama Lengkap</label>
+                    <p id="modalNama" class="form-control-plaintext"></p>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Stambuk</label>
+                    <p id="modalStambuk" class="form-control-plaintext"></p>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ruangan</label>
+                    <p id="modalRuangan" class="form-control-plaintext"></p>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Jenis Wawancara</label>
+                    <p id="modalJenisWawancara" class="form-control-plaintext"></p>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Waktu</label>
+                    <p id="modalWaktu" class="form-control-plaintext"></p>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tanggal</label>
+                    <p id="modalTanggal" class="form-control-plaintext"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(() => {
+
+        
         const mahasiswaDropdown = document.getElementById("mahasiswa");
         const addMahasiswaButton = document.getElementById("addMahasiswaButton");
         const selectedMahasiswaList = document.getElementById("selectedMahasiswaList");
@@ -201,6 +243,21 @@ $ruanganList = RuanganController::viewAllRuangan();
                     alert("Gagal menyimpan jadwal. Silakan coba lagi.");
                 }
             });
+        });
+        $(document).on("click", ".open-detail", function () {
+            const nama = $(this).data("nama");
+            const stambuk = $(this).data("stambuk");
+            const ruangan = $(this).data("ruangan");
+            const jenisWawancara = $(this).data("jeniswawancara");
+            const waktu = $(this).data("waktu");
+            const tanggal = $(this).data("tanggal");
+
+            $("#modalNama").text(nama || "-");
+            $("#modalStambuk").text(stambuk || "-");
+            $("#modalRuangan").text(ruangan || "-");
+            $("#modalJenisWawancara").text(jenisWawancara || "-");
+            $("#modalWaktu").text(waktu || "-");
+            $("#modalTanggal").text(tanggal || "-");
         });
     });
 </script>
