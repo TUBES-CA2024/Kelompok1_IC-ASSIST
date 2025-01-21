@@ -57,8 +57,7 @@ class HomeController extends Controller
                 case 'logout':
                     $_SESSION = [];
                     session_destroy();
-
-                    header('Location: localhost/tubes_web/public/');
+                    View::render('index', 'login');
                     exit;
             }
 

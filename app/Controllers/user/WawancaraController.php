@@ -10,6 +10,28 @@ class WawancaraController extends Controller
         $data = $wawancara->getAll();
         return $data;
     }
+
+    public static function getAllById()
+{
+    if (!isset($_SESSION['user']['id'])) {
+        error_log("Error: User not logged in");
+        return [];
+    }
+
+    $id = $_SESSION['user']['id'];
+    $wawancara = new Wawancara(0, 0, 0, 0);
+
+    try {
+        $data = $wawancara->getWawancaraById($id);
+        return is_array($data) ? $data : []; 
+    } catch (\Exception $e) {
+        error_log("Error in getAllById: " . $e->getMessage());
+        return [];
+    }
+}
+
+    
+    
     public function save()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

@@ -32,17 +32,34 @@ class Wawancara extends Model
     }
     public function getWawancaraById($id)
     {
-        $sql = "SELECT m.nama_lengkap, m.stambuk, r.nama, w.jenis_wawancara, w.waktu, w.tanggal FROM " . self::$table . " w JOIN mahasiswa m ON w.id_mahasiswa = :id JOIN ruangan r ON w.id_ruangan = r.id WHERE w.id = r.id";
+        $idMhs = $this->getIdMahasiswa($id);
+        if (!$idMhs) {
+            error_log("Error: ID mahasiswa tidak ditemukan untuk user ID $id");
+            return [];
+        }
+    
+        $sql = "SELECT 
+                    r.nama AS ruangan, 
+                    w.jenis_wawancara, 
+                    w.waktu, 
+                    w.tanggal 
+                FROM " . self::$table . " w 
+                JOIN ruangan r ON w.id_ruangan = r.id
+                WHERE w.id_mahasiswa = :id";
+    
         try {
             $stmt = self::getDB()->prepare($sql);
-            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':id', $idMhs, \PDO::PARAM_INT);
             $stmt->execute();
-            return $stmt->fetch(\PDO::FETCH_ASSOC);
+            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $result ?: []; 
         } catch (\PDOException $e) {
             error_log("Error in getWawancaraById: " . $e->getMessage());
             return [];
         }
     }
+    
+
     public function save(Wawancara $wawancara, $id) {
         $sql = "INSERT INTO " . self::$table . " (id_mahasiswa, id_ruangan, jenis_wawancara, waktu, tanggal) VALUES (?, ?, ?, ?, ?)";
         $stmt = self::getDB()->prepare($sql);
@@ -74,4 +91,25 @@ class Wawancara extends Model
         $stmt->execute();
         return true;
     }
+    private function getIdMahasiswa($id) {
+        $sql = "SELECT id FROM mahasiswa WHERE id_user = ?";
+        try {
+            $stmt = self::getDB()->prepare($sql);
+            $stmt->bindParam(1, $id, \PDO::PARAM_INT); // Pastikan parameter berupa integer
+            $stmt->execute();
+            $result = $stmt->fetch(\PDO::FETCH_ASSOC); // Ambil hasil sebagai array asosiatif
+            
+            // Periksa apakah hasil ditemukan
+            if ($result && isset($result['id'])) {
+                return $result['id']; // Kembalikan nilai ID mahasiswa
+            } else {
+                error_log("Error: ID mahasiswa tidak ditemukan untuk user ID $id");
+                return null; // Kembalikan null jika tidak ada hasil
+            }
+        } catch (\PDOException $e) {
+            error_log("Error in getIdMahasiswa: " . $e->getMessage());
+            return null; // Kembalikan null jika terjadi error
+        }
+    }
+    
 }
