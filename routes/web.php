@@ -45,3 +45,5 @@ Router::post("/deletesoal",[new SoalController,'deleteSoal']);
 Router::post("/updatesoal",[new SoalController,'updateSoal']);
 Router::post("/absensi",[new AbsensiUserController, 'saveData']);
 Router::post("/wawancara",[new WawancaraController, 'save']);
+Router::post("/updatewawancara",[new WawancaraController, 'update']);
+Router::Post("/deletewawancara",[new WawancaraController, 'delete']);

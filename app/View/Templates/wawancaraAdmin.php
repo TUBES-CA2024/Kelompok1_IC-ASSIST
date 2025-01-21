@@ -66,7 +66,8 @@ $ruanganList = RuanganController::viewAllRuangan();
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <button type="button" class="btn btn-secondary mt-2" id="addMahasiswaButton">Tambah mahasiswa</button>
+                        <button type="button" class="btn btn-secondary mt-2" id="addMahasiswaButton">Tambah
+                            mahasiswa</button>
                     </div>
                     <div class="mb-3">
                         <label for="selectedMahasiswa" class="form-label">Mahasiswa Terpilih</label>
@@ -96,9 +97,9 @@ $ruanganList = RuanganController::viewAllRuangan();
                         <label for="wawancara" class="form-label">Jenis Wawancara</label>
                         <select class="form-select" id="wawancara" required>
                             <option value="" disabled selected>-- Pilih Jenis Wawancara --</option>
-                            <option value="wawancara_asisten">Wawancara Asisten</option>
-                            <option value="wawancara_kepala_lab_i">Wawancara Kepala Lab I</option>
-                            <option value="wawancara_kepala_lab_ii">Wawancara Kepala Lab II</option>
+                            <option value="wawancara asisten">Wawancara Asisten</option>
+                            <option value="wawancara kepala lab I">Wawancara Kepala Lab I</option>
+                            <option value="wawancara kepala lab II">Wawancara Kepala Lab II</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Tambah Jadwal</button>
@@ -142,7 +143,55 @@ $ruanganList = RuanganController::viewAllRuangan();
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="editButton">Edit jadwal wawancara</button>
+                <button type="button" class="btn btn-danger" id="deleteButton">Hapus jadwal wawancara</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updateWawancaraModal" tabindex="-1" aria-labelledby="updateWawancaraModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateWawancaraModalLabel">Update Wawancara</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateWawancaraForm">
+                    <input type="hidden" id="updateWawancaraId">
+                    <div class="mb-3">
+                        <label for="updateRuangan" class="form-label">Ruangan</label>
+                        <select class="form-select" id="updateRuangan" required>
+                            <option value="" disabled selected>-- Pilih Ruangan --</option>
+                            <?php foreach ($ruanganList as $ruangan): ?>
+                                <option value="<?= $ruangan['id'] ?>">
+                                    <?= $ruangan['nama'] ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateTanggal" class="form-label">Tanggal</label>
+                        <input type="date" class="form-control" id="updateTanggal" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateWaktu" class="form-label">Waktu</label>
+                        <input type="time" class="form-control" id="updateWaktu" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateJenisWawancara" class="form-label">Jenis Wawancara</label>
+                        <select class="form-select" id="updateJenisWawancara" required>
+                            <option value="" disabled selected>-- Pilih Jenis Wawancara --</option>
+                            <option value="wawancara asisten">Wawancara Asisten</option>
+                            <option value="wawancara kepala lab I">Wawancara Kepala Lab I</option>
+                            <option value="wawancara kepala lab II">Wawancara Kepala Lab II</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Jadwal</button>
+                </form>
             </div>
         </div>
     </div>
@@ -151,7 +200,7 @@ $ruanganList = RuanganController::viewAllRuangan();
 <script>
     $(document).ready(() => {
 
-        
+
         const mahasiswaDropdown = document.getElementById("mahasiswa");
         const addMahasiswaButton = document.getElementById("addMahasiswaButton");
         const selectedMahasiswaList = document.getElementById("selectedMahasiswaList");
@@ -220,9 +269,9 @@ $ruanganList = RuanganController::viewAllRuangan();
                 tanggal,
                 waktu,
                 wawancara,
-            }; 
+            };
             $.ajax({
-                url: "<?=APP_URL?>/wawancara",
+                url: "<?= APP_URL ?>/wawancara",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(jadwalData),
@@ -245,6 +294,7 @@ $ruanganList = RuanganController::viewAllRuangan();
             });
         });
         $(document).on("click", ".open-detail", function () {
+            const id = $(this).closest("tr").data("id");
             const nama = $(this).data("nama");
             const stambuk = $(this).data("stambuk");
             const ruangan = $(this).data("ruangan");
@@ -258,7 +308,93 @@ $ruanganList = RuanganController::viewAllRuangan();
             $("#modalJenisWawancara").text(jenisWawancara || "-");
             $("#modalWaktu").text(waktu || "-");
             $("#modalTanggal").text(tanggal || "-");
+            $("#editButton").data("id", id);
+            $("#deleteButton").data("id", id);
         });
+        $(document).on("click", "#editButton", function () {
+            const id = $(this).data("id");
+            const ruangan = $("#modalRuangan").text();
+            const jenisWawancara = $("#modalJenisWawancara").text();
+            const waktu = $("#modalWaktu").text();
+            const tanggal = $("#modalTanggal").text();
+
+            console.log ("id " + id);
+            $("#updateWawancaraId").val(id);
+            $("#updateRuangan").val(ruangan);
+            $("#updateJenisWawancara").val(jenisWawancara);
+            $("#updateWaktu").val(waktu);
+            $("#updateTanggal").val(tanggal);
+
+            $("#updateWawancaraModal").modal("show");
+            $("#wawancaraModal").modal("hide");
+        });
+
+        $("#updateWawancaraForm").on("submit", function (e) {
+            e.preventDefault();
+
+            const id = $("#updateWawancaraId").val();
+            const ruangan = $("#updateRuangan").val();
+            const tanggal = $("#updateTanggal").val();
+            const waktu = $("#updateWaktu").val();
+            const jenisWawancara = $("#updateJenisWawancara").val();
+
+            const updateData = {
+                id,
+                ruangan,
+                tanggal,
+                waktu,
+                jenisWawancara,
+            };
+
+            console.log( "id : "+ updateData.id);
+            console.log( "ruangan : "+ updateData.ruangan);
+            console.log( "tanggal : "+ updateData.tanggal);
+            console.log( "waktu : "+ updateData.waktu);
+            console.log( "jenis wawancara : "+ updateData.jenisWawancara);
+
+            $.ajax({
+                url: "<?=APP_URL?>/updatewawancara",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(updateData),
+                success: function (response) {
+                    if (response.status === "success") {
+                        alert(response.message || "Jadwal wawancara berhasil diupdate");
+                        location.reload();
+                    } else {
+                        alert(response.message || "Gagal mengupdate jadwal wawancara");
+                    }
+                },
+                error: function (xhr) {
+                    console.error("Error:", xhr.responseText);
+                    alert("Gagal mengupdate jadwal wawancara. Silakan coba lagi.");
+                },
+            });
+        });
+        $(document).on("click", "#deleteButton", function () {
+            const id = $(this).data("id");
+
+            if (!confirm("Apakah Anda yakin ingin menghapus jadwal wawancara ini?")) return;
+
+            $.ajax({
+                url: "<?=APP_URL?>/deletewawancara",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ id }),
+                success: function (response) {
+                    if (response.status === "success") {
+                        alert(response.message || "Jadwal wawancara berhasil dihapus");
+                        location.reload();
+                    } else {
+                        alert(response.message || "Gagal menghapus jadwal wawancara");
+                    }
+                },
+                error: function (xhr) {
+                    console.error("Error:", xhr.responseText);
+                    alert("Gagal menghapus jadwal wawancara. Silakan coba lagi.");
+                },
+            });
+        });
+
     });
 </script>
-
