@@ -1,3 +1,7 @@
+<?php
+ use App\Controllers\user\WawancaraController;
+ $wawancara = WawancaraController::getAll();
+?>
 <h1>Wawancara Admin</h1>
 
 <table id="presentasiMahasiswa" class="table table-striped">
@@ -6,33 +10,30 @@
             <th>No</th>
             <th>Nama Lengkap</th>
             <th>Stambuk</th>
-            <th>Judul Presentasi</th>
-            <th>Aksi</th>
-        </tr>s
+            <th>Ruangan</th>
+            <th>Jenis Wawancara</th>
+            <th>Waktu</th>
+            <th>Tanggal</th>
+        </tr>
     </thead>
     <tbody>
         <?php $i = 1; ?>
-        <?php foreach ($mahasiswaList as $row) { ?>
+        <?php foreach ($wawancara as $row) { ?>
             <tr data-id="<?= $row['id'] ?>" data-userid="<?= $row['id_mahasiswa'] ?>">
                 <td><?= $i ?></td>
                 <td>
                     <span class="open-detail" data-bs-toggle="modal" data-bs-target="#presentasiModal"
-                        data-nama="<?= $row['nama'] ?>" data-stambuk="<?= $row['stambuk'] ?>"
-                        data-judul="<?= $row['judul'] ?>" data-ppt="<?= $row['berkas']['ppt'] ?>"
-                        data-makalah="<?= $row['berkas']['makalah'] ?>">
-                        <?= $row['nama'] ?>
+                        data-nama="<?= $row['nama_lengkap'] ?>" data-stambuk="<?= $row['stambuk'] ?>"
+                        data-ruangan="<?= $row['ruangan'] ?>" data-jeniswawancara="<?= $row['jenis_wawancara'] ?>"
+                        data-waktu="<?= $row['waktu']?>" data-tanggal="<?= $row['tanggal'] ?>">
+                        <?= $row['nama_lengkap'] ?>
                     </span>
                 </td>
                 <td><?= $row['stambuk'] ?></td>
-                <td><?= $row['judul'] ?></td>
-                <td>
-                    <div style="display: flex; gap: 5%;">
-                        <img src="/tubes_web/public/Assets/Img/edit.svg" alt="edit" class="edit-button"
-                            style="cursor: pointer;">
-                        <img src="/tubes_web/public/Assets/Img/delete.svg" alt="delete" class="delete-button"
-                            style="cursor: pointer;">
-                    </div>
-                </td>
+                <td><?= $row['ruangan'] ?></td>
+                <td><?= $row['jenis_wawancara']?></td>
+                <td><?= $row['waktu']?></td>
+                <td><?= $row['tanggal']?></td>
             </tr>
             <?php $i++; ?>
         <?php } ?>

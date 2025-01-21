@@ -29,10 +29,10 @@
             <tr data-id="<?= $row['id'] ?>" data-userid="<?= $row['id'] ?>">
                 <td><?= $i ?></td>
                 <td>
-                    <span class="open-detail" data-bs-toggle="modal" data-bs-target="#presentasiModal"
+                    <span class="open-detail" data-bs-toggle="modal" data-bs-target="#detailAbsensiModal"
                         data-nama="<?= $row['nama_lengkap'] ?>" data-stambuk="<?= $row['stambuk'] ?>"
-                        data-absensiwawancaraI="<?= $row['absensi_wawancara_I'] ?>" data-absensiwawancaraII="<?= $row['absensi_wawancara_II']?>"
-                        data-absensiwawancaraIII="<?= $row['absensi_wawancara_III'] ?>"
+                        data-absensiwawancarai="<?= $row['absensi_wawancara_I'] ?>" data-absensiwawancaraii="<?= $row['absensi_wawancara_II']?>"
+                        data-absensiwawancaraiii="<?= $row['absensi_wawancara_III'] ?>"
                         data-absensitestertulis="<?= $row['absensi_tes_tertulis'] ?>" data-absensipresentasi="<?= $row['absensi_presentasi'] ?>">
                         <?= $row['nama_lengkap'] ?>
                     </span>
@@ -122,6 +122,78 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Tambah absensi</button>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detailAbsensiModal" tabindex="-1" aria-labelledby="detailAbsensiModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailAbsensiModalLabel">Detail Absensi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="mb-3">
+                        <label>Nama Lengkap:</label>
+                        <span id="detailNama"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label>Stambuk:</label>
+                        <span id="detailStambuk"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label>Tes Tertulis:</label>
+                        <select name="tesTertulis" id="tesTertulis" class="form-select">
+                            <option value="">Pilih...</option>
+                            <option value="Hadir">Hadir</option>
+                            <option value="Alpha">Alpha</option>
+                            <option value="Izin">Izin</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Presentasi:</label>
+                        <select name="presentasi" id="presentasi" class="form-select">
+                            <option value="">Pilih...</option>
+                            <option value="Hadir">Hadir</option>
+                            <option value="Alpha">Alpha</option>
+                            <option value="Izin">Izin</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Wawancara I:</label>
+                        <select name="wawancaraI" id="wawancaraI" class="form-select">
+                            <option value="">Pilih...</option>
+                            <option value="Hadir">Hadir</option>
+                            <option value="Alpha">Alpha</option>
+                            <option value="Izin">Izin</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Wawancara II:</label>
+                        <select name="wawancaraII" id="wawancaraII" class="form-select">
+                            <option value="">Pilih...</option>
+                            <option value="Hadir">Hadir</option>
+                            <option value="Alpha">Alpha</option>
+                            <option value="Izin">Izin</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Wawancara III:</label>
+                        <select name="wawancaraIII" id="wawancaraIII" class="form-select">
+                            <option value="">Pilih...</option>
+                            <option value="Hadir">Hadir</option>
+                            <option value="Alpha">Alpha</option>
+                            <option value="Izin">Izin</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" id="resetDetailAbsensi" class="btn btn-warning me-2">Reset</button>
+                    <button type="button" id="saveDetailAbsensi" class="btn btn-success" disabled>Save</button>
+                </div>
             </div>
         </div>
     </div>
@@ -232,7 +304,63 @@
             },
         });
     });
-});
+    let originalValues = {};
+        const saveButton = $("#saveDetailAbsensi");
 
+        $(document).on("click", ".open-detail", function () {
+            const nama = $(this).data("nama") || "";
+            const stambuk = $(this).data("stambuk") || "";
+            const wawancaraI = $(this).data("absensiwawancarai") || "";
+            const wawancaraII = $(this).data("absensiwawancaraii") || "";
+            const wawancaraIII = $(this).data("absensiwawancaraiii") || "";
+            const tesTertulis = $(this).data("absensitestertulis") || "";
+            const presentasi = $(this).data("absensipresentasi") || "";
 
+            console.log({ nama, stambuk, wawancaraI, wawancaraII, wawancaraIII, tesTertulis, presentasi });
+            $("#detailNama").text(nama);
+            $("#detailStambuk").text(stambuk);
+
+            $("#tesTertulis").val(tesTertulis);
+            $("#presentasi").val(presentasi);
+            $("#wawancaraI").val(wawancaraI);
+            $("#wawancaraII").val(wawancaraII);
+            $("#wawancaraIII").val(wawancaraIII);
+
+            originalValues = { tesTertulis, presentasi, wawancaraI, wawancaraII, wawancaraIII };
+            saveButton.prop("disabled", true);
+
+            $("#detailAbsensiModal").modal("show");
+        });
+
+        $("select").on("change", function () {
+            const currentValues = {
+                tesTertulis: $("#tesTertulis").val(),
+                presentasi: $("#presentasi").val(),
+                wawancaraI: $("#wawancaraI").val(),
+                wawancaraII: $("#wawancaraII").val(),
+                wawancaraIII: $("#wawancaraIII").val(),
+            };
+
+            const hasChanged = Object.keys(originalValues).some(
+                (key) => originalValues[key] !== currentValues[key]
+            );
+
+            saveButton.prop("disabled", !hasChanged);
+        });
+
+        $("#resetDetailAbsensi").on("click", function () {
+            $("#tesTertulis").val(originalValues.tesTertulis);
+            $("#presentasi").val(originalValues.presentasi);
+            $("#wawancaraI").val(originalValues.wawancaraI);
+            $("#wawancaraII").val(originalValues.wawancaraII);
+            $("#wawancaraIII").val(originalValues.wawancaraIII);
+
+            saveButton.prop("disabled", true);
+        });
+
+        $("#saveDetailAbsensi").on("click", function () {
+            alert("Detail absensi berhasil disimpan!");
+            $("#detailAbsensiModal").modal("hide");
+        });
+    });
 </script>
