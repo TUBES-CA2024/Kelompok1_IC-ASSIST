@@ -108,7 +108,7 @@ class Wawancara extends Model
             }
         } catch (\PDOException $e) {
             error_log("Error in getIdMahasiswa: " . $e->getMessage());
-            return null; // Kembalikan null jika terjadi error
+            return null; 
         }
     }
     

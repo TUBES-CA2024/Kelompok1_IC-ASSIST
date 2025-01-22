@@ -54,4 +54,17 @@ class NotificationControllers extends Controller {
         ob_end_clean();
     }
     
+    public static function getMessageById() {
+        if(session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if(!isset($_SESSION['user']['id'])) {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
+            return;
+        }
+        $id = $_SESSION['user']['id'];
+        $notifikasi = new NotificationUser($id,'');
+        return $notifikasi->getById($notifikasi);
+    }
 }

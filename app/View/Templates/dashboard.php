@@ -1,3 +1,8 @@
+<?php
+use app\Controllers\notifications\NotificationControllers;
+
+$notifikasi = NotificationControllers::getMessageById();
+?>
 
 <main>
   <h1 class="dashboard">Dashboard</h1>
@@ -103,12 +108,8 @@
       <span class="material-symbols-outlined">inbox</span>
       <div class="updates">
         <div class="update">
-          <div class="profile-photo">
-            <img src="/tubes_web/public/Assets/Img/dummy.jpeg" alt="foto dummy" style="width:100%; height:100%;" />
-          </div>
           <div class="message">
             <p><b>Tim Iclabs</b> selamat kamu telah berhasil mendaftar di web IC-ASSIST</p>
-            <small class="text_muted">10 hours ago</small>
           </div>
         </div>
         <div class="dashboard" id="dashboard">
@@ -123,14 +124,22 @@
 </div>
 
 <div id="customMessageModal" class="custom-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
-  <div class="custom-modal-content" style="background: white; padding: 20px; border-radius: 8px; width: 400px;">
+  <div class="custom-modal-content" style="background: white; padding: 20px; border-radius: 8px; width: 600px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
     <div class="custom-modal-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
       <h5 class="custom-modal-title">Pesan</h5>
       <button id="closeModalButton" style="background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
     </div>
-    <div class="custom-modal-body" style="margin-top: 10px;">
-      <p><b>Tim Iclabs</b>: Selamat kamu telah berhasil mendaftar di web IC-ASSIST</p>
-      <small class="text-muted">10 hours ago</small>
+    <div class="custom-modal-body" style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">
+      <?php
+      foreach($notifikasi as $notif) { ?>
+          <div style="background: #f9f9f9; border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-transform: uppercase;">
+            <b>Tim Iclabs</b>
+            <p><?=$notif['pesan']?></p>
+            <p><?=$notif['created_at']?></p>
+          </div>
+      <?php
+      }
+      ?>
     </div>
     <div class="custom-modal-footer" style="margin-top: 20px; text-align: right;">
       <button id="closeModalFooterButton" class="btn btn-secondary">Tutup</button>

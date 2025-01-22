@@ -35,13 +35,14 @@ class NotificationUser extends Model {
         return $data;
     }
 
-    public function getById($idMahasiswa) {
+    public function getById(NotificationUser $notification) {
         $query = "SELECT * FROM " . static::$table . " WHERE id_mahasiswa = :idMahasiswa";
         $stmt = self::getDB()->prepare($query);
-        $stmt->bindParam(':id', $idMahasiswa);
+        $idMahasiswa = $this->getIdMahasiswaByIdUser($notification->id_mahasiswa);
+        $id = $idMahasiswa['id'];
+        $stmt->bindParam(':idMahasiswa', $id);
         $stmt->execute();
-        $result = $stmt->fetch();
-
+        $result = $stmt->fetchAll();
         return $result;
     }
 
@@ -51,5 +52,14 @@ class NotificationUser extends Model {
         $stmt->bindParam(':id_mahasiswa', $notification->id_mahasiswa);
         $stmt->bindParam(':pesan', $notification->pesan);
         $stmt->execute();
+    }
+
+    private function getIdMahasiswaByIdUser($id) {
+        $query = "SELECT id FROM mahasiswa WHERE id_user = :id";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result;
     }
 }
