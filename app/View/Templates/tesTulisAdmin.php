@@ -414,7 +414,7 @@ if (gambarInput) {
   console.log("jawaban: ", formData.get("jawaban"));
 
   $.ajax({
-    url: '/tubes_web/public/updatesoal', // Sesuaikan URL endpoint
+    url: '/tubes_web/public/updatesoal', 
     type: 'POST',
     data: formData,
     contentType: false,

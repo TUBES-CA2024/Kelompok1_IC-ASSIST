@@ -1,7 +1,9 @@
 <?php
 use app\Controllers\notifications\NotificationControllers;
+use app\Controllers\user\DashboardUserController;
+$notifikasi = NotificationControllers::getMessageById() ?? [];
+$i = 0;
 
-$notifikasi = NotificationControllers::getMessageById();
 ?>
 
 <main>
@@ -12,7 +14,7 @@ $notifikasi = NotificationControllers::getMessageById();
       <div class="middle">
         <div class="left">
           <h3>Tahap yang telah di selesaikan</h3>
-          <h1>4</h1>
+          <h1><?=$i?></h1>
         </div>
         <div class="progress">
           <svg>
@@ -36,66 +38,183 @@ $notifikasi = NotificationControllers::getMessageById();
           <th>No</th>
           <th>Tahapan</th>
           <th>Status</th>
-          <th>Waktu</th>
-          <th>Keterangan</th>
+          <th>keterangan</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>1</td>
           <td>Lengkapi Biodata</td>
+          <?php 
+          if(DashboardUserController::getBiodataStatus() == 1) {
+            $i++;
+            ?>
+          <td class="success">Selesai</td>
+          
+          <td>Anda telah menyelesaikan tahap ini</td>
+            <?php
+          } else {
+          ?>
           <td class="danger">Belum</td>
-          <td>17-10-2024 - 19-12-2024</td>
-          <td>Belum Melengkapi Biodata</td>
+          <td>Anda telah menyelesaikan tahap ini</td>
+          <?php
+          }
+          ?>
         </tr>
         <tr>
           <td>2</td>
           <td>Lengkapi Berkas</td>
+          <?php 
+          if(DashboardUserController::getBerkasStatus() == 1) {
+            $i++;
+            ?>
+          <td class="success">Selesai</td>
+          <td>Anda telah menyelesaikan tahap ini</td>
+            <?php
+          } else {
+          ?>
           <td class="danger">Belum</td>
-          <td>17-10-2024 - 19-12-2024</td>
-          <td>Belum Melengkapi Berkas CV dan Makalah</td>
+          <td>Anda telah menyelesaikan tahap ini</td>
+          <?php
+          }
+          ?>
         </tr>
         <tr>
           <td>3</td>
           <td>Tes Tertulis</td>
+          <?php 
+          if(DashboardUserController::getAbsensiTesTertulis() == 1) {
+            $i++;
+            ?>
+          <td class="success">Selesai</td>
+          <td>Anda telah menyelesaikan tahap ini</td>
+            <?php
+          } else {
+          ?>
           <td class="danger">Belum</td>
-          <td>17-10-2024 - 19-12-2024</td>
-          <td>Belum lulus tahap sebelumnya</td>
+          <td>Anda belum menyelesaikan tahap ini</td>
+          <?php
+          }
+          ?>
+
         </tr>
         <tr>
           <td>4</td>
           <td>Submit Judul makalah dan PPT</td>
+          <?php 
+          if(DashboardUserController::getPptStatus() == 'diterima') {
+            $i++;
+            ?>
+          <td class="success">Selesai</td>
+          <td>Anda telah menyelesaikan tahap ini</td>
+            <?php
+          } else if(DashboardUserController::getPptStatus() == 'revisi') {
+            
+          ?>
+          <td class="danger">Revisi</td>
+          <td>Anda belum menyelesaikan tahap ini</td>
+          <?php
+          } else {
+          ?>
           <td class="danger">Belum</td>
-          <td>17-10-2024 - 19-12-2024</td>
-          <td>Belum lulus tahap sebelumnya</td>
+          <td>Anda belum submit judul presentasi </td>
+            <?php
+          }
+          ?>
         </tr>
         <tr>
           <td>5</td>
           <td>Submit makalah dan PPT</td>
+          <?php 
+          if(DashboardUserController::getPptJudulAccStatus() == 1) {
+            $i++;
+            ?>
+          <td class="success">Selesai</td>
+          <td>Anda telah menyelesaikan tahap ini</td>
+            <?php
+          } else {
+          ?>
           <td class="danger">Belum</td>
-          <td>17-10-2024 - 19-12-2024</td>
-          <td>Belum lulus tahap sebelumnya</td>
+          <td>Anda Belum Submit Ppt dan makalah anda</td>
+          <?php
+          }
+          ?>
+
         </tr>
         <tr>
           <td>6</td>
           <td>Presentasi</td>
+          <?php 
+          if(DashboardUserController::getAbsensiPresentasi() == 1) {
+            $i++;
+            ?>
+          <td class="success">Selesai</td>
+          <td>Anda telah menyelesaikan tahap ini</td>
+            <?php
+          } else {
+          ?>
           <td class="danger">Belum</td>
-          <td>17-10-2024 - 19-12-2024</td>
-          <td>Belum Submit makalah dan PPT</td>
+          <td>Anda belum menyelesaikan tahap ini</td>
+          <?php
+          }
+          ?>
+
         </tr>
         <tr>
           <td>7</td>
-          <td>Wawancara I</td>
+          <td>Wawancara Asisten</td>
+          <?php 
+          if(DashboardUserController::getAbsensiWawancaraI() == 1) {
+            $i++;
+            ?>
+          <td class="success">Selesai</td>
+          <td>Anda telah menyelesaikan tahap ini</td>
+            <?php
+          } else {
+          ?>
           <td class="danger">Belum</td>
-          <td>17-10-2024 - 19-12-2024</td>
-          <td>Belum lulus tahap sebelumya</td>
+          <td>Anda belum menyelesaikan tahap ini</td>
+          <?php
+          }
+          ?>
+
         </tr>
         <tr>
           <td>8</td>
-          <td>Wawancara II</td>
+          <td>Wawancara Kepala Lab 1</td>
+          <?php 
+          if(DashboardUserController::getAbsensiWawancaraII() == 1) {
+            $i++;
+            ?>
+          <td class="success">Selesai</td>
+          <td>Anda telah menyelesaikan tahap ini</td>
+            <?php
+          } else {
+          ?>
           <td class="danger">Belum</td>
-          <td>17-10-2024 - 19-12-2024</td>
-          <td>Belum lulus tahap sebelumnya</td>
+          <td>Anda belum menyelesaikan tahap ini</td>
+          <?php
+          }
+          ?>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>Wawancara Kepala Lab 2</td>
+          <?php 
+          if(DashboardUserController::getAbsensiWawancaraIII() == 1) {
+            $i++;
+            ?>
+          <td class="success">Selesai</td>
+          <td>Anda telah menyelesaikan tahap ini</td>
+            <?php
+          } else {
+          ?>
+          <td class="danger">Belum</td>
+          <td>Anda belum menyelesaikan tahap ini</td>
+          <?php
+          }
+          ?>
+
         </tr>
       </tbody>
     </table>
@@ -131,6 +250,10 @@ $notifikasi = NotificationControllers::getMessageById();
     </div>
     <div class="custom-modal-body" style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">
       <?php
+      if($notifikasi == null) {
+        echo "<p>Tidak ada pesan</p>";
+      } else {
+
       foreach($notifikasi as $notif) { ?>
           <div style="background: #f9f9f9; border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-transform: uppercase;">
             <b>Tim Iclabs</b>
@@ -138,6 +261,7 @@ $notifikasi = NotificationControllers::getMessageById();
             <p><?=$notif['created_at']?></p>
           </div>
       <?php
+      }
       }
       ?>
     </div>
