@@ -385,28 +385,64 @@ $allSoal = ExamController::viewAllSoal();
     });
 
     $("#updateSoalForm").on("submit", function (e) {
-      e.preventDefault();
+  e.preventDefault();
 
-      const formData = new FormData(this);
+  const formData = new FormData();
+  formData.append("id", $("#updateSoalId").val());
+  formData.append("deskripsi", $("#updateDeskripsi").val());
+  formData.append("tipeSoal", $('input[name="updateTipeSoal"]:checked').val());
 
-      $.ajax({
-        url: '<?= APP_URL ?>/updatesoal',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-          alert("Soal berhasil diperbarui!");
+  const gambarInput = $("#updateGambar")[0]?.files[0];
+if (gambarInput) {
+  formData.append("gambar", gambarInput);
+} else {
+  formData.append("tipeSoal", "tidak"); 
+}
+
+
+  formData.append("tipeJawaban", $('input[name="updateTipeJawaban"]:checked').val());
+
+  if ($('input[name="updateTipeJawaban"]:checked').val() === "pilihan_ganda") {
+    formData.append("pilihan", $("#updatePilihan").val());
+    formData.append("jawaban", $("#updateJawaban").val());
+  }
+
+  console.log("id: ", formData.get("id"));
+  console.log("deskripsi: ", formData.get("deskripsi"));
+  console.log("gambar: ", formData.get("gambar"));
+  console.log("pilihan: ", formData.get("pilihan"));
+  console.log("jawaban: ", formData.get("jawaban"));
+
+  $.ajax({
+    url: '/tubes_web/public/updatesoal', // Sesuaikan URL endpoint
+    type: 'POST',
+    data: formData,
+    contentType: false,
+    processData: false,
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+    },
+    success: function (response) {
+      try {
+        const jsonResponse = JSON.parse(response);
+        if (jsonResponse.status === 'success') {
+          alert('Soal berhasil diperbarui!');
           location.reload();
-        },
-        error: function (xhr) {
-          alert("Terjadi kesalahan saat memperbarui soal.");
-          console.error(xhr.responseText);
+        } else {
+          alert(jsonResponse.message);
         }
-      });
+      } catch (error) {
+        console.error('Error parsing response:', error);
+        alert('Terjadi kesalahan, coba lagi.');
+      }
+    },
+    error: function (xhr) {
+      console.error('Error:', xhr.responseText);
+      alert('Terjadi kesalahan server. Silakan coba lagi.');
+    },
+  });
 
-      $("#updateSoalModal").modal("hide");
-    });
-
+  $("#updateSoalModal").modal("hide");
+});
   });
 </script>

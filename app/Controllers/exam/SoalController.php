@@ -25,7 +25,6 @@ class SoalController extends Controller {
                 $fotoSize = $_FILES['gambar']['size'] ?? 0;
    
             }
-          
             if ($tipeJawaban === 'pilihan_ganda' && !empty($pilihan)) {
                 $pilihanArray = explode(',', $pilihan); 
                 $pilihan = json_encode($pilihanArray);  
@@ -118,7 +117,7 @@ class SoalController extends Controller {
         $fotoSize = null;
 
         if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
-            $gambar = $_FILES['gambar']['tmp_name'] ?? '';
+            $gambar = $_FILES['gambar']['tmp_name'] ?? 'bukan soal gambar';
             $fotoSize = $_FILES['gambar']['size'] ?? 0;
         }
 

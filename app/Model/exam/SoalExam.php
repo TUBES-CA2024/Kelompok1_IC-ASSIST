@@ -126,7 +126,7 @@ class SoalExam extends Model {
         $sql = "UPDATE " . static::$table . " SET deskripsi = ?, pilihan = ?, jawaban = ?, gambar = ?, status_soal = ?, modified = ? WHERE id = ?";
         $fileGambar = $this->getImageNama($soal->gambar, $soal->fotoSize);
         if(!$fileGambar) {
-            throw new \Exception("Gagal memproses gambar");
+            $fileGambar = "Bukan soal bergambar";
         }
         $date = date('Y-m-d H:i:s');
         $stmt = self::getDB()->prepare($sql);
