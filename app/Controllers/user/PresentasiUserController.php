@@ -151,7 +151,7 @@ class PresentasiUserController extends Controller
             ]);
         }
     }
-    public function SendKeteranganAndRevisi()
+    public function sendKeteranganAndRevisi()
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -167,7 +167,7 @@ class PresentasiUserController extends Controller
             return;
         }
         $id = $_POST['id'] ?? '';
-        $keterangan = $_POST['keterangan'] ?? '';
+        $keterangan = $_POST['message'] ?? '';
 
         if (empty($keterangan) || empty($id)) {
             header('Content-Type: application/json');

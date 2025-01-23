@@ -289,8 +289,10 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
             const id = $('#editModal').data('id');
             const message = $('#message').val();
 
+            console.log('ID:', id);
+            console.log('Message:', message);
             $.ajax({
-                url: '<?= APP_URL ?>/notification',
+                url: '<?= APP_URL ?>/updatepresentasi',
                 type: 'POST',
                 data: { id: id, message: message },
                 dataType: 'json',
@@ -298,6 +300,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
                     if (response.status === 'success') {
                         alert('Pesan berhasil dikirim!');
                     } else {
+                        console.error(response.message);
                         alert('Gagal mengirim pesan!');
                     }
                 },

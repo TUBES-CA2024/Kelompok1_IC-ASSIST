@@ -97,7 +97,7 @@ class Presentasi extends Model {
     }
 
     public function updateIsRevisiAndKeterangan($id,$keterangan) {
-        $sql = "UPDATE " . static::$table . " SET is_revisi = 1, is_accepted = 0, keterangan = ? WHERE id_mahasiswa = ?";
+        $sql = "UPDATE " . static::$table . " SET is_revisi = 1, is_accepted = 0, keterangan = ? WHERE id= ?";
         $stmt = self::getDB()->prepare($sql);
         $stmt->bindParam(1, $keterangan);
         $stmt->bindParam(2, $id);

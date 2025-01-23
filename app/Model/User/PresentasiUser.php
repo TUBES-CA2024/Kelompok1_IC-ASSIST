@@ -189,7 +189,7 @@ class PresentasiUser extends Model {
         return $result;
     }
     public function getValueForTable($id) {
-        $query = "SELECT judul, is_revisi, is_accepted,created_at FROM " . static::$table . " WHERE id_mahasiswa = ?";
+        $query = "SELECT judul, is_revisi, is_accepted,created_at, keterangan FROM " . static::$table . " WHERE id_mahasiswa = ?";
         $stmt = self::getDB()->prepare($query);
         $idMahasiswa = $this->getIdMahasiswa($id);
         $stmt->bindParam(1,$idMahasiswa['id']);
