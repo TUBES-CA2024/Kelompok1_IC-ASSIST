@@ -12,7 +12,7 @@ $ruanganList = RuanganController::viewAllRuangan();
     Tambah mahasiswa
 </button>
 
-<table id="wawancaraMahasiswa" class="table table-striped">
+<table id="wawancaraMahasiswa" class="table table-striped rounded-table">
     <thead>
         <tr>
             <th>No</th>

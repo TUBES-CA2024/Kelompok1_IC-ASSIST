@@ -7,12 +7,10 @@
 
 <main>
 <h1 class="dashboard">Daftar Hadir</h1>
-
-
 <button type="button" data-bs-toggle="modal" data-bs-target="#addMahasiswaModal" class="btn btn-primary mb-3">
   Tambah Kehadiran Mahasiswa
 </button>
-<table id="presentasiMahasiswa" class="table table-striped">
+<table id="presentasiMahasiswa" class="table table-striped rounded-table">
     <thead>
         <tr>
             <th>No</th>

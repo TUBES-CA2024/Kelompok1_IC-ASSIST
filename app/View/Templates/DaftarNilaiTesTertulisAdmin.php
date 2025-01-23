@@ -6,7 +6,7 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
 <main>
 
 <h1 class="dashboard">Daftar Nilai</h1>
-<table id="daftar-nilai" class="table table-striped table-bordered">
+<table id="daftar-nilai" class="table table-striped rounded-table">
     <thead>
         <tr>
             <th>No</th>

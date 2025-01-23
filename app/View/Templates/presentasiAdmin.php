@@ -9,7 +9,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
 ?>
 <main>
 <h1 class="dashboard">Presentasi </h1>
-<table id="presentasiMahasiswa" class="table table-striped">
+<table id="presentasiMahasiswa" class="table table-striped rounded-table">
     <thead>
         <tr>
             <th>No</th>
@@ -56,7 +56,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
         Tambah Jadwal
     </button>
 
-    <table class="table table-striped table-bordered" style="table-layout: auto; width: 100%; text-align: left;">
+    <table class="table table-striped rounded-table" style="table-layout: auto; width: 100%; text-align: left;">
         <thead class="table-dark">
             <tr>
                 <th>No</th>

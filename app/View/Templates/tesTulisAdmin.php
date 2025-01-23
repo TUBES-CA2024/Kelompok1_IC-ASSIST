@@ -8,10 +8,8 @@ $allSoal = ExamController::viewAllSoal();
 <button type="button" data-bs-toggle="modal" data-bs-target="#addSoalModal" class="btn btn-primary mb-3">
    Soal
 </button>
-<button type="button">
-  <a href="#" data-page="lihatnilai" class="btn btn-primary mb-3">Lihat nilai</a>
-</button>
-<table class="table table-striped table-bordered">
+
+<table class="table table-striped rounded-table ">
   <thead class="table-dark">
     <tr>
       <th>No</th>

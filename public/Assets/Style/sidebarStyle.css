@@ -220,13 +220,13 @@
 
 .main-content {
     position: relative;
-    background-color: #f4f4f4;
+    background-color: #3DC2EC;
     min-height: 100vh;
     top: 0;
     left: 80px;
     transition: all 0.5s ease;
     width: calc(100% - 80px);
-    padding: 1rem;
+    padding: 0.8rem;
 }
 
 .container-gacor-footer {
@@ -264,4 +264,11 @@ footer a:hover {
 body {
     font-family: 'Poppins', sans-serif;
 
+}
+
+.rounded-table {
+    border-radius: 10px; 
+    overflow: hidden; 
+    border-collapse: separate; 
+    border-spacing: 0; 
 }
