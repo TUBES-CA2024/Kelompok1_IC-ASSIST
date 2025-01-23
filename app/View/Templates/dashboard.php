@@ -2,7 +2,6 @@
 use app\Controllers\notifications\NotificationControllers;
 use app\Controllers\user\DashboardUserController;
 $notifikasi = NotificationControllers::getMessageById() ?? [];
-$i = 0;
 
 ?>
 
@@ -14,14 +13,14 @@ $i = 0;
       <div class="middle">
         <div class="left">
           <h3>Tahap yang telah di selesaikan</h3>
-          <h1><?=$i?></h1>
+          <h1><?=DashboardUserController::getNumberTahapanSelesai()?></h1>
         </div>
         <div class="progress">
           <svg>
-            <circle cx="38" cy="38" r="38"></circle>
+            <circle cx="39" cy="39" r="39"></circle>
           </svg>
           <div class="number">
-            <p>81%</p>
+            <?=DashboardUserController::getPercentage()?>
           </div>
         </div>
       </div>
@@ -47,7 +46,7 @@ $i = 0;
           <td>Lengkapi Biodata</td>
           <?php 
           if(DashboardUserController::getBiodataStatus() == 1) {
-            $i++;
+           
             ?>
           <td class="success">Selesai</td>
           
@@ -56,7 +55,7 @@ $i = 0;
           } else {
           ?>
           <td class="danger">Belum</td>
-          <td>Anda telah menyelesaikan tahap ini</td>
+          <td>Anda belum menyelesaikan tahap ini</td>
           <?php
           }
           ?>
@@ -66,7 +65,6 @@ $i = 0;
           <td>Lengkapi Berkas</td>
           <?php 
           if(DashboardUserController::getBerkasStatus() == 1) {
-            $i++;
             ?>
           <td class="success">Selesai</td>
           <td>Anda telah menyelesaikan tahap ini</td>
@@ -74,7 +72,7 @@ $i = 0;
           } else {
           ?>
           <td class="danger">Belum</td>
-          <td>Anda telah menyelesaikan tahap ini</td>
+          <td>Anda belum mensubmit berkas anda </td>
           <?php
           }
           ?>
@@ -84,7 +82,6 @@ $i = 0;
           <td>Tes Tertulis</td>
           <?php 
           if(DashboardUserController::getAbsensiTesTertulis() == 1) {
-            $i++;
             ?>
           <td class="success">Selesai</td>
           <td>Anda telah menyelesaikan tahap ini</td>
@@ -103,7 +100,6 @@ $i = 0;
           <td>Submit Judul makalah dan PPT</td>
           <?php 
           if(DashboardUserController::getPptStatus() == 'diterima') {
-            $i++;
             ?>
           <td class="success">Selesai</td>
           <td>Anda telah menyelesaikan tahap ini</td>
@@ -127,7 +123,6 @@ $i = 0;
           <td>Submit makalah dan PPT</td>
           <?php 
           if(DashboardUserController::getPptJudulAccStatus() == 1) {
-            $i++;
             ?>
           <td class="success">Selesai</td>
           <td>Anda telah menyelesaikan tahap ini</td>
@@ -146,7 +141,6 @@ $i = 0;
           <td>Presentasi</td>
           <?php 
           if(DashboardUserController::getAbsensiPresentasi() == 1) {
-            $i++;
             ?>
           <td class="success">Selesai</td>
           <td>Anda telah menyelesaikan tahap ini</td>
@@ -165,7 +159,6 @@ $i = 0;
           <td>Wawancara Asisten</td>
           <?php 
           if(DashboardUserController::getAbsensiWawancaraI() == 1) {
-            $i++;
             ?>
           <td class="success">Selesai</td>
           <td>Anda telah menyelesaikan tahap ini</td>
@@ -184,7 +177,6 @@ $i = 0;
           <td>Wawancara Kepala Lab 1</td>
           <?php 
           if(DashboardUserController::getAbsensiWawancaraII() == 1) {
-            $i++;
             ?>
           <td class="success">Selesai</td>
           <td>Anda telah menyelesaikan tahap ini</td>
@@ -202,7 +194,6 @@ $i = 0;
           <td>Wawancara Kepala Lab 2</td>
           <?php 
           if(DashboardUserController::getAbsensiWawancaraIII() == 1) {
-            $i++;
             ?>
           <td class="success">Selesai</td>
           <td>Anda telah menyelesaikan tahap ini</td>

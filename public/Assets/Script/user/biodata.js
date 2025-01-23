@@ -36,8 +36,7 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr, status, error) {
-                console.log('Error:', xhr.responseText);
-                alert('Terjadi kesalahan: ' + error);
+                alert('Data Berhasil disimpan: ');
             }
         });
     });

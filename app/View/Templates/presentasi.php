@@ -11,6 +11,7 @@ $results = PresentasiUserController::viewAll() ?? [];
     ?>
     <div class="form-container">    
         <form id="berkasPresentasiForm">
+          <?php if(!isset($results['is_accepted'])) { ?>
             <div class="mb-3">
                 <label for="judul" class="form-label">Judul</label>
                 <input type="text" class="form-control" id="judul" name="judul" placeholder="Masukkan Judul" required>
@@ -20,7 +21,8 @@ $results = PresentasiUserController::viewAll() ?? [];
             </div>
         </form>
         </div>
-        <?php     if($results['is_accepted'] == 1 && isset($results['is_accepted'])) {
+        <?php
+          }else if($results['is_accepted'] == 1 && isset($results['is_accepted'])) {
  ?>
           <div class="form-container">    
         <form id="presentasiFormAccepted" enctype="multipart/form-data">
