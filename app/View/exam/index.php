@@ -14,13 +14,13 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/tubes_web/public/Assets/Style/exam.css" />
+    <link rel="stylesheet" href="<?=APP_URL?>/Assets/Style/exam.css" />
 </head>
 
 <body>
     <header>
         <div class="header-container">
-            <img src="/tubes_web/public/Assets/Img/iclabs.png" alt="Logo" class="logo">
+            <img src="<?=APP_URL?>/Assets/Img/iclabs.png" alt="Logo" class="logo">
             <h1>ICLabs - Tes Tertulis</h1>
         </div>
     </header>
@@ -47,10 +47,12 @@ foreach ($results as $index => $result): ?>
     <div class="question" data-id-soal="<?= htmlspecialchars($result['id']) ?>" style="display: none;">
         <h3>Question <?= $index + 1 ?></h3>
 
-        <?php if (!empty($result['gambar'])): ?>
-            <img src="/tubes_web/public/Assets/Img/soal/<?= htmlspecialchars($result['gambar']) ?>"
-                alt="Gambar Soal <?= $index + 1 ?>" class="question-image">
-        <?php endif; ?>
+        <?php if (!empty($result['gambar']) && $result['gambar'] != 'Bukan soal bergambar'): ?>
+    <img src="/tubes_web/public/Assets/Img/soal/<?= htmlspecialchars($result['gambar']) ?>"
+         alt="Gambar Soal <?= $index + 1 ?>"
+         style="display: block; margin: 20px auto; max-width: 100%; max-height: 420px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+<?php endif; ?>
+
 
         <p><?= htmlspecialchars($result['deskripsi']) ?></p>
 
@@ -69,8 +71,12 @@ foreach ($results as $index => $result): ?>
                 <?php endforeach; ?>
             </ul>
         <?php else: ?>
-            <textarea name="answer[<?= htmlspecialchars($result['id']) ?>]" class="text-answer"
-                placeholder="Write your answer here..."></textarea>
+            <textarea name="answer[<?= htmlspecialchars($result['id']) ?>]" 
+          class="text-answer" 
+          placeholder="Write your answer here..." 
+          style="width: 60%; margin: 0 auto; margin-top: 1.5rem; display: block; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: 'Poppins', sans-serif; font-size: 16px; line-height: 1.5; resize: none; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); background-color: #f9f9f9; color: #333;">
+</textarea>
+
         <?php endif; ?>
 
         <div class="navigation-buttons">

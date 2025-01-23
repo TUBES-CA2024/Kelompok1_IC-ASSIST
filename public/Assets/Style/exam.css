@@ -18,7 +18,7 @@ body {
 
 header {
     width: 100%;
-    background-color: #00bcd4; /* Warna header sesuai dengan warna tombol */
+    background-color: #00bcd4; 
     padding: 10px 20px;
     display: flex;
     align-items: center;
@@ -43,7 +43,6 @@ h1 {
     font-weight: bold;
 }
 
-/* Container for main content */
 .container {
     display: flex;
     background-color: #ffffff;
@@ -102,16 +101,15 @@ h1 {
     font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
-    border: 1px solid #888; /* Border untuk tombol navigasi */
+    border: 1px solid #888; 
 }
 
 .nav button.active {
     background-color: #00bcd4;
     color: #ffffff;
-    border: 1px solid #004d40; /* Border khusus untuk tombol aktif */
+    border: 1px solid #004d40; 
 }
 
-/* Main content styling */
 .main-content {
     width: 75%;
     padding: 20px;
@@ -155,7 +153,6 @@ h1 {
     margin-right: 10px;
 }
 
-/* Navigation buttons (Back and Next) */
 .navigation-buttons {
     display: flex;
     justify-content: space-between;
@@ -259,13 +256,40 @@ footer {
 }
 
 .question-image {
-    max-width: 100%; 
-    height: auto;
-    margin-bottom: 15px; 
+    max-width: 50%; 
+    height: 50%;
+    margin-bottom: 5rem; 
 }
 
 .nav button.answered {
     background-color:#3DC2EC;
     color: white;
     border: 1px solid #05c925; /* Untuk membedakan */
+}
+
+.text-answer {
+    width: 60%;
+    margin: 0 auto; /* Agar berada di tengah */
+    display: block; /* Untuk memastikan marginnya bekerja */
+    padding: 15px;
+    border-radius: 10px; /* Membuat sudut membulat */
+    border: 1px solid #ddd; /* Garis tepi */
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: none; /* Agar tidak bisa diubah ukurannya */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Menambahkan sedikit bayangan */
+    background-color: #f9f9f9; /* Warna latar belakang */
+    color: #333; /* Warna teks */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Animasi saat berinteraksi */
+}
+
+.text-answer:focus {
+    border-color: #3DC2EC; /* Warna garis tepi saat fokus */
+    box-shadow: 0 0 5px rgba(61, 194, 236, 0.5); /* Bayangan saat fokus */
+    outline: none; /* Menghilangkan outline default */
+}
+
+.text-answer::placeholder {
+    color: #aaa; /* Warna placeholder */
 }
