@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
             jawaban: jawaban,
         }));
     
-        console.log("Mengirim jawaban ke backend:", JSON.stringify(data));
+        console.log("Mengirim jawaban ke backend:", JSON.stringify(data)); 
     
         return new Promise((resolve, reject) => {
             $.ajax({
@@ -100,7 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 data: JSON.stringify(data),
                 success: function (response) {
                     try {
-                        // Validasi respons dari backend
                         if (typeof response !== "object" || !response.status) {
                             throw new Error("Format respons tidak valid");
                         }
@@ -128,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     
-
+    
 
 
     function updateNavigationButtons() {
@@ -195,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function saveAnswer(idSoal, answer) {
-        answers[idSoal] = answer; // Simpan jawaban ke dalam objek JSON
+        answers[idSoal] = answer; 
     }
 
     
@@ -208,16 +207,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     questions.forEach((question, index) => {
         const options = question.querySelectorAll("input[type='radio']");
+        const textarea = question.querySelector("textarea.text-answer");
         const idSoal = question.getAttribute("data-id-soal");
-
+    
         options.forEach(option => {
             option.addEventListener("change", () => {
                 const answer = option.value;
-                saveAnswer(idSoal, answer); // Simpan jawaban
+                saveAnswer(idSoal, answer); 
                 markAnsweredQuestion(index);
             });
         });
+    
+        if (textarea) {
+            textarea.addEventListener("input", () => {
+                const answer = textarea.value.trim(); 
+                saveAnswer(idSoal, answer); 
+                console.log(`Jawaban disimpan: { idSoal: ${idSoal}, answer: "${answer}" }`); // Debugging
+                markAnsweredQuestion(index);
+            });
+        }
     });
+    
+    
 
     showQuestion(currentQuestion);
     updateTimerDisplay(remainingTime);

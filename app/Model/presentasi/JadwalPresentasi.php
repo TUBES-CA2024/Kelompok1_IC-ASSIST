@@ -58,15 +58,16 @@ class JadwalPresentasi extends Model
 }
 
     
-    
+    // id ruangan = 1 , 2 ,3 ,4 5
+    // id mahasiswa = 6 ,7 ,8 ,9
     public function save(JadwalPresentasi $jadwalPresentasi, $mahasiswas)
     {
-
+        // looping 1
         foreach ($mahasiswas as $mahasiswa) {
             $sql = "INSERT INTO " . static::$table . " 
             (id_presentasi,id_ruangan,tanggal,waktu) VALUES (?,?,?,?)";
-            $idRuangan = (int) $jadwalPresentasi->id_ruangan;
-            $idPresentasi = (int) $mahasiswa['id'];
+            $idRuangan = (int) $jadwalPresentasi->id_ruangan; //id 1
+            $idPresentasi = (int) $mahasiswa['id']; // id 6
             $date = $this->validateAndFormatDate($jadwalPresentasi->tanggal);
             $time = $this->validateAndFormatTime($jadwalPresentasi->waktu);
             $stmt = self::getDB()->prepare($sql); 

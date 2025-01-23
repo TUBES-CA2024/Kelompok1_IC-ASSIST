@@ -28,7 +28,8 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
     <div class="container">
         <div class="sidebar">
             <div class="profile-section">
-                <img src="<?= htmlspecialchars($photo) ?>" alt="User Photo" name="userphoto" id="userphoto" class="profile-picture">
+                <img src="<?= htmlspecialchars($photo) ?>" alt="User Photo" name="userphoto" id="userphoto"
+                    class="profile-picture">
                 <h3><?= htmlspecialchars($nama) ?></h3>
                 <p><?= htmlspecialchars($stambuk) ?></p>
             </div>
@@ -41,35 +42,44 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
         <div class="main-content">
             <div class="timer">Time Remaining: <span id="timer">30:00</span></div>
             <div class="questions-container">
-                <?php foreach ($results as $index => $result): ?>
-                    <div class="question" data-id-soal="<?= htmlspecialchars($result['id']) ?>" style="display: none;">
-                        <h3>Question <?= $index + 1 ?></h3>
+            <?php
+foreach ($results as $index => $result): ?>
+    <div class="question" data-id-soal="<?= htmlspecialchars($result['id']) ?>" style="display: none;">
+        <h3>Question <?= $index + 1 ?></h3>
 
-                        <?php if (!empty($result['gambar'])): ?>
-                            <img src="/tubes_web/public/Assets/Img/soal/<?= htmlspecialchars($result['gambar']) ?>" alt="Gambar Soal <?= $index + 1 ?>" class="question-image">
-                        <?php endif; ?>
+        <?php if (!empty($result['gambar'])): ?>
+            <img src="/tubes_web/public/Assets/Img/soal/<?= htmlspecialchars($result['gambar']) ?>"
+                alt="Gambar Soal <?= $index + 1 ?>" class="question-image">
+        <?php endif; ?>
 
-                        <p><?= htmlspecialchars($result['deskripsi']) ?></p>
+        <p><?= htmlspecialchars($result['deskripsi']) ?></p>
 
-                        <ul class="options">
-                            <?php
-                            $options = json_decode($result['pilihan']);
-                            foreach ($options as $optionIndex => $option): ?>
-                                <li>
-                                    <label>
-                                        <input type="radio" name="answer[<?= $index ?>]" value="<?= htmlspecialchars($optionIndex) ?>">
-                                        <?= htmlspecialchars($option) ?>
-                                    </label>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-
-                        <div class="navigation-buttons">
-                            <button class="nav-button back">Back</button>
-                            <button class="nav-button next">Next</button>
-                        </div>
-                    </div>
+        <?php if ($result['status_soal'] === 'pilihan_ganda'): ?>
+            <ul class="options">
+                <?php
+                $options = json_decode($result['pilihan']);
+                foreach ($options as $optionIndex => $option): ?>
+                    <li>
+                        <label>
+                            <input type="radio" name="answer[<?= htmlspecialchars($result['id']) ?>]"
+                                value="<?= htmlspecialchars($optionIndex) ?>">
+                            <?= htmlspecialchars($option) ?>
+                        </label>
+                    </li>
                 <?php endforeach; ?>
+            </ul>
+        <?php else: ?>
+            <textarea name="answer[<?= htmlspecialchars($result['id']) ?>]" class="text-answer"
+                placeholder="Write your answer here..."></textarea>
+        <?php endif; ?>
+
+        <div class="navigation-buttons">
+            <button class="nav-button back">Back</button>
+            <button class="nav-button next">Next</button>
+        </div>
+    </div>
+<?php endforeach; ?>
+
             </div>
         </div>
     </div>
