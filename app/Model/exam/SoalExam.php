@@ -125,8 +125,9 @@ class SoalExam extends Model {
     public function updateSoal($id, SoalExam $soal) {
         $sql = "UPDATE " . static::$table . " SET deskripsi = ?, pilihan = ?, jawaban = ?, gambar = ?, status_soal = ?, modified = ? WHERE id = ?";
         $fileGambar = $this->getImageNama($soal->gambar, $soal->fotoSize);
-        if(!$fileGambar) {
-            $fileGambar = "Bukan soal bergambar";
+       
+        if(!$soal->jawaban) {
+            $soal->jawaban = 'soal tidak punya jawaban';
         }
         $date = date('Y-m-d H:i:s');
         $stmt = self::getDB()->prepare($sql);
@@ -141,7 +142,7 @@ class SoalExam extends Model {
     }
     private function getImageNama($berkas, $berkasSize) {
         if($berkas === '' || $berkasSize === 0 || $berkas == null) {
-            return '';
+            return "Bukan soal bergambar";
         }
         $imageExt = strtolower(pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION));
         if (!in_array($imageExt, $this->imageAccepted)) {

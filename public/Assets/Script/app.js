@@ -1,6 +1,6 @@
 $(document).ready(function () {
   $('.sidebar a, .profile a, .dashboard a').on('click', function (e) {
-    if (this.id === "startTestButton") return; // Jangan tangani tombol "Start Test"
+    if (this.id === "startTestButton") return; 
     e.preventDefault();
 
     var page = $(this).data('page');
@@ -12,7 +12,7 @@ $(document).ready(function () {
     console.log("Memuat halaman:", page);
 
     $.ajax({
-      url: `${APP_URL}/${page}`, // Gunakan template literal untuk URL
+      url: `${APP_URL}/${page}`, 
       method: 'GET',
       success: function (response) {
         $('#content').html(response);
@@ -28,7 +28,6 @@ $(document).ready(function () {
   var lastScrollTop = 0;
   var scrollTimeout;
 
-  // Menangani scroll untuk menampilkan/menyembunyikan footer
   window.addEventListener("scroll", function () {
     if (scrollTimeout) {
       clearTimeout(scrollTimeout);
@@ -45,23 +44,20 @@ $(document).ready(function () {
         return;
       }
 
-      // Sembunyikan footer jika scroll ke bawah, tampilkan jika scroll ke atas
       if (currentScroll > lastScrollTop) {
         footer.classList.remove('show-footer');
       } else {
         footer.classList.add('show-footer');
       }
 
-      // Pastikan footer terlihat jika sudah mendekati bagian bawah halaman
       if (currentScroll + clientHeight >= scrollHeight - 10) {
         footer.classList.add('show-footer');
       }
 
       lastScrollTop = currentScroll;
-    }, 100); // Debounce scroll event
+    }, 100); 
   });
 
-  // Menangani tombol "Start Test" agar tidak terpengaruh SPA handler
   $('#startTestButton').on('click', function () {
     const nomorMejaInput = $('#nomorMeja').val().trim();
 
@@ -70,7 +66,7 @@ $(document).ready(function () {
       return;
     }
 
-    $('#errorMessage').text(''); // Hapus pesan error jika input valid
+    $('#errorMessage').text(''); 
 
     // Redirect ke halaman ujian dengan nomor meja
     const targetURL = `${APP_URL}/soal?nomorMeja=${encodeURIComponent(nomorMejaInput)}`;

@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
             textarea.addEventListener("input", () => {
                 const answer = textarea.value.trim(); 
                 saveAnswer(idSoal, answer); 
-                console.log(`Jawaban disimpan: { idSoal: ${idSoal}, answer: "${answer}" }`); // Debugging
+                console.log(`Jawaban disimpan: { idSoal: ${idSoal}, answer: "${answer}" }`);
                 markAnsweredQuestion(index);
             });
         }

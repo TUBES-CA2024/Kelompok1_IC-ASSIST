@@ -117,7 +117,7 @@ class SoalController extends Controller {
         $fotoSize = null;
 
         if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
-            $gambar = $_FILES['gambar']['tmp_name'] ?? 'bukan soal gambar';
+            $gambar = $_FILES['gambar']['tmp_name'] ?? '';
             $fotoSize = $_FILES['gambar']['size'] ?? 0;
         }
 
@@ -135,7 +135,6 @@ class SoalController extends Controller {
             $tipeJawaban
         );
 
-        // Memperbarui soal menggunakan metode updateSoal
         $soalExam->updateSoal($id, $soalExam);
 
         // Respon sukses

@@ -41,4 +41,12 @@ class JawabanExam extends Model {
 
         return $result ? $result : null;
     }
+    public function getJawabanByIdMahasiswa() {
+        $query = "SELECT * FROM " . self::$table . " WHERE id_mahasiswa = :id";
+        $id = $this->getIdMahasiswa($_SESSION['user']['id'])['id'];
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }

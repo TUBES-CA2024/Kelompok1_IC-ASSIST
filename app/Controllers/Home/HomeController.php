@@ -54,6 +54,9 @@ class HomeController extends Controller
                 case 'profile':
                     View::render('profileAdmin', 'Templates');
                     break;
+                case 'lihatnilai':
+                    View::render('DaftarNilaiTesTertulisAdmin', 'Templates');
+                    break;
                 case 'logout':
                     $_SESSION = [];
                     session_destroy();

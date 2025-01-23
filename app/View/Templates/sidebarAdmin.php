@@ -43,6 +43,13 @@
             <span class="tooltip">Tes Tulis</span>
         </li>
         <li>
+            <a href="#" data-page="lihatnilai">
+            <i class='bx bx-bar-chart-alt-2' ></i>
+                        <span class="nav-item">Lihat nilai peserta</span>
+            </a>
+            <span class="tooltip">Lihat nilai peserta</span>
+        </li>
+        <li>
             <a href="#" data-page="wawancara">
                 <i class="bx bx-user-voice"></i>
                 <span class="nav-item">Wawancara</span>

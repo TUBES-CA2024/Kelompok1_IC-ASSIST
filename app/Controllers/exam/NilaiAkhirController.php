@@ -35,5 +35,19 @@ class NilaiAkhirController extends Controller {
         }
     }
     
-    
+    public static function getAllNilaiAkhirMahasiswa() {
+        try {
+            if(session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            if(!isset($_SESSION['user']['id'])) {
+                throw new \Exception('User tidak terautentikasi');
+            }
+            $nilai = new NilaiAkhir();
+            return $nilai->getAllNIlai();
+        } catch(\Exception $e) {
+            error_log("Error in getAllNilaiAkhirMahasiswa: " . $e->getMessage());
+            return [];
+        }
+    }
 }

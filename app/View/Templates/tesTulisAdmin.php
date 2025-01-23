@@ -6,6 +6,9 @@ $allSoal = ExamController::viewAllSoal();
 <button type="button" data-bs-toggle="modal" data-bs-target="#addSoalModal" class="btn btn-primary mb-3">
   Tambah Soal
 </button>
+<button type="button">
+  <a href="#" data-page="lihatnilai" class="btn btn-primary mb-3">Lihat nilai</a>
+</button>
 <table class="table table-striped table-bordered">
   <thead class="table-dark">
     <tr>
@@ -25,7 +28,7 @@ $allSoal = ExamController::viewAllSoal();
         <td><?= $i++ ?></td>
         <td><?= $soal['deskripsi'] ?></td>
         <td>
-          <?php if (!empty($soal['gambar'])): ?>
+          <?php if ($soal['gambar'] !== 'Bukan soal bergambar'): ?>
             <img src="/tubes_web/public/Assets/Img/soal/<?= htmlspecialchars($soal['gambar']) ?>" alt="soal.png"
               style="width: 4cm; height: 3cm;">
           <?php else: ?>
@@ -396,17 +399,14 @@ $allSoal = ExamController::viewAllSoal();
 if (gambarInput) {
   formData.append("gambar", gambarInput);
 } else {
-  formData.append("tipeSoal", "tidak"); 
+  formData.append("gambar",'');
 }
-
-
   formData.append("tipeJawaban", $('input[name="updateTipeJawaban"]:checked').val());
 
   if ($('input[name="updateTipeJawaban"]:checked').val() === "pilihan_ganda") {
     formData.append("pilihan", $("#updatePilihan").val());
     formData.append("jawaban", $("#updateJawaban").val());
-  }
-
+  } 
   console.log("id: ", formData.get("id"));
   console.log("deskripsi: ", formData.get("deskripsi"));
   console.log("gambar: ", formData.get("gambar"));
