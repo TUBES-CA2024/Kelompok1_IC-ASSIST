@@ -6,7 +6,7 @@ $results = PresentasiUserController::viewAll() ?? [];
 ?>
     <main>
     <div>
-    <h2 class="presentasi">Presentasi</h2>
+    <h1 class="dashboard">Presentasi</h1>
     <?php 
     ?>
     <div class="form-container">    

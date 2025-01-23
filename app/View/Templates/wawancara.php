@@ -4,7 +4,7 @@
 ?>
 
 <main>
-    <h2 class="dashboard">Wawancara</h2>
+    <h1 class="dashboard">Wawancara</h1>
     <div class="recent-judul">
         <table>
             <thead>

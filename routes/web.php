@@ -46,4 +46,5 @@ Router::post("/updatesoal",[new SoalController,'updateSoal']);
 Router::post("/absensi",[new AbsensiUserController, 'saveData']);
 Router::post("/wawancara",[new WawancaraController, 'save']);
 Router::post("/updatewawancara",[new WawancaraController, 'update']);
-Router::Post("/deletewawancara",[new WawancaraController, 'delete']);
+Router::post("/deletewawancara",[new WawancaraController, 'delete']);
+Router::post("/updatepresentasi",[new PresentasiUserController, 'SendKeteranganAndRevisi']);

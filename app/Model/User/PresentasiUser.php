@@ -20,6 +20,7 @@ class PresentasiUser extends Model {
     protected $filePptAcc = "pptx";
     protected $maxMakalahSize = 1024 * 1024;
     protected $maxPptSize = 1024 * 1024 * 4;
+    protected $keterangan;
     public function __construct(
         $id_mahasiswa = null,
         $judul = null,
@@ -40,6 +41,10 @@ class PresentasiUser extends Model {
             $this->makalahSize = $makalahSize;
             $this->pptSize = $pptSize;
 
+        } else if($judul === null && $makalah === null && $ppt === null && $makalahSize === null && $pptSize === null) {
+            $this->id_mahasiswa = $id_mahasiswa;
+            $this->is_revisi = $is_revisi;
+            $this->is_accepted = $is_accepted;
         }
          else {
             $this->id_mahasiswa = $id_mahasiswa;
@@ -206,4 +211,5 @@ class PresentasiUser extends Model {
         }
         return $result['is_accepted'];
     }
+
 }

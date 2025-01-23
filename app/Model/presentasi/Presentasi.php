@@ -4,7 +4,7 @@ namespace App\Model\presentasi;
 
 use App\Core\Model;
 class Presentasi extends Model {
-
+    protected $keterangan;
     static protected $table = 'presentasi';
 
     public function getAll() {
@@ -90,10 +90,18 @@ class Presentasi extends Model {
     }
 
     public function updateJudulStatus($id) {
-        $sql = "UPDATE " . static::$table . " SET is_accepted = 1 WHERE id_mahasiswa = :id";
+        $sql = "UPDATE " . static::$table . " SET is_accepted = 1, is_revisi = 0  WHERE id_mahasiswa = :id";
         $stmt = self::getDB()->prepare($sql);
-        $stmt->bindParam(':id', $_POST['id']);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
+    }
+
+    public function updateIsRevisiAndKeterangan($id,$keterangan) {
+        $sql = "UPDATE " . static::$table . " SET is_revisi = 1, is_accepted = 0, keterangan = ? WHERE id_mahasiswa = ?";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindParam(1, $keterangan);
+        $stmt->bindParam(2, $id);
+        return $stmt->execute();
     }
 
 }

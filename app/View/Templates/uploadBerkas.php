@@ -5,7 +5,7 @@ $isAcc = $result['is_Accepted'] ?? '';
 ?>
 
 <main>
-    <h2 class="berkas">Upload Berkas</h2>
+    <h1 class="biodata">Upload Berkas</h1>
     <div class="form-container" style="max-width: 1000px; height: 500px; padding: 20px; margin: 0 auto;">
         <form style="padding:10px" id="berkasForm" enctype="multipart/form-data">
             <div class="mb-3">

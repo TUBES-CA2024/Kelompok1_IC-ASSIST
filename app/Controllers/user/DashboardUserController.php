@@ -73,31 +73,37 @@ class DashboardUserController extends Controller {
         return $i;
     }
     public static function getPercentage() {
-        if (self::getNumberTahapanSelesai() == 0) {
+        $completed = self::getNumberTahapanSelesai(); 
+        $total = 9; 
+        if ($completed == 0) {
             return 0;
         }
-        $i = floor((self::getNumberTahapanSelesai() / 9) * 100);
-        return "$i%" ;
-    }    
+        return floor(($completed / $total) * 100); 
+    }
+    
     public static function generateCircle($percentage) {
-        $radius = 38; 
-        $circumference = 2 * pi() * $radius; 
-        $offset = $circumference * (1 - $percentage / 100); 
+        $radius = 38; // Radius lingkaran
+        $circumference = 2 * pi() * $radius; // Keliling lingkaran
+        $offset = $circumference * (1 - $percentage / 100); // Hitung offset
+    
         return "
-        <svg width=\"100\" height=\"100\">
-            <circle cx=\"50\" cy=\"50\" r=\"$radius\" stroke=\"#e6e6e6\" stroke-width=\"4\" fill=\"none\"></circle>
-            <circle 
-                cx=\"50\" 
-                cy=\"50\" 
-                r=\"$radius\" 
-                stroke=\"#00aaff\" 
-                stroke-width=\"4\" 
-                fill=\"none\" 
-                stroke-dasharray=\"$circumference\" 
-                stroke-dashoffset=\"$offset\"
-                transform=\"rotate(-90 50 50)\"
-            ></circle>
-        </svg>";
+        <div class=\"progress\">
+            <svg width=\"100\" height=\"100\">
+                <circle cx=\"50\" cy=\"50\" r=\"$radius\" stroke=\"#e6e6e6\" stroke-width=\"14\" fill=\"none\"></circle>
+                <circle 
+                    cx=\"50\" 
+                    cy=\"50\" 
+                    r=\"$radius\" 
+                    stroke=\"#00aaff\" 
+                    stroke-width=\"14\" 
+                    fill=\"none\" 
+                    stroke-dasharray=\"$circumference\" 
+                    stroke-dashoffset=\"$offset\"
+                    transform=\"rotate(-90 50 50)\"
+                ></circle>
+            </svg>
+            <div class=\"number\">{$percentage}%</div>
+        </div>";
     }
     
 }

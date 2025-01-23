@@ -178,41 +178,50 @@ main .insights .progress {
     border-radius: 50%;
 }
 /* PROGRESS CIRCLE */
-main .insights svg {
+/* PROGRESS CIRCLE */
+main .insights .progress {
+    position: relative;
     width: 7rem;
     height: 7rem;
 }
 
-main .insights svg circle{
-    fill: none;
-    stroke: var(--color-primary);
-    stroke-width: 14;
-    stroke-linecap: round;
-    transform: translate(5px, 5px);
-    stroke-dasharray: 110;
-    stroke-dashoffset: 92;
+main .insights .progress svg {
+    width: 100%;
+    height: 100%;
 }
 
-main .insights .tahap svg circle{
-   stroke-dashoffset: -30;
-   stroke-dasharray: 200;
+main .insights .progress svg circle {
+    fill: none;
+    stroke-width: 14;
+    stroke-linecap: round;
+    transform: rotate(-90deg); /* Rotate circle to start from top */
+    transform-origin: center; /* Set origin to the center for rotation */
+}
+
+main .insights .progress svg circle:first-child {
+    stroke: #e6e6e6; /* Background stroke color */
+}
+
+main .insights .progress svg circle:last-child {
+    stroke: var(--color-primary); /* Progress stroke color */
+    stroke-dasharray: 0; /* Will be dynamically set by JavaScript */
+    stroke-dashoffset: 0; /* Will be dynamically set by JavaScript */
+    transition: stroke-dashoffset 0.4s ease; /* Smooth animation for progress */
 }
 
 main .insights .progress .number {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%;
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
-main .insights small {
-    margin-top: 1.6rem;
-    display: block;
-}
 table {
     font-size: 0.9rem;
 }
