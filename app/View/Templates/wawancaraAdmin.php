@@ -6,7 +6,8 @@ $wawancara = WawancaraController::getAll();
 $mahasiswaList = MahasiswaController::viewAllMahasiswa();
 $ruanganList = RuanganController::viewAllRuangan();
 ?>
-<h1>Wawancara Admin</h1>
+<main>
+    <h1 class="dashboard">Wawancara</h1>
 <button type="button" data-bs-toggle="modal" data-bs-target="#addJadwalModal" class="btn btn-primary mb-3">
     Tambah mahasiswa
 </button>
@@ -46,6 +47,7 @@ $ruanganList = RuanganController::viewAllRuangan();
         <?php } ?>
     </tbody>
 </table>
+</main>
 
 <div class="modal fade" id="addJadwalModal" tabindex="-1" aria-labelledby="addJadwalModalLabel" aria-hidden="true">
     <div class="modal-dialog">

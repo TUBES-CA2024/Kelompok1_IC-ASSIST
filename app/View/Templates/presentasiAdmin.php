@@ -7,6 +7,8 @@ $mahasiswaAccStatus = PresentasiUserController::viewAllAccStatusForAdmin();
 $ruanganList = RuanganController::viewAllRuangan();
 $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
 ?>
+<main>
+<h1 class="dashboard">Presentasi </h1>
 <table id="presentasiMahasiswa" class="table table-striped">
     <thead>
         <tr>
@@ -136,6 +138,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
         </div>
     </div>
 </div>
+</main>
 
 <div class="modal fade" id="presentasiModal" tabindex="-1" aria-labelledby="presentasiModalLabel" aria-hidden="true">
     <div class="modal-dialog">

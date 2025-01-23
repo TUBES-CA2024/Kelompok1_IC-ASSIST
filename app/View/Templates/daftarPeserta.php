@@ -3,7 +3,8 @@ use App\Controllers\user\BerkasUserController;
 use App\Controllers\user\MahasiswaController;
 $result = MahasiswaController::viewAllMahasiswa() ?? [];
 ?>
-
+<main>
+    <h1 class="dashboard">Daftar peserta</h1>
 <table id="daftar" class="display">
     <thead>
         <tr>
@@ -49,7 +50,7 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
         <?php } ?>
     </tbody>
 </table>
-
+</main>
 <!-- Modal -->
 <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
     <div class="modal-dialog">

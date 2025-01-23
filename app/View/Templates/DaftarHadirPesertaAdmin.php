@@ -5,7 +5,9 @@
     $mahasiswaList = MahasiswaController::viewAllMahasiswa();
 ?>
 
-<h1>Daftar Hadir Mahasiswa</h1>
+<main>
+<h1 class="dashboard">Daftar Hadir</h1>
+
 
 <button type="button" data-bs-toggle="modal" data-bs-target="#addMahasiswaModal" class="btn btn-primary mb-3">
   Tambah Kehadiran Mahasiswa
@@ -48,6 +50,7 @@
         <?php } ?>
     </tbody>
 </table>
+</main>
 
 <div class="modal fade" id="addMahasiswaModal" tabindex="-1" aria-labelledby="addJadwalModalLabel" aria-hidden="true">
     <div class="modal-dialog">

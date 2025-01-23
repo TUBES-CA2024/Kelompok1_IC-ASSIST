@@ -2,9 +2,11 @@
 use App\Controllers\exam\ExamController;
 $allSoal = ExamController::viewAllSoal();
 ?>
-<h1>Daftar Soal</h1>
+
+<main>
+  <h1 class="dashboard">Tes Tertulis</h1>
 <button type="button" data-bs-toggle="modal" data-bs-target="#addSoalModal" class="btn btn-primary mb-3">
-  Tambah Soal
+   Soal
 </button>
 <button type="button">
   <a href="#" data-page="lihatnilai" class="btn btn-primary mb-3">Lihat nilai</a>
@@ -106,6 +108,7 @@ $allSoal = ExamController::viewAllSoal();
     </div>
   </div>
 </div>
+</main>
 
 <div class="modal fade" id="updateSoalModal" tabindex="-1" aria-labelledby="updateSoalModalLabel" aria-hidden="true">
   <div class="modal-dialog">

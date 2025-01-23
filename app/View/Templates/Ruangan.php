@@ -3,6 +3,8 @@ use App\Controllers\presentasi\RuanganController;
 $ruanganList = RuanganController::viewAllRuangan();
 
 ?>
+<main>
+<h1 class="dashboard">Ruangan</h1>
 
 <table class="table table-striped table-bordered" style="table-layout: auto; width: 100%; text-align: left;">
         <thead class="table-dark">
@@ -22,3 +24,4 @@ $ruanganList = RuanganController::viewAllRuangan();
             <?php } ?>
         </tbody>
     </table>
+</main>

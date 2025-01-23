@@ -3,7 +3,9 @@
 use App\Controllers\Exam\NilaiAkhirController;
 $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
 ?>
-<h1>Daftar Nilai Mahasiswa</h1>
+<main>
+
+<h1 class="dashboard">Daftar Nilai</h1>
 <table id="daftar-nilai" class="table table-striped table-bordered">
     <thead>
         <tr>
@@ -24,3 +26,4 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
         <?php endforeach; ?>
     </tbody>
 </table>
+</main>
