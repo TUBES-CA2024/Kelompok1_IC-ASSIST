@@ -71,9 +71,19 @@ class NilaiAkhir extends Model {
     }
 
     public function getAllNilai() {
-        $sql = "SELECT m.nama_lengkap, m.stambuk, n.nilai FROM mahasiswa m
+        $sql = "SELECT m.id, m.nama_lengkap, m.stambuk, n.nilai FROM mahasiswa m
                 JOIN nilai_akhir n ON m.id = n.id_mahasiswa";
         $stmt = self::getDB()->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getSoalAndJawaban($id) {
+        $query = "SELECT s.deskripsi, s.pilihan, s.jawaban, j.jawaban as jawaban_user
+                  FROM soal s
+                  JOIN jawaban j ON s.id = j.id_soal
+                  WHERE j.id_mahasiswa = :id_mahasiswa";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(':id_mahasiswa', $id);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

@@ -50,4 +50,44 @@ class NilaiAkhirController extends Controller {
             return [];
         }
     }
+
+    public function getSoalAndJawabanMahasiswa() {
+        try {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+    
+            if (!isset($_SESSION['user']['id'])) {
+                throw new \Exception('User tidak terautentikasi');
+            }
+    
+            $id = $_POST['id'] ?? null;
+            if (!$id) {
+                throw new \Exception('ID mahasiswa tidak ditemukan');
+            }
+    
+            $nilai = new NilaiAkhir();
+            $result = $nilai->getSoalAndJawaban($id);
+    
+            if (empty($result)) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Tidak ada data soal dan jawaban untuk mahasiswa ini.'
+                ]);
+                return;
+            }
+    
+            echo json_encode([
+                'status' => 'success',
+                'data' => $result
+            ]);
+        } catch (\Exception $e) {
+            error_log("Error in getSoalAndJawabanMahasiswa: " . $e->getMessage());
+            echo json_encode([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+    
 }

@@ -59,7 +59,6 @@ $ruanganList = RuanganController::viewAllRuangan();
     </div>
 </div>
 
-<!-- Modal Update Ruangan -->
 <div class="modal fade" id="updateRuanganModal" tabindex="-1" aria-labelledby="updateRuanganLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

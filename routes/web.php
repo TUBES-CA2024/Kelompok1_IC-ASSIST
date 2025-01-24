@@ -2,6 +2,7 @@
 
 use App\Controllers\exam\AnswersController;
 use App\Controllers\exam\ExamController;
+use App\Controllers\Exam\NilaiAkhirController;
 use App\Controllers\Home\HomeController;
 use App\Controllers\Login\LoginController;
 use App\Controllers\Login\RegisterController;
@@ -17,7 +18,6 @@ use App\Controllers\exam\SoalController;
 use App\Controllers\user\WawancaraController;
 use App\Controllers\presentasi\RuanganController;
 use App\Core\Router;
-use App\Model\presentasi\Ruangan;
 
 
 
@@ -53,3 +53,4 @@ Router::post("/updatepresentasi",[new PresentasiUserController, 'sendKeteranganA
 Router::post("/tambahruangan",[new RuanganController, 'addRuangan']);
 Router::post("/deleteruangan",[new RuanganController, 'deleteRuangan']);
 Router::post("/updateruangan",[new RuanganController, 'updateRuangan']);
+Router::post("/getsoaljawaban",[new NilaiAkhirController, 'getSoalAndJawabanMahasiswa']);
