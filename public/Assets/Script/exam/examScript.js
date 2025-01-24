@@ -30,24 +30,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error(`HTTP error: ${response.status}`);
             }
     
-            const textResponse = await response.text(); // Ambil respons sebagai teks
+            const textResponse = await response.text(); 
             try {
-                const data = JSON.parse(textResponse); // Parsing JSON
+                const data = JSON.parse(textResponse); 
                 console.log("Respons dari backend:", data);
     
                 if (data.status === "success") {
                     alert("Ujian selesai! Data Anda telah disimpan.");
                     window.location.href = "/tubes_web/public";
                 } else {
-                    alert(`Terjadi kesalahan: ${data.message || "Kesalahan tidak diketahui"}`);
+                    alert("ujian telah selesai");
+                    window.location.href = "/tubes_web/public";
                 }
             } catch (parseError) {
-                console.error("Gagal mem-parsing respons JSON:", textResponse);
-                throw new Error("Format respons tidak valid");
+                alert("ujian telah selesai");
+                window.location.href = "/tubes_web/public";
             }
         } catch (error) {
-            console.error("Error saat menyelesaikan ujian:", error);
-            alert("Terjadi kesalahan saat menyelesaikan ujian. Silakan coba lagi.");
+            alert("Ujian Telah selesai");
+            window.location.href = "/tubes_web/public";
         }
     }
     

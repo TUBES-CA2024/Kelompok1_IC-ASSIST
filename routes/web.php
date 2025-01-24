@@ -15,7 +15,9 @@ use App\Controllers\user\PresentasiUserController;
 use App\Controllers\notifications\NotificationControllers;
 use App\Controllers\exam\SoalController;
 use App\Controllers\user\WawancaraController;
+use App\Controllers\presentasi\RuanganController;
 use App\Core\Router;
+use App\Model\presentasi\Ruangan;
 
 
 
@@ -48,3 +50,6 @@ Router::post("/wawancara",[new WawancaraController, 'save']);
 Router::post("/updatewawancara",[new WawancaraController, 'update']);
 Router::post("/deletewawancara",[new WawancaraController, 'delete']);
 Router::post("/updatepresentasi",[new PresentasiUserController, 'sendKeteranganAndRevisi']);
+Router::post("/tambahruangan",[new RuanganController, 'addRuangan']);
+Router::post("/deleteruangan",[new RuanganController, 'deleteRuangan']);
+Router::post("/updateruangan",[new RuanganController, 'updateRuangan']);

@@ -145,7 +145,6 @@ class SoalController extends Controller {
         http_response_code(200);
 
     } catch (\Exception $e) {
-        // Log error dan respon error
         error_log("Error in updateSoal: " . $e->getMessage());
 
         echo json_encode([

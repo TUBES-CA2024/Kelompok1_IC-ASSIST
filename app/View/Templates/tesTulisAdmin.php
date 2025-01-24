@@ -203,7 +203,12 @@ $allSoal = ExamController::viewAllSoal();
       const jawaban = $(this).data("jawaban");
 
       $("#modalDeskripsi").text(deskripsi);
-      $("#modalGambar").attr("src", gambar ? "/tubes_web/public/Assets/Img/soal/" + gambar : "");
+      if (gambar !== 'Bukan soal bergambar') {
+    $("#modalGambar").attr("src", "/tubes_web/public/Assets/Img/soal/" + gambar);
+} else {
+    $("#modalGambar").removeAttr("src");
+}
+
       $("#modalPilihan").text(pilihan);
       $("#modalJawaban").text(jawaban);
 
@@ -265,14 +270,12 @@ $allSoal = ExamController::viewAllSoal();
       }
     });
 
-    // Initial state check for tipeSoal
     if ($('input[name="updateTipeSoal"]:checked').val() === "iya") {
       $("#updateGambar").closest(".mb-3").show();
     } else {
       $("#updateGambar").closest(".mb-3").hide();
     }
 
-    // Initial state check for tipeJawaban
     if ($('input[name="updateTipeJawaban"]:checked').val() === "pilihan_ganda") {
       $("#updatePilihanGandaInput").show();
       $("#updateJawabanGandaInput").show();
@@ -431,9 +434,10 @@ if (gambarInput) {
           location.reload();
         } else {
           alert(jsonResponse.message);
+          console.log(jsonResponse.message);
         }
       } catch (error) {
-        console.error('Error parsing response:', error);
+        console.log('Error parsing response:', error);
         alert('Terjadi kesalahan, coba lagi.');
       }
     },

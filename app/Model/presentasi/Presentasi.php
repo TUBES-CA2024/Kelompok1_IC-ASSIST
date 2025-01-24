@@ -103,5 +103,4 @@ class Presentasi extends Model {
         $stmt->bindParam(2, $id);
         return $stmt->execute();
     }
-
 }
