@@ -116,7 +116,15 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
                     if (response.status === 'success' && response.data.length > 0) {
                         let soalJawabanHTML = '';
                         response.data.forEach(item => {
-                            soalJawabanHTML += `<li><strong>Soal:</strong> ${item.deskripsi} <br><strong>Jawaban:</strong> ${item.jawaban}</li>`;
+                            soalJawabanHTML += `
+                            <li><strong>Soal:</strong> ${item.deskripsi} 
+                            <br>
+                            <strong> pilihan: </strong> ${item.pilihan}
+                            <br>
+                            <strong>Jawaban benar :</strong> ${item.jawaban}
+                            <strong>Jawaban User  :</strong> ${item.jawaban_user} 
+                            <br>
+                            </li>`;
                         });
                         $('#soalJawabanList').html(soalJawabanHTML);
                     } else {
