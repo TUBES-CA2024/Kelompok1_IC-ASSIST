@@ -24,14 +24,29 @@ class BerkasUserController extends Controller
         return true;
     }
     public function updateAcceptedStatus() {
-        $berkas = new BerkasUser(0,0,0,0,0,0,0,0,0);
-        $id = $_POST['id'] ?? '';
-        $isAccepted = $berkas->updateAccepted($id);
-        if($isAccepted) {
-            return true;
+        try {
+            $id = $_POST['id'] ?? null;
+            if (!$id) {
+                http_response_code(400);
+                echo json_encode(['status' => 'error', 'message' => 'ID tidak diberikan']);
+                return;
+            }
+    
+            $berkas = new BerkasUser();
+            $isAccepted = $berkas->updateAccepted($id);
+    
+            if ($isAccepted) {
+                echo json_encode(['status' => 'success', 'message' => 'Status berhasil diperbarui']);
+            } else {
+                http_response_code(500);
+                echo json_encode(['status' => 'error', 'message' => 'Gagal memperbarui status']);
+            }
+        } catch (\Exception $e) {
+            http_response_code(500);
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
-        return false;
     }
+    
     public function saveBerkas()
     {
         if (session_status() == PHP_SESSION_NONE) {

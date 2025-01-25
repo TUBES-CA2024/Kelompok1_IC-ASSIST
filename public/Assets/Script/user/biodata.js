@@ -1,4 +1,3 @@
-const appUrl = "/tubes_web/public/"
 
 $(document).ready(function() {
     
@@ -6,7 +5,7 @@ $(document).ready(function() {
     $('#logoutButton').click(function(e) {
         e.preventDefault();
         $.ajax({
-            url: appUrl + 'logout', 
+            url: '/tubes_web/public/logout', 
             type: 'POST',
             success: function(response) {
                 if (response.status === 'success') {
@@ -26,7 +25,7 @@ $(document).ready(function() {
     $('#editProfileForm').submit(function(e) {
         e.preventDefault();
                 $.ajax({
-            url: appUrl + 'updatebiodata',
+            url: '/tubes_web/public/updatebiodata',
             type: 'POST',
             data: $(this).serialize(),
             dataType: 'json',

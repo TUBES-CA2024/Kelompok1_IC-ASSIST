@@ -147,24 +147,23 @@ $notifikasi = NotificationControllers::getMessageById() ?? [];
 });
 
 
-  const viewMessageButton = document.getElementById("viewMessageButton");
-  const customMessageModal = document.getElementById("customMessageModal");
-  const closeModalButton = document.getElementById("closeModalButton");
-  const closeModalFooterButton = document.getElementById("closeModalFooterButton");
+//  let customMessageModal = document.getElementById("customMessageModal");
+//  let closeModalButton = document.getElementById("closeModalButton");
+//  let closeModalFooterButton = document.getElementById("closeModalFooterButton");
 
-  viewMessageButton.addEventListener("click", function () {
+  document.getElementById("viewMessageButton").addEventListener("click", function () {
     customMessageModal.style.display = "flex";
   });
 
-  closeModalButton.addEventListener("click", function () {
+  document.getElementById("closeModalButton").addEventListener("click", function () {
     customMessageModal.style.display = "none";
   });
 
-  closeModalFooterButton.addEventListener("click", function () {
+  document.getElementById("closeModalFooterButton").addEventListener("click", function () {
     customMessageModal.style.display = "none";
   });
 
-  customMessageModal.addEventListener("click", function (event) {
+  document.getElementById("customMessageModal").addEventListener("click", function (event) {
     if (event.target === customMessageModal) {
       customMessageModal.style.display = "none";
     }

@@ -146,7 +146,6 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
 </div>
 
 <script>
-    const appUrl = "/tubes_web/public/";
 
     $(document).ready(function () {
         $('#editProfileButton').click(function () {
@@ -171,12 +170,12 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
         $('#logoutButton').click(function (e) {
             e.preventDefault();
             $.ajax({
-                url: appUrl + 'logout',
+                url: '/tubes_web/public/logout',
                 type: 'POST',
                 success: function (response) {
                     if (response.status === 'success') {
                         alert(response.message || 'Logout berhasil');
-                        window.location.href = appUrl;
+                        window.location.href = '/tubes_web/public/';
                     } else {
                         alert(response.message || 'Logout gagal');
                     }
@@ -205,7 +204,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
             console.log("Form Data:", formData);
 
             $.ajax({
-                url: appUrl + 'updatebiodata',
+                url: '/tubes_web/public/updatebiodata',
                 method: 'POST',
                 data: formData,
                 success: function (response) {

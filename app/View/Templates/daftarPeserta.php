@@ -5,51 +5,51 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
 ?>
 <main>
     <h1 class="dashboard">Daftar peserta</h1>
-<table id="daftar" class="display">
-    <thead>
-        <tr>
-            <th>no</th>
-            <th>Nama Lengkap</th>
-            <th>Stambuk</th>
-            <th>Jurusan</th>
-            <th>Kelas</th>
-            <th>Alamat</th>
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php $i = 1; ?>
-        <?php foreach ($result as $row) { ?>
-            <tr data-id="<?= $row['id'] ?>" data-userid="<?= $row['idUser'] ?>" style="cursor: pointer;">
-                <td><?= $i ?></td>
-                <td>
-                    <span data-bs-toggle="modal" data-bs-target="#detailModal" data-nama="<?= $row['nama_lengkap'] ?>"
-                        data-stambuk="<?= $row['stambuk'] ?>" data-jurusan="<?= $row['jurusan'] ?>"
-                        data-kelas="<?= $row['kelas'] ?>" data-alamat="<?= $row['alamat'] ?>"
-                        data-tempat_lahir="<?= $row['tempat_lahir'] ?>" data-notelp="<?= $row['notelp'] ?>"
-                        data-tanggal_lahir="<?= $row['tanggal_lahir'] ?>" data-jenis_kelamin="<?= $row['jenis_kelamin'] ?>"
-                        data-foto="<?= $row['berkas']['foto'] ?>" data-cv="<?= $row['berkas']['cv'] ?>"
-                        data-transkrip="<?= $row['berkas']['transkrip_nilai'] ?>"
-                        data-surat="<?= $row['berkas']['surat_pernyataan'] ?>">
-                        <?= $row['nama_lengkap'] ?>
-                    </span>
-
-                </td>
-                <td><?= $row['stambuk'] ?></td>
-                <td><?= $row['jurusan'] ?></td>
-                <td><?= $row['kelas'] ?></td>
-                <td><?= $row['alamat'] ?></td>
-                <td>
-                    <div style="display: flex; gap:5%;">
-                        <img src="/tubes_web/public/Assets/Img/edit.svg" alt="edit" style="cursor: pointer;">
-                        <img src="/tubes_web/public/Assets/Img/delete.svg" alt="delete" style="cursor: pointer;">
-                    </div>
-                </td>
+    <table id="daftar" class="display">
+        <thead>
+            <tr>
+                <th>no</th>
+                <th>Nama Lengkap</th>
+                <th>Stambuk</th>
+                <th>Jurusan</th>
+                <th>Kelas</th>
+                <th>Alamat</th>
+                <th>Aksi</th>
             </tr>
-            <?php $i++; ?>
-        <?php } ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php $i = 1; ?>
+            <?php foreach ($result as $row) { ?>
+                <tr data-id="<?= $row['id'] ?>" data-userid="<?= $row['idUser'] ?>" style="cursor: pointer;">
+                    <td><?= $i ?></td>
+                    <td>
+                        <span data-bs-toggle="modal" data-bs-target="#detailModal" data-nama="<?= $row['nama_lengkap'] ?>"
+                            data-stambuk="<?= $row['stambuk'] ?>" data-jurusan="<?= $row['jurusan'] ?>"
+                            data-kelas="<?= $row['kelas'] ?>" data-alamat="<?= $row['alamat'] ?>"
+                            data-tempat_lahir="<?= $row['tempat_lahir'] ?>" data-notelp="<?= $row['notelp'] ?>"
+                            data-tanggal_lahir="<?= $row['tanggal_lahir'] ?>"
+                            data-jenis_kelamin="<?= $row['jenis_kelamin'] ?>" data-foto="<?= $row['berkas']['foto'] ?>"
+                            data-cv="<?= $row['berkas']['cv'] ?>" data-transkrip="<?= $row['berkas']['transkrip_nilai'] ?>"
+                            data-surat="<?= $row['berkas']['surat_pernyataan'] ?>">
+                            <?= $row['nama_lengkap'] ?>
+                        </span>
+
+                    </td>
+                    <td><?= $row['stambuk'] ?></td>
+                    <td><?= $row['jurusan'] ?></td>
+                    <td><?= $row['kelas'] ?></td>
+                    <td><?= $row['alamat'] ?></td>
+                    <td>
+                        <div style="display: flex; gap:5%;">
+                            <img src="/tubes_web/public/Assets/Img/edit.svg" alt="edit" style="cursor: pointer;">
+                            <img src="/tubes_web/public/Assets/Img/delete.svg" alt="delete" style="cursor: pointer;">
+                        </div>
+                    </td>
+                </tr>
+                <?php $i++; ?>
+            <?php } ?>
+        </tbody>
+    </table>
 </main>
 <!-- Modal -->
 <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
@@ -148,7 +148,7 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
 
         $('#detailModal').on('show.bs.modal', function (event) {
             const button = $(event.relatedTarget);
-
+            const idMhs = button.closest('tr').data('id');
             // Ambil data dari atribut data-*
             const nama = button.data('nama');
             const stambuk = button.data('stambuk');
@@ -164,6 +164,7 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
             const transkrip = button.data('transkrip');
             const surat = button.data('surat');
 
+            $(this).data('id', idMhs);
             // Set data ke modal
             $('#modalNama').text(nama);
             $('#modalStambuk').text(stambuk);
@@ -211,6 +212,32 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
             event.stopPropagation();
             const id = $(this).closest('tr').data('id');
             $('#editModal').data('id', id).modal('show');
+        });
+
+        $('#acceptButton').on('click', function () {
+            const idToSend = $('#detailModal').data('id'); // Ambil ID dari modal
+            console.log('ID yang dikirim ke server: ', idToSend);
+
+            if (!idToSend) {
+                alert('ID tidak ditemukan di modal!');
+                return;
+            }
+
+            // Kirim data ke server
+            $.ajax({
+                url: '<?=APP_URL?>/acceptberkas',
+                type: 'POST',
+                data: {id: idToSend}    ,
+                success: function (response) {
+                    if (response.status === 'success') {
+                        alert('Data berhasil diaccept!');
+                        $('#detailModal').modal('hide');
+                    } 
+                },
+                error: function (xhr) {
+                    console.error('Error: ', xhr.responseText);
+                }
+            });
         });
 
         $('#confirmDelete').on('click', function (e) {

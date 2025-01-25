@@ -33,7 +33,7 @@ class DashboardUser extends Model {
     }
 
     public function getBerkasStatus() {
-        $query = "SELECT * FROM " . self::$tableBerkas . " WHERE id_mahasiswa = :id";
+        $query = "SELECT accepted FROM " . self::$tableBerkas . " WHERE id_mahasiswa = :id";
         $stmt = self::getDB()->prepare($query);
         $id = $this->getMahasiswaId();
         $stmt->bindParam(':id', $id);
@@ -44,11 +44,8 @@ class DashboardUser extends Model {
             return false;
         }
         foreach ($result as $key => $value) {
-            if (!empty($value)) {
-                return true;
-            }
+            return $value;
         }
-        return false;
     }
     
     public function getAbsensiTesTertulis() {

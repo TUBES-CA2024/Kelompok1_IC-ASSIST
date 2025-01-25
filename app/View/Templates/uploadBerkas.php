@@ -207,7 +207,7 @@ $nama = ProfileController::viewBiodata() == null ? "Nama Lengkap" : ProfileContr
                         <td><?=$nama?></td>
                         <td>Submit Berkas</td>
                         <?php if ($result['accepted'] == 1) { ?>
-                            <td><span class="status">Terverifikasi</span></td>
+                            <td><span class="status-acc">Terverifikasi</span></td>
                         <?php } else if ($result['accepted'] == 0) { ?>
                         <td><span class="status">Belum Terverifikasi</span></td>
                     </tr>
