@@ -73,7 +73,7 @@ class NilaiAkhirController extends Controller {
                 echo json_encode([
                     'status' => 'error',
                     'message' => 'Tidak ada data soal dan jawaban untuk mahasiswa ini.'
-                ]);//tess
+                ]);
                 return;
             }
     

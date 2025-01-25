@@ -50,17 +50,14 @@ class Router
         $found = false;
 
         foreach ($routes as $route) {
-            // Konversi path dengan parameter ke regex
             $pattern = str_replace("/", "\/", $route['path']);
             $pattern = preg_replace('/\{(\w+)\}/', '(?P<$1>[^\/]+)', $pattern);
-            $pattern = '/^' . $pattern . '\/?$/'; // Tambahkan trailing slash opsional
-
+            $pattern = '/^' . $pattern . '\/?$/'; 
             if (preg_match($pattern, $path, $matches)) {
                 $handler = $route['handler'];
                 $found = true;
 
                 if (is_callable($handler)) {
-                    // Jalankan handler dengan parameter regex jika cocok
                     return $handler(array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY));
                 }
 
@@ -68,7 +65,6 @@ class Router
             }
         }
 
-        // Jika rute tidak ditemukan
         if (!$found) {
             http_response_code(404);
             exit;

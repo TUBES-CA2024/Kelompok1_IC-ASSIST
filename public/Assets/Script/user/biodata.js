@@ -1,20 +1,48 @@
-$('#logoutButton').click(function(e) {
-    e.preventDefault();
-    $.ajax({
-        url: 'tubes_web/public/logout', 
-        type: 'POST',
-        success: function(response) {
-            if (response.status === 'success') {
-                alert(response.message || 'Logout berhasil');
-                window.location.href = '/tubes_web/public';
-            } else {
-                alert(response.message || 'Logout gagal');
+const appUrl = "/tubes_web/public/"
+
+$(document).ready(function() {
+    
+    
+    $('#logoutButton').click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: appUrl + 'logout', 
+            type: 'POST',
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert(response.message || 'Logout berhasil');
+                    window.location.href = '/tubes_web/public';
+                } else {
+                    alert(response.message || 'Logout gagal');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log('Error:', xhr.responseText);
+                alert('Terjadi kesalahan: ' + error);
             }
-        },
-        error: function(xhr, status, error) {
-            console.log('Error:', xhr.responseText);
-            alert('Terjadi kesalahan: ' + error);
-        }
+        });
+    });
+
+    $('#editProfileForm').submit(function(e) {
+        e.preventDefault();
+                $.ajax({
+            url: appUrl + 'updatebiodata',
+            type: 'POST',
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert(response.message || 'Data berhasil diperbarui');
+                    window.location.reload();
+                } else {
+                    alert(response.message || 'Data gagal diperbarui');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log('Error:', xhr.responseText);
+                alert('Terjadi kesalahan: ' + error);
+            }
+        });
     });
 });
 
@@ -40,8 +68,51 @@ $(document).ready(function() {
             }
         });
     });
-});
+    $('#biodataForm').submit(function(e) {
+        e.preventDefault();
 
+        $.ajax({
+            url: 'tubes_web/public/store',
+            type: 'POST',
+            data: $('#biodataForm').serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert(response.message || 'Data berhasil disimpan');
+                    window.location.href = 'tubes_web/public/';
+                } else {
+                    alert(response.message || 'Data gagal disimpan');
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Data Berhasil disimpan: ');
+            }
+        });
+    });
+});
+$(document).ready(function() {
+    $('#biodataForm').submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: 'tubes_web/public/store',
+            type: 'POST',
+            data: $('#biodataForm').serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert(response.message || 'Data berhasil disimpan');
+                    window.location.href = 'tubes_web/public/';
+                } else {
+                    alert(response.message || 'Data gagal disimpan');
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Data Berhasil disimpan: ');
+            }
+        });
+    });
+});
 function updateKelasOptions() {
     const gender = document.querySelector('input[name="gender"]:checked').value;
     const kelasSelect = document.getElementById('floatingSelect');

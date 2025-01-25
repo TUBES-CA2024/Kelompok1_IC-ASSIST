@@ -33,16 +33,28 @@ class BiodataUser extends Model {
         $tanggalLahir = null, 
         $noHp = null
         ) {
-        $this->idUser = $idUser;
-        $this->jurusan = $jurusan;
-        $this->stambuk = $stambuk;
-        $this->kelas = $kelas;
-        $this->namaLengkap = $namaLengkap;
-        $this->alamat = $alamat;
-        $this->jenisKelamin = $jenisKelamin;
-        $this->tempatLahir = $tempatLahir;
-        $this->tanggalLahir = $tanggalLahir;
-        $this->noHp = $noHp;
+            if($stambuk == null) {
+                $this->idUser = $idUser;
+                $this->jurusan = $jurusan;
+                $this->kelas = $kelas;
+                $this->namaLengkap = $namaLengkap;
+                $this->alamat = $alamat;
+                $this->jenisKelamin = $jenisKelamin;
+                $this->tempatLahir = $tempatLahir;
+                $this->tanggalLahir = $tanggalLahir;
+                $this->noHp = $noHp;
+            } else {
+                $this->idUser = $idUser;
+                $this->jurusan = $jurusan;
+                $this->stambuk = $stambuk;
+                $this->kelas = $kelas;
+                $this->namaLengkap = $namaLengkap;
+                $this->alamat = $alamat;
+                $this->jenisKelamin = $jenisKelamin;
+                $this->tempatLahir = $tempatLahir;
+                $this->tanggalLahir = $tanggalLahir;
+                $this->noHp = $noHp;
+            }
     }
 
     public function save(BiodataUser $biodata) {
@@ -126,11 +138,22 @@ class BiodataUser extends Model {
     
 
     public function getBiodata($id) {
-        $query = 
-        "SELECT stambuk,(SELECT nama FROM kelas where id = id_kelas) as kelas,
-        (SELECT nama FROM jurusan where id = id_jurusan) as jurusan, 
-        nama_lengkap, alamat, jenis_kelamin, tempat_lahir, tanggal_lahir, 
-        no_telp FROM " . static::$table . " where id_user = ?";
+        $query = "
+        SELECT 
+            s.stambuk,
+            k.nama AS kelas,
+            j.nama AS jurusan,
+            s.nama_lengkap,
+            s.alamat,
+            s.jenis_kelamin,
+            s.tempat_lahir,
+            s.tanggal_lahir,
+            s.no_telp
+        FROM " . static::$table . " s
+        JOIN kelas k ON k.id = s.id_kelas
+        JOIN jurusan j ON j.id = s.id_jurusan
+        WHERE s.id_user = ?";
+    
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(1, $id);
         $stmt->execute();
@@ -152,4 +175,36 @@ class BiodataUser extends Model {
        return null;
     }
 
+    public function updateBiodata(BiodataUser $biodata) {
+        $sql = "UPDATE " . static::$table . " 
+                SET nama_lengkap = ?, id_jurusan = ?, id_kelas = ?, alamat = ?, jenis_kelamin = ?, tempat_lahir = ?, tanggal_lahir = ?, no_telp = ? 
+                WHERE id_user = ?";
+        
+        // Validasi dan dapatkan ID
+        $idKelas = $this->getIdKelas($biodata->kelas);
+        $idJurusan = $this->getIdJurusan($biodata->jurusan);
+        
+        if (!$idKelas || !$idJurusan) {
+            throw new \Exception("ID Kelas atau Jurusan tidak valid.");
+        }
+    
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindParam(1, $biodata->namaLengkap);
+        $stmt->bindParam(2, $idJurusan['id']);
+        $stmt->bindParam(3, $idKelas['id']);
+        $stmt->bindParam(4, $biodata->alamat);
+        $stmt->bindParam(5, $biodata->jenisKelamin);
+        $stmt->bindParam(6, $biodata->tempatLahir);
+        $stmt->bindParam(7, $biodata->tanggalLahir);
+        $stmt->bindParam(8, $biodata->noHp);
+        $stmt->bindParam(9, $biodata->idUser);
+    
+        try {
+            $stmt->execute();
+        } catch (\Exception $e) {
+            error_log("SQL Error: " . $sql . " Params: " . json_encode([$biodata->namaLengkap, $idJurusan['id'], $idKelas['id'], $biodata->alamat, $biodata->jenisKelamin, $biodata->tempatLahir, $biodata->tanggalLahir, $biodata->noHp, $biodata->idUser]));
+            throw new \Exception("Gagal mengupdate biodata: " . $e->getMessage());
+        }
+    }
+    
 }
