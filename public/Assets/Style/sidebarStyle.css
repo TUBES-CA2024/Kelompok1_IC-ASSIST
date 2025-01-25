@@ -220,14 +220,20 @@
 
 .main-content {
     position: relative;
-    background-color: #3DC2EC;
-    min-height: 100vh;
+    background: linear-gradient(135deg, #3DC2EC, #74EBD5); /* Gradien modern */
+    min-height: 100vh; /* Sedikit lebih kecil untuk proporsi */
     top: 0;
-    left: 80px;
+    left: 80px; /* Sesuaikan dengan sidebar */
     transition: all 0.5s ease;
-    width: calc(100% - 80px);
-    padding: 0.8rem;
+    width: calc(100% - 80px); /* Sesuai ukuran sidebar */
+    padding: 1.5rem; /* Padding sedikit lebih kecil */
+    border-radius: 12px; /* Radius yang lebih proporsional */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Shadow lebih lembut */
+    overflow: hidden;
+    max-width: 100%; /* Batas lebar maksimal */
+    margin-left: 1px;
 }
+
 
 .container-gacor-footer {
     max-width: 100%;

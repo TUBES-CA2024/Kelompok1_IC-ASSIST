@@ -15,71 +15,72 @@ $noHp = ProfileController::viewBiodata() == null ? "No Telephone" : ProfileContr
 $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto"] ?? "default.png");
 ?>
 
-<div class="profile">
-    <div class="form-container"
-        style="display: flex; align-items: center; justify-content: space-between; padding: 30px; height: 250px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; background-color: #fff;">
-        <div style="flex: 1; display: flex; justify-content: center;">
+<main>
+    <h1 class="dashboard">Profile</h1>
+    <div class="profile-container"
+        style="display: grid; grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem; max-width: 900px; margin: 0 auto;">
+        <!-- Profile Section -->
+        <div class="profile-card"
+            style="background-color: #fff; border-radius: 20px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); padding: 2.5rem; display: grid; grid-template-columns: auto 1fr auto; gap: 1.5rem; align-items: center;">
             <img src="<?= $photo ?>" alt="Profile Picture"
-                style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                style="width: 150px; height: 150px; object-fit: cover; border-radius: 15px;">
+            <div style="font-size: 1.1rem;">
+                <p>Username: <strong><?= $userName; ?></strong></p>
+                <p>NIM: <strong><?= $stambuk; ?></strong></p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <button type="button" class="btn" id="editProfileButton"
+                    style="background-color: #007BFF; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">Edit
+                    Profile</button>
+                <button id="logoutButton" class="btn"
+                    style="background-color: #FF0000; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">Logout</button>
+            </div>
         </div>
-        <div style="flex: 2; padding-left: 20px;">
-            <p style="font-size: 1rem; margin-bottom: 10px;">Username: <strong><?= $userName; ?></strong></p>
-            <p style="font-size: 1rem; margin-bottom: 10px;">NIM: <strong><?= $stambuk; ?></strong></p>
-        </div>
-        <div class="profile-buttons" style="flex: 1; display: flex; flex-direction: column; align-items: flex-end;">
-            <button type="button" class="btn btn-submit" id="editProfileButton"
-                style="background-color: #007BFF; color: white; padding: 8px 16px; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; margin-bottom: 10px; width: 150px;">
-                Edit Profile
-            </button>
-            <button id="logoutButton" class="btn btn-submit"
-                style="background-color: #FF0000; color: white; padding: 8px 16px; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; width: 150px;">
-                Logout
-            </button>
-        </div>
-    </div>
-</div>
 
-<div class="form-container"
-    style="display: flex; flex-direction: column; justify-content: center; padding: 30px; height: auto; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-width: 800px; margin: 0 auto; background-color: #fff; margin-top:1.8rem;">
-    <div style="flex: 1; display: flex; flex-wrap: wrap; justify-content: space-between;">
-        <div style="flex: 1 1 45%; margin-bottom: 15px;">
-            <p style="font-size: 1rem;">Nama Lengkap</p>
-            <p><strong><?= $nama; ?></strong></p>
-        </div>
-        <div style="flex: 1 1 45%; margin-bottom: 15px;">
-            <p style="font-size: 1rem;">NIM</p>
-            <p><strong><?= $stambuk; ?></strong></p>
-        </div>
-        <div style="flex: 1 1 45%; margin-bottom: 15px;">
-            <p style="font-size: 1rem;">Jurusan</p>
-            <p><strong><?= $jurusan; ?></strong></p>
-        </div>
-        <div style="flex: 1 1 45%; margin-bottom: 15px;">
-            <p style="font-size: 1rem;">Kelas</p>
-            <p><strong><?= $kelas; ?></strong></p>
-        </div>
-        <div style="flex: 1 1 45%; margin-bottom: 15px;">
-            <p style="font-size: 1rem;">Alamat</p>
-            <p><strong><?= $alamat; ?></strong></p>
-        </div>
-        <div style="flex: 1 1 45%; margin-bottom: 15px;">
-            <p style="font-size: 1rem;">Jenis Kelamin</p>
-            <p><strong><?= $jenisKelamin; ?></strong></p>
-        </div>
-        <div style="flex: 1 1 45%; margin-bottom: 15px;">
-            <p style="font-size: 1rem;">Tempat Lahir</p>
-            <p><strong><?= $tempatLahir; ?></strong></p>
-        </div>
-        <div style="flex: 1 1 45%; margin-bottom: 15px;">
-            <p style="font-size: 1rem;">Tanggal Lahir</p>
-            <p><strong><?= $tanggalLahir; ?></strong></p>
-        </div>
-        <div style="flex: 1 1 45%; margin-bottom: 15px;">
-            <p style="font-size: 1rem;">No Telephone</p>
-            <p><strong><?= $noHp; ?></strong></p>
+        <!-- Details Section -->
+        <div class="details-card"
+            style="background-color: #fff; border-radius: 20px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); padding: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div>
+                <p style="font-size: 1rem; color: #333; margin-bottom: 0.5rem;">Nama Lengkap</p>
+                <p style="font-size: 1.1rem; font-weight: bold; color: #555;"><?= $nama; ?></p>
+            </div>
+            <div>
+                <p style="font-size: 1rem; color: #333; margin-bottom: 0.5rem;">NIM</p>
+                <p style="font-size: 1.1rem; font-weight: bold; color: #555;"><?= $stambuk; ?></p>
+            </div>
+            <div>
+                <p style="font-size: 1rem; color: #333; margin-bottom: 0.5rem;">Jurusan</p>
+                <p style="font-size: 1.1rem; font-weight: bold; color: #555;"><?= $jurusan; ?></p>
+            </div>
+            <div>
+                <p style="font-size: 1rem; color: #333; margin-bottom: 0.5rem;">Kelas</p>
+                <p style="font-size: 1.1rem; font-weight: bold; color: #555;"><?= $kelas; ?></p>
+            </div>
+            <div>
+                <p style="font-size: 1rem; color: #333; margin-bottom: 0.5rem;">Alamat</p>
+                <p style="font-size: 1.1rem; font-weight: bold; color: #555;"><?= $alamat; ?></p>
+            </div>
+            <div>
+                <p style="font-size: 1rem; color: #333; margin-bottom: 0.5rem;">Jenis Kelamin</p>
+                <p style="font-size: 1.1rem; font-weight: bold; color: #555;"><?= $jenisKelamin; ?></p>
+            </div>
+            <div>
+                <p style="font-size: 1rem; color: #333; margin-bottom: 0.5rem;">Tempat Lahir</p>
+                <p style="font-size: 1.1rem; font-weight: bold; color: #555;"><?= $tempatLahir; ?></p>
+            </div>
+            <div>
+                <p style="font-size: 1rem; color: #333; margin-bottom: 0.5rem;">Tanggal Lahir</p>
+                <p style="font-size: 1.1rem; font-weight: bold; color: #555;"><?= $tanggalLahir; ?></p>
+            </div>
+            <div>
+                <p style="font-size: 1rem; color: #333; margin-bottom: 0.5rem;">No Telephone</p>
+                <p style="font-size: 1.1rem; font-weight: bold; color: #555;"><?= $noHp; ?></p>
+            </div>
         </div>
     </div>
-</div>
+</main>
+
+
 
 <div id="editProfileModal" class="modal"
     style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
@@ -150,7 +151,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
     $(document).ready(function () {
         $('#editProfileButton').click(function () {
             $('#editProfileModal').css('display', 'flex');
-            updateKelasOptions(); 
+            updateKelasOptions();
         });
 
         $('#closeModal').click(function () {
@@ -210,7 +211,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
                 success: function (response) {
                     if (response.status === 'success') {
                         alert(response.message || 'Data berhasil diperbarui');
-                        window.location.reload(); 
+                        window.location.reload();
                     } else {
                         alert("data berhasil diperbarui");
                         window.location.reload();
@@ -230,8 +231,8 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
             kelasSelect.innerHTML = '<option value="">Pilih Kelas</option>';
 
             const kelasOptions = gender === 'Perempuan'
-                ? ['B1', 'B2', 'B3', 'B4', 'B5', 'B6'] 
-                : ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9']; 
+                ? ['B1', 'B2', 'B3', 'B4', 'B5', 'B6']
+                : ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9'];
             kelasOptions.forEach(kelas => {
                 const option = document.createElement('option');
                 option.value = kelas;

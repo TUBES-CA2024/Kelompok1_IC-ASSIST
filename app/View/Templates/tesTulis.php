@@ -92,7 +92,9 @@
 }
 
 </style>
-<<div class="exam-container">
+<main>
+<h1 class="dashboard">Tes Tertulis</h1>
+<div class="exam-container">
     <h2>Test Exam</h2>
     <p>Pada tahap kali ini kalian akan melaksanakan ujian pilihan ganda.</p>
     <p>Tata tertib sebelum ujian meliputi:</p>
@@ -108,6 +110,7 @@
     <div id="errorMessage" class="error"></div>
     <button id="startTestButton">Start Test</button>
 </div>
+</main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function () {
