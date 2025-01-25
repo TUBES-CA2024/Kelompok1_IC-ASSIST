@@ -5,6 +5,171 @@
     $mahasiswaList = MahasiswaController::viewAllMahasiswa();
 ?>
 
+<style>
+    /* Import Font */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+  
+
+    /* Primary Button */
+    .btn-primary {
+        background: linear-gradient(135deg, #3DC2EC, #3392cc);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #3392cc, #3DC2EC);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .btn-primary:focus {
+        outline: none;
+    }
+
+    /* Table Styles */
+    .table-striped {
+        background-color: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    .table-striped th,
+    .table-striped td {
+        padding: 16px 20px;
+        text-align: left;
+        color: #555;
+    }
+
+    .table-striped th {
+        background-color: #f9fbfc;
+        font-weight: 600;
+        font-size: 1rem;
+        color: #333;
+        text-transform: uppercase;
+    }
+
+    .table-striped tr:nth-child(odd) {
+        background-color: #f8faff;
+    }
+
+    .table-striped tr:nth-child(even) {
+        background-color: #e8f4fc;
+    }
+
+    .table-striped tr:hover {
+        background-color: rgba(61, 194, 236, 0.2);
+        cursor: pointer;
+    }
+
+    .rounded-table {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    /* Modal Styles */
+    .modal-content {
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .modal-header {
+        background: linear-gradient(135deg, #3DC2EC, #3392cc);
+        color: white;
+        border-bottom: none;
+        border-radius: 12px 12px 0 0;
+        padding: 20px;
+    }
+
+    .modal-header h5 {
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .modal-body {
+        padding: 20px;
+        color: #555;
+    }
+
+    .modal-footer {
+        border-top: none;
+        padding: 20px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    /* Form Styles */
+    .form-control,
+    .form-select {
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        padding: 10px 15px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #3DC2EC;
+        box-shadow: 0 0 5px rgba(61, 194, 236, 0.5);
+        outline: none;
+    }
+
+    .form-select {
+        appearance: none;
+        background: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%233DC2EC' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 5.646a.5.5 0 0 1 .708 0L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E")
+            no-repeat right 12px center;
+        background-size: 12px 12px;
+    }
+
+    .form-control-plaintext {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        color: #555;
+        font-size: 1rem;
+    }
+
+    .form-control-plaintext:focus {
+        border: none;
+        outline: none;
+    }
+
+    .btn-warning {
+        background: linear-gradient(135deg, #FFD54F, #FFC107);
+        color: white;
+    }
+
+    .btn-warning:hover {
+        background: linear-gradient(135deg, #FFC107, #FFD54F);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #4CAF50, #388E3C);
+        color: white;
+    }
+
+    .btn-success:hover {
+        background: linear-gradient(135deg, #388E3C, #4CAF50);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
 <main>
 <h1 class="dashboard">Daftar Hadir</h1>
 <button type="button" data-bs-toggle="modal" data-bs-target="#addMahasiswaModal" class="btn btn-primary mb-3">

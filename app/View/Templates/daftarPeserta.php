@@ -3,9 +3,81 @@ use App\Controllers\user\BerkasUserController;
 use App\Controllers\user\MahasiswaController;
 $result = MahasiswaController::viewAllMahasiswa() ?? [];
 ?>
+
+<style>
+    /* Font Poppins */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f0f4f8;
+    }
+
+    .table-modern {
+        background: linear-gradient(145deg, #ffffff, #f3f6fa); /* Gradient background */
+        border-radius: 16px; /* Rounded corners */
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Depth effect */
+        overflow: hidden;
+        border-collapse: separate;
+        border-spacing: 0; /* Remove gaps */
+        width: 100%;
+        margin: 20px 0; /* Add spacing around the table */
+    }
+
+    .table-modern th, .table-modern td {
+        padding: 16px 20px; /* Add padding for spacing */
+        text-align: left;
+        color: #333; /* Dark text for readability */
+        border-bottom: 1px solid #eaeaea; /* Light borders between rows */
+    }
+
+    .table-modern th {
+        background-color: #f9fbfc; /* Subtle header background */
+        font-weight: 600; /* Bold font */
+        color: #555; /* Slightly darker text for headers */
+        font-size: 1rem; /* Adjust header font size */
+    }
+
+    .table-modern tr:hover td {
+        background-color: rgba(61, 194, 236, 0.1); /* Highlight row on hover */
+        cursor: pointer;
+    }
+
+    .table-modern tr:last-child td {
+        border-bottom: none; /* Remove bottom border for the last row */
+    }
+
+    .table-modern tbody tr:first-child td:first-child {
+        border-top-left-radius: 16px; /* Rounded top-left corner */
+    }
+
+    .table-modern tbody tr:first-child td:last-child {
+        border-top-right-radius: 16px; /* Rounded top-right corner */
+    }
+
+    .table-modern tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 16px; /* Rounded bottom-left corner */
+    }
+
+    .table-modern tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 16px; /* Rounded bottom-right corner */
+    }
+
+    .table-modern .action-icons img {
+        width: 24px;
+        height: 24px;
+        margin: 0 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .table-modern .action-icons img:hover {
+        transform: scale(1.1); /* Slight zoom on hover */
+    }
+</style>
+
 <main>
     <h1 class="dashboard">Daftar peserta</h1>
-    <table id="daftar" class="display">
+    <table id="daftar" class="display table-modern">
         <thead>
             <tr>
                 <th>no</th>

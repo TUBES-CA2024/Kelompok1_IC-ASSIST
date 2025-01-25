@@ -7,6 +7,186 @@ $mahasiswaAccStatus = PresentasiUserController::viewAllAccStatusForAdmin();
 $ruanganList = RuanganController::viewAllRuangan();
 $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
 ?>
+<style>
+    /* Import Font Poppins */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    /* Button Styles */
+    .btn-primary {
+        background: linear-gradient(135deg, #3DC2EC, #3392cc);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #3392cc, #3DC2EC);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .btn-primary:focus {
+        outline: none;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    /* Table Styles */
+    .table-striped {
+        background-color: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .table-striped th,
+    .table-striped td {
+        padding: 16px 20px;
+        text-align: left;
+        color: #555;
+    }
+
+    .table-striped th {
+        background-color: #f9fbfc;
+        font-weight: 600;
+        font-size: 1rem;
+        color: #333;
+        text-transform: uppercase;
+    }
+
+    .table-striped tr:nth-child(odd) {
+        background-color: #f8faff;
+    }
+
+    .table-striped tr:nth-child(even) {
+        background-color: #e8f4fc;
+    }
+
+    .table-striped tr:hover {
+        background-color: rgba(61, 194, 236, 0.2);
+        cursor: pointer;
+    }
+
+    .rounded-table {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    /* Modal Styles */
+    .modal-content {
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .modal-header {
+        background: linear-gradient(135deg, #3DC2EC, #3392cc);
+        color: white;
+        border-bottom: none;
+        border-radius: 12px 12px 0 0;
+        padding: 20px;
+    }
+
+    .modal-header h5 {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .modal-body {
+        padding: 20px;
+        color: #555;
+    }
+
+    .modal-footer {
+        border-top: none;
+        padding: 20px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    /* Form Inputs */
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        padding: 10px 15px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #3DC2EC;
+        box-shadow: 0 0 5px rgba(61, 194, 236, 0.5);
+        outline: none;
+    }
+
+    .form-select {
+        border-radius: 8px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+    }
+
+    .form-select:focus {
+        border-color: #3DC2EC;
+        outline: none;
+    }
+
+    /* Miscellaneous */
+    .btn-close {
+        background: transparent;
+        font-size: 1.2rem;
+        color: white;
+        border: none;
+    }
+
+    .btn-close:hover {
+        color: #ccc;
+    }
+    .tes {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--color-white);
+    width: 18%;
+    text-align: center;
+    border-radius: var(--border-radius-1);
+    box-shadow: var(--box-shadow);
+    color: var(--color-primary);
+    border: 1px solid var(--color-light);
+    }
+</style>
+
 <main>
 <h1 class="dashboard">Presentasi </h1>
 <table id="presentasiMahasiswa" class="table table-striped rounded-table">
@@ -49,7 +229,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
 </table>
 
 <div style="text-align: center;">
-    <h1 style="font-size: 2rem; color: #333;">Jadwal Presentasi</h1>
+    <h1 class="tes">Jadwal Presentasi</h1>
 
     <button type="button" data-bs-toggle="modal" data-bs-target="#addJadwalModal"
         style="font-size: 1rem; padding: 10px 20px; margin-bottom: 1rem;">

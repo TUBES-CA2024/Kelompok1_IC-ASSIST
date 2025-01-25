@@ -104,11 +104,11 @@
         <li><b>Kerjakan dengan jujur</b></li>
     </ul>
     <p>Ujian kali ini memiliki durasi waktu <b>80 Menit</b>. Sebelum dimulai dipersilahkan untuk membaca doa terlebih dahulu.</p>
-    <p>Masukkan nomor meja Anda sebelum memulai ujian:</p>
-    
-    <input type="text" id="nomorMeja" placeholder="Masukkan nomor meja Anda" />
+   
+    <strong><label for="nomorMeja" class="form-label">Masukkan nomor meja anda untuk memulai ujian</label></strong>
+    <input type="text" id="nomorMeja" class = "form-control" placeholder="Masukkan nomor meja Anda" />
     <div id="errorMessage" class="error"></div>
-    <button id="startTestButton">Start Test</button>
+    <button id="startTestButton" style="margin-top: 10px;">Start Test</button>
 </div>
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
