@@ -102,7 +102,6 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status === 'success') {
                     alert(response.message || 'Data berhasil disimpan');
-                    window.location.href = 'tubes_web/public/';
                 } else {
                     alert(response.message || 'Data gagal disimpan');
                 }

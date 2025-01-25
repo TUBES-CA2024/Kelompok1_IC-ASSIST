@@ -13,12 +13,12 @@ $tanggalLahir = ProfileController::viewBiodata() == null ? "Tanggal Lahir" : Pro
 $noHp = ProfileController::viewBiodata() == null ? "No Telephone" : ProfileController::viewBiodata()["noHp"];
 ?>
 <div>
-    <h1 class="biodata">Biodata</h1>
+    <main>
+    <h1 class="dashboard">Biodata</h1>
 </div>
 <div class="form-container">
     <?php if (BiodataUserController::isEmpty()) { ?>
-        <form id="biodataForm">
-            <!-- Row 1 -->
+        <form id="biodataForm" class="biodata-form">
             <div class="form-row">
                 <div class="form-group">
                     <label for="nama" class="form-label">Nama Lengkap</label>
@@ -32,15 +32,14 @@ $noHp = ProfileController::viewBiodata() == null ? "No Telephone" : ProfileContr
             <div class="form-group">
                 <label class="form-label">Jenis Kelamin</label>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="wanita" value="wanita" required>
-                    <label class="form-check-label" for="wanita">Wanita</label>
+                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="wanita" required onclick="updateKelasOptions()">
+                    <label class="form-check-label" for="inlineRadio1">Wanita</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="pria" value="pria" required>
-                    <label class="form-check-label" for="pria">Pria</label>
+                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="pria" required onclick="updateKelasOptions()">
+                    <label class="form-check-label" for="inlineRadio2">Pria</label>
                 </div>
             </div>
-            <!-- Row 2 -->
             <div class="form-row">
                 <div class="form-group">
                     <label for="jurusan" class="form-label">Jurusan</label>
@@ -51,7 +50,7 @@ $noHp = ProfileController::viewBiodata() == null ? "No Telephone" : ProfileContr
                 </div>
                 <div class="form-group">
                     <label for="kelas" class="form-label">Kelas</label>
-                    <select class="form-select" id="kelas" name="kelas" required>
+                    <select class="form-select" id="floatingSelect" name="kelas" required>
                         <option selected disabled>Pilih Kelas Anda</option>
                     </select>
                 </div>
@@ -81,10 +80,9 @@ $noHp = ProfileController::viewBiodata() == null ? "No Telephone" : ProfileContr
                 </div>
             </div>
 
-            <!-- Buttons -->
             <div class="button-container">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="reset" class="btn btn-secondary">Reset</button>
+                <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                <button type="reset" class="btn btn-secondary" name="reset">Reset</button>
             </div>
         </form>
     <?php } else { ?>
@@ -140,4 +138,5 @@ $noHp = ProfileController::viewBiodata() == null ? "No Telephone" : ProfileContr
         </div>
     <?php } ?>
 </div>
+</main>
 <script src="/tubes_web/public/Assets/Script/user/biodata.js"></script>

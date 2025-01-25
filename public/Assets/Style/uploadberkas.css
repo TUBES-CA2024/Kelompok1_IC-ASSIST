@@ -76,3 +76,101 @@ body {
     font-family: 'Poppins', sans-serif;
 
 }
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 16px 24px;
+    width: 100%;
+    max-width: 800px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card .left {
+    display: flex;
+    align-items: center;
+}
+
+.card .left .icon {
+    font-size: 1.5rem;
+    color: #3DC2EC;
+    margin-right: 12px;
+}
+
+.card .left .details {
+    display: flex;
+    flex-direction: column;
+}
+
+.card .left .details .id {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.card .left .details .date {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.card .middle {
+    display: flex;
+    align-items: center;
+}
+
+.card .middle .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin-right: 16px;
+    overflow: hidden;
+}
+
+.card .middle .info {
+    display: flex;
+    flex-direction: column;
+}
+
+.card .middle .info .name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.card .middle .info .category {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.card .right {
+    display: flex;
+    align-items: center;
+}
+
+.card .right .status {
+    font-size: 0.9rem;
+    color: #FFC107;
+    background-color: rgba(255, 193, 7, 0.2);
+    padding: 4px 8px;
+    border-radius: 8px;
+    margin-right: 16px;
+}
+
+.card .right .menu {
+    font-size: 1.2rem;
+    color: #888;
+    cursor: pointer;
+}
+
+.card .right .menu:hover {
+    color: #333;
+}

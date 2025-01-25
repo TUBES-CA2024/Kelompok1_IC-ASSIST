@@ -7,6 +7,31 @@ use App\Model\User\Mahasiswa;
 
 class BerkasUserController extends Controller
 {
+    public static function isEmptyBerkas() {
+        $berkas = new BerkasUser(0,0,0,0,0,0,0,0,0);
+        $isEmpty = $berkas->isEmpty($_SESSION['user']['id']);
+        if(!$isEmpty) {
+            return false;
+        }
+        return true;
+    }
+    public static function isAcceptedBerkas() {
+        $berkas = new BerkasUser(0,0,0,0,0,0,0,0,0);
+        $isAccepted = $berkas->isAcceptedBerkasUser();
+        if(!$isAccepted) {
+            return false;
+        }
+        return true;
+    }
+    public function updateAcceptedStatus() {
+        $berkas = new BerkasUser(0,0,0,0,0,0,0,0,0);
+        $id = $_POST['id'] ?? '';
+        $isAccepted = $berkas->updateAccepted($id);
+        if($isAccepted) {
+            return true;
+        }
+        return false;
+    }
     public function saveBerkas()
     {
         if (session_status() == PHP_SESSION_NONE) {
@@ -67,7 +92,7 @@ class BerkasUserController extends Controller
     }
     public static function viewBerkas()
     {
-        $user = new BerkasUser();
+        $user = new BerkasUser(0,0,0,0,0,0,0,0,0);
         $berkas = $user->getBerkas($_SESSION['user']['id']);
         if (!$berkas) {
             return null;
@@ -128,6 +153,49 @@ class BerkasUserController extends Controller
 
         } catch (\Exception $e) {
             echo "Error: " . $e->getMessage();
+        }
+    }
+    public function updateBerkas() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (!isset($_SESSION['user']['id'])) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'User tidak terautentikasi'
+            ]);
+            return;
+        }
+        $foto = $_FILES['foto']['tmp_name'] ?? '';
+        $cv = $_FILES['cv']['tmp_name'] ?? '';
+        $transkrip = $_FILES['transkrip']['tmp_name'] ?? '';
+        $suratPernyataan = $_FILES['suratpernyataan']['tmp_name'] ?? '';
+        if (!$foto || !$cv || !$transkrip || !$suratPernyataan) {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => 'Semua file wajib diupload']);
+            return;
+        }
+        $imgSize = $_FILES['foto']['size'] ?? 0;
+        $cvSize = $_FILES['cv']['size'] ?? 0;
+        $transkripSize = $_FILES['transkrip']['size'] ?? 0;
+        $suratPernyataanSize = $_FILES['suratpernyataan']['size'] ?? 0;
+        $berkasUser = new BerkasUser(
+            $_SESSION['user']['id'],
+            $foto,
+            $cv,
+            $transkrip,
+            $suratPernyataan,
+            $imgSize,
+            $cvSize,
+            $transkripSize,
+            $suratPernyataanSize
+        );
+        if ($berkasUser->update($berkasUser)) {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'success', 'message' => 'Berkas berhasil diupdate']);
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => 'Berkas gagal diupdate']);
         }
     }
 }

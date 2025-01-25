@@ -22,12 +22,10 @@ $(document).ready(function() {
         });
     });
 
-    // Handler untuk form #presentasiFormAccepted
     $('#presentasiFormAccepted').on('submit', function (e) {
-        e.preventDefault(); // Mencegah pengiriman form secara default
+        e.preventDefault(); 
     
-        // Ambil data form
-        var formData = new FormData(this);
+        var formData = new FormData(this); 
     
         $.ajax({
             url: '/tubes_web/public/presentasi', // Endpoint untuk memproses file

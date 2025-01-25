@@ -44,7 +44,6 @@ $notifikasi = NotificationControllers::getMessageById() ?? [];
         </tr>
       </thead>
       <tbody>
-        <!-- PHP Loop for Tahapan -->
         <?php
         $tahapan = [
           ["1", "Lengkapi Biodata", DashboardUserController::getBiodataStatus(), "tahap ini"],

@@ -222,13 +222,52 @@ class BerkasUser extends Model {
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(1,$idMahasiswa['id']);
         $stmt->execute();
-        $stmt = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if(!$stmt) {
             return null;
         }
         return $stmt;
     }
     
+    public function updateAccepted($id) {
+        $query = "UPDATE " . static::$table . " SET accepted = 1 WHERE id_mahasiswa = ?";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(1,$id);
+        return $stmt->execute();;
+    }
+
+    public function update(BerkasUser $berkasUser) {
+        $query = "UPDATE " . static::$table . " SET foto = ?, cv = ?, transkrip_nilai = ?, surat_pernyataan = ?, accepted = 0 WHERE id_mahasiswa = ?";
+        $stmt = self::getDB()->prepare($query);
+        $gambar = $this->getImageName($berkasUser->foto, $berkasUser->fotoSize);
+        if (!$gambar) {
+            throw new Exception("Gagal memproses foto");
+        }
+        $fileCv = $this->getFileCv($berkasUser->cv, $berkasUser->cvSize);
+        if (!$fileCv) {
+            throw new Exception("Gagal memproses CV");
+        }
+        $fileNilai = $this->getFileTranskrip($berkasUser->transkripNilai, $berkasUser->transkripNilaiSize);
+
+        if(!$fileNilai) {
+            throw new Exception("Gagal memproses transkrip nilai");
+        }
+        $filePernyataan = $this->getFileSuratPernyataan($berkasUser->suratPernyataan, $berkasUser->suratPernyataanSize);
+        if(!$filePernyataan) {
+            throw new Exception("Gagal memproses surat pernyataan");
+        }
+        $idMahasiswaData = $this->getIdMahasiswa($berkasUser->id_mahasiswa);
+        if(!$idMahasiswaData || !isset($idMahasiswaData['id'])) {
+            throw new Exception("Mahasiswa tidak ditemukan" + var_dump($idMahasiswaData));
+        }
+        $idMahasiswa = $idMahasiswaData['id'];
+        $stmt->bindParam(1,$gambar);
+        $stmt->bindParam(2,$fileCv);
+        $stmt->bindParam(3,$fileNilai);
+        $stmt->bindParam(4,$filePernyataan);
+        $stmt->bindParam(5,$idMahasiswa);
+        return $stmt->execute();
+    }
     public function getBerkasAdmin() {
         $query = "SELECT * FROM " . static::$table;
         $stmt = self::getDB()->prepare($query);
@@ -245,5 +284,23 @@ class BerkasUser extends Model {
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(1,$idMahasiswa['id']);
         $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC) ? false : true;
     }
+
+    public function isAcceptedBerkasUser() {
+        $query = "SELECT accepted FROM " . static::$table . " WHERE id_mahasiswa = ?";
+        $idMahasiswa = $this->getIdMahasiswa($_SESSION['user']['id']);
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(1,$idMahasiswa['id']);
+        $stmt->execute();
+        $stmt = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(!$stmt) {
+            return false;
+        }
+        if($stmt['accepted'] == 1) {
+            return true;
+        }
+        return false;
+    }
+    
 } 

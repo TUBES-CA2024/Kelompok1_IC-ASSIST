@@ -56,3 +56,4 @@ Router::post("/deleteruangan",[new RuanganController, 'deleteRuangan']);
 Router::post("/updateruangan",[new RuanganController, 'updateRuangan']);
 Router::post("/getsoaljawaban",[new NilaiAkhirController, 'getSoalAndJawabanMahasiswa']);
 Router::post("/updatebiodata",[new ProfileController, 'updateBiodata']);
+Router::post("/acceptberkas",[new BerkasUserController, 'updateAcceptedStatus']);

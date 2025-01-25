@@ -73,13 +73,11 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
             </div>
             <div class="modal-footer">
                 <div class="text-center">
-                    <!-- Tombol utama -->
                     <button type="button" class="btn btn-primary" data-bs-toggle="collapse"
                         data-bs-target="#downloadOptions" aria-expanded="false" aria-controls="downloadOptions">
                         Unduh Berkas
                     </button>
 
-                    <!-- Tombol-tombol pilihan -->
                     <div class="collapse mt-3" id="downloadOptions">
                         <div class="d-grid gap-2">
                             <button type="button" class="btn btn-primary btn-sm" id="downloadFotoButton"
