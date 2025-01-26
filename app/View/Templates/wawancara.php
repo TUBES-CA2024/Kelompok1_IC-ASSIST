@@ -5,7 +5,7 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-    .recent-judul {
+    .recent-wawancara {
         margin: 0 auto;
         max-width: 90%;
         background-color: #fff;
@@ -22,8 +22,7 @@
     }
 
     table thead {
-        background-color: #3DC2EC;
-        color: white;
+        background-color: white;
         text-transform: uppercase;
         font-weight: 600;
     }
@@ -83,10 +82,9 @@
 
 <main>
     <h1 class="dashboard">Wawancara</h1>
-    <div class="recent-judul">
+    <div class="recent-wawancara">
         <table>
             <thead>
-                <tr>
                     <th>No</th>
                     <th>Jenis-Wawancara</th>
                     <th>Lokasi</th>

@@ -58,23 +58,39 @@ class PresentasiUser extends Model {
     }
 
     public function saveJudul(PresentasiUser $presentasiUser) {
-        $query = "INSERT INTO " . static::$table . " 
-            (id_mahasiswa, judul) 
-            VALUES 
-            (?, ?)";
-        $stmt = self::getDB()->prepare($query);
+        $queryCheck = "SELECT id FROM " . static::$table . " WHERE id_mahasiswa = ?";
+        $stmtCheck = self::getDB()->prepare($queryCheck);
     
         $idMahasiswa = $this->getIdMahasiswa($presentasiUser->id_mahasiswa);
         if (!$idMahasiswa || !isset($idMahasiswa['id'])) {
-            throw new Exception("Mahasiswa tidak ditemukan" + var_dump($idMahasiswa)); 
+            throw new Exception("Mahasiswa tidak ditemukan: " . var_export($idMahasiswa, true));
         }
         $idMahasiswa = $idMahasiswa['id'];
-        $stmt->bindParam(1, $idMahasiswa, PDO::PARAM_INT);
-        $stmt->bindParam(2, $presentasiUser->judul, PDO::PARAM_STR);
-        
-        return $stmt->execute();
+    
+        $stmtCheck->bindParam(1, $idMahasiswa, PDO::PARAM_INT);
+        $stmtCheck->execute();
+        $existingRecord = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+    
+        if ($existingRecord) {
+            $queryUpdate = "UPDATE " . static::$table . " 
+                            SET judul = ? 
+                            WHERE id_mahasiswa = ?";
+            $stmtUpdate = self::getDB()->prepare($queryUpdate);
+            $stmtUpdate->bindParam(1, $presentasiUser->judul, PDO::PARAM_STR);
+            $stmtUpdate->bindParam(2, $idMahasiswa, PDO::PARAM_INT);
+            return $stmtUpdate->execute();
+        } else {
+            $queryInsert = "INSERT INTO " . static::$table . " 
+                            (id_mahasiswa, judul) 
+                            VALUES 
+                            (?, ?)";
+            $stmtInsert = self::getDB()->prepare($queryInsert);
+            $stmtInsert->bindParam(1, $idMahasiswa, PDO::PARAM_INT);
+            $stmtInsert->bindParam(2, $presentasiUser->judul, PDO::PARAM_STR);
+            return $stmtInsert->execute();
+        }
     }
-
+    
     public function updateMakalahAndPpt(PresentasiUser $presentasiUser) {
         $query = "UPDATE " . static::$table . " 
             SET makalah = ?, ppt = ? WHERE id_mahasiswa = ?";

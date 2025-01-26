@@ -63,12 +63,12 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
             </a>
             <span class="tooltip">Wawancara</span>
         </li>
-        <li>
+        <!-- <li>
             <a href="#" data-page="pengumuman">
                 <i class="bx bx-notepad"></i>
                 <span class="nav-item">Pengumuman</span>
             </a>
             <span class="tooltip">Pengumuman</span>
-        </li>
+        </li> -->
     </ul>
 </div>

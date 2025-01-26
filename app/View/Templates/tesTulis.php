@@ -1,116 +1,141 @@
 <style>
+    /* Import Font */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-.exam-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f4f7fa;
+        margin: 0;
+        padding: 0;
+    }
 
-.exam-container h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
+    .exam-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px 30px;
+        background: linear-gradient(135deg, #ffffff, #f9f9f9);
+        border: 1px solid rgba(61, 194, 236, 0.2);
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
 
-.exam-container p {
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    text-align: justify;
-}
+    .exam-container h2 {
+        text-align: center;
+        color: #3DC2EC;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
 
-.exam-container ul {
-    list-style: none; 
-    margin-left: 20px;
-    margin-bottom: 20px;
-}
+    .exam-container p {
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 15px;
+        text-align: justify;
+        font-size: 16px;
+    }
 
-.exam-container li {
-    position: relative;
-    padding-left: 25px;
-    margin-bottom: 10px;
-    color: #444;
-}
+    .exam-container ul {
+        list-style: none;
+        padding: 0;
+        margin: 15px 0;
+    }
 
-.exam-container li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 6px;
-    width: 8px;
-    height: 8px;
-    background-color: #3DC2EC; 
-    border-radius: 50%; 
-}
+    .exam-container li {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 10px;
+        color: #444;
+        font-size: 15px;
+    }
 
-.exam-container button {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    background-color: #3DC2EC;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+    .exam-container li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 12px;
+        height: 12px;
+        background-color: #3DC2EC;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-.exam-container button:hover {
-    background-color: #45a049;
-}
+    .exam-container strong {
+        color: #333;
+    }
 
-.exam-container b {
-    color: #333;
     .exam-container input[type="text"] {
-    display: block;
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    box-sizing: border-box;
-}
+        display: block;
+        width: calc(100% - 20px);
+        padding: 12px 15px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
 
-.exam-container input[type="text"]:focus {
-    border-color: #3DC2EC;
-    outline: none;
-    box-shadow: 0 0 5px rgba(61, 194, 236, 0.5);
-}
+    .exam-container input[type="text"]:focus {
+        border-color: #3DC2EC;
+        outline: none;
+        box-shadow: 0 0 5px rgba(61, 194, 236, 0.5);
+    }
 
-.exam-container .error {
-    color: red;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
+    .exam-container .error {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+        display: none;
+    }
 
-}
+    .exam-container button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #3DC2EC, #3392cc);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        margin-top: 15px;
+    }
 
+    .exam-container button:hover {
+        background: linear-gradient(135deg, #3392cc, #3DC2EC);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .exam-container button:active {
+        transform: translateY(0);
+    }
 </style>
+
 <main>
-<h1 class="dashboard">Tes Tertulis</h1>
-<div class="exam-container">
-    <h2>Test Exam</h2>
-    <p>Pada tahap kali ini kalian akan melaksanakan ujian pilihan ganda.</p>
-    <p>Tata tertib sebelum ujian meliputi:</p>
-    <ul>
-        <li><b>Dilarang menghadap kiri kanan. Silahkan fokus di komputernya saja</b></li>
-        <li><b>Bila membutuhkan sesuatu silahkan angkat tangannya dan panggil asistennya</b></li>
-        <li><b>Kerjakan dengan jujur</b></li>
-    </ul>
-    <p>Ujian kali ini memiliki durasi waktu <b>80 Menit</b>. Sebelum dimulai dipersilahkan untuk membaca doa terlebih dahulu.</p>
-   
-    <strong><label for="nomorMeja" class="form-label">Masukkan nomor meja anda untuk memulai ujian</label></strong>
-    <input type="text" id="nomorMeja" class = "form-control" placeholder="Masukkan nomor meja Anda" />
-    <div id="errorMessage" class="error"></div>
-    <button id="startTestButton" style="margin-top: 10px;">Start Test</button>
-</div>
+    <h1 class="dashboard" style="text-align: center; color: #3DC2EC; font-weight: 600; margin-bottom: 20px;">Tes Tertulis</h1>
+    <div class="exam-container">
+        <h2>Test Exam</h2>
+        <p>Pada tahap kali ini kalian akan melaksanakan ujian pilihan ganda.</p>
+        <p>Tata tertib sebelum ujian meliputi:</p>
+        <ul>
+            <li><strong>Dilarang menghadap kiri kanan. Silahkan fokus di komputernya saja.</strong></li>
+            <li><strong>Bila membutuhkan sesuatu silahkan angkat tangan dan panggil asistennya.</strong></li>
+            <li><strong>Kerjakan dengan jujur.</strong></li>
+        </ul>
+        <p>Ujian kali ini memiliki durasi waktu <strong>80 Menit</strong>. Sebelum dimulai, dipersilahkan untuk membaca doa terlebih dahulu.</p>
+
+        <strong><label for="nomorMeja" class="form-label">Masukkan nomor meja Anda untuk memulai ujian</label></strong>
+        <input type="text" id="nomorMeja" class="form-control" placeholder="Masukkan nomor meja Anda">
+        <div id="errorMessage" class="error">Silahkan masukkan nomor meja.</div>
+        <button id="startTestButton">Start Test</button>
+    </div>
 </main>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function () {

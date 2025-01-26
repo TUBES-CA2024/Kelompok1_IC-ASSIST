@@ -67,7 +67,7 @@ $results = PresentasiUserController::viewAll();
           $keterangan = !$row['is_accepted']
             ? (!empty($row['is_revisi'] && (!empty($row['keterangan']) || !$row['keterangan'])) ? $row['keterangan'] : 'Belum Diterima')
             : 'Silahkan submit ppt dan makalahnya!';
-          $color = !$row['is_accepted'] ? 'danger' : 'success';
+          $color = !$row['is_accepted'] ? 'status' : 'status-acc';
           $judul = $row['judul'];
           $created = $row['created_at'];
           ?>

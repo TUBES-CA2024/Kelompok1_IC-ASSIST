@@ -16,14 +16,11 @@ $notifikasi = NotificationControllers::getMessageById() ?? [];
           <h1><?= DashboardUserController::getNumberTahapanSelesai() ?></h1>
         </div>
         <div class="progress" data-percentage="<?= DashboardUserController::getPercentage() ?>">
-  <svg>
-    <circle cx="39" cy="39" r="39"></circle>
-    <circle cx="39" cy="39" r="39"></circle>
-  </svg>
-  <div class="number">
-    <?= DashboardUserController::getPercentage() ?>%
-  </div>
-</div>
+         
+          <div class="number">
+            <?= DashboardUserController::getPercentage() ?>%
+          </div>
+        </div>
 
       </div>
       <small class="text-muted">Last 24 Hours</small>
@@ -34,45 +31,45 @@ $notifikasi = NotificationControllers::getMessageById() ?? [];
     <h2 class="tahapan-pendaftaran">
       Tahapan-Tahapan Pendaftaran Calon Asisten ICLABS 2024
     </h2>
-    <table>
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Tahapan</th>
-          <th>Status</th>
-          <th>Keterangan</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-        $tahapan = [
-          ["1", "Lengkapi Biodata", DashboardUserController::getBiodataStatus(), "tahap ini"],
-          ["2", "Lengkapi Berkas", DashboardUserController::getBerkasStatus(), "mensubmit berkas"],
-          ["3", "Tes Tertulis", DashboardUserController::getAbsensiTesTertulis(), "tahap ini"],
-          ["4", "Submit Judul Makalah dan PPT", DashboardUserController::getPptStatus(), "submit judul presentasi"],
-          ["5", "Submit Makalah dan PPT", DashboardUserController::getPptJudulAccStatus(), "submit PPT dan makalah"],
-          ["6", "Presentasi", DashboardUserController::getAbsensiPresentasi(), "tahap ini"],
-          ["7", "Wawancara Asisten", DashboardUserController::getAbsensiWawancaraI(), "tahap ini"],
-          ["8", "Wawancara Kepala Lab 1", DashboardUserController::getAbsensiWawancaraII(), "tahap ini"],
-          ["9", "Wawancara Kepala Lab 2", DashboardUserController::getAbsensiWawancaraIII(), "tahap ini"],
-        ];
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Tahapan</th>
+              <th>Status</th>
+              <th>Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            $tahapan = [
+              ["1", "Lengkapi Biodata", DashboardUserController::getBiodataStatus(), "tahap ini"],
+              ["2", "Lengkapi Berkas", DashboardUserController::getBerkasStatus(), "mensubmit berkas"],
+              ["3", "Tes Tertulis", DashboardUserController::getAbsensiTesTertulis(), "tahap ini"],
+              ["4", "Submit Judul Makalah dan PPT", DashboardUserController::getPptStatus(), "submit judul presentasi"],
+              ["5", "Submit Makalah dan PPT", DashboardUserController::getPptJudulAccStatus(), "submit PPT dan makalah"],
+              ["6", "Presentasi", DashboardUserController::getAbsensiPresentasi(), "tahap ini"],
+              ["7", "Wawancara Asisten", DashboardUserController::getAbsensiWawancaraI(), "tahap ini"],
+              ["8", "Wawancara Kepala Lab 1", DashboardUserController::getAbsensiWawancaraII(), "tahap ini"],
+              ["9", "Wawancara Kepala Lab 2", DashboardUserController::getAbsensiWawancaraIII(), "tahap ini"],
+            ];
 
-        foreach ($tahapan as $tahap) {
-          $status = $tahap[2];
-          ?>
-          <tr>
-            <td><?= $tahap[0] ?></td>
-            <td><?= $tahap[1] ?></td>
-            <td class="<?= $status ? 'success' : 'danger' ?>">
-              <?= $status ? 'Selesai' : 'Belum' ?>
-            </td>
-            <td>Anda <?= $status ? "telah menyelesaikan" : "belum menyelesaikan" ?> <?= $tahap[3] ?></td>
-          </tr>
-          <?php
-        }
-        ?>
-      </tbody>
-    </table>
+            foreach ($tahapan as $tahap) {
+              $status = $tahap[2];
+              ?>
+              <tr>
+                <td><?= $tahap[0] ?></td>
+                <td><?= $tahap[1] ?></td>
+                <td class="<?= $status ? 'status-acc' : 'status' ?>">
+                  <?= $status ? 'Selesai' : 'Belum' ?>
+                </td>
+                <td>Anda <?= $status ? "telah menyelesaikan" : "belum menyelesaikan" ?>   <?= $tahap[3] ?></td>
+              </tr>
+              <?php
+            }
+            ?>
+          </tbody>
+        </table>
   </div>
 </main>
 <div class="right">
@@ -133,23 +130,23 @@ $notifikasi = NotificationControllers::getMessageById() ?? [];
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-  const progressCircles = document.querySelectorAll(".progress");
+    const progressCircles = document.querySelectorAll(".progress");
 
-  progressCircles.forEach(progress => {
-    const circle = progress.querySelector("circle:last-child");
-    const radius = parseFloat(circle.getAttribute("r"));
-    const circumference = 2 * Math.PI * radius;
-    const percentage = parseFloat(progress.dataset.percentage || 0);
+    progressCircles.forEach(progress => {
+      const circle = progress.querySelector("circle:last-child");
+      const radius = parseFloat(circle.getAttribute("r"));
+      const circumference = 2 * Math.PI * radius;
+      const percentage = parseFloat(progress.dataset.percentage || 0);
 
-    circle.style.strokeDasharray = `${circumference}`;
-    circle.style.strokeDashoffset = `${circumference * (1 - percentage / 100)}`;
+      circle.style.strokeDasharray = `${circumference}`;
+      circle.style.strokeDashoffset = `${circumference * (1 - percentage / 100)}`;
+    });
   });
-});
 
 
-//  let customMessageModal = document.getElementById("customMessageModal");
-//  let closeModalButton = document.getElementById("closeModalButton");
-//  let closeModalFooterButton = document.getElementById("closeModalFooterButton");
+  //  let customMessageModal = document.getElementById("customMessageModal");
+  //  let closeModalButton = document.getElementById("closeModalButton");
+  //  let closeModalFooterButton = document.getElementById("closeModalFooterButton");
 
   document.getElementById("viewMessageButton").addEventListener("click", function () {
     customMessageModal.style.display = "flex";

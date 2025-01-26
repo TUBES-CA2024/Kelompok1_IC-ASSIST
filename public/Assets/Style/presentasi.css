@@ -104,3 +104,20 @@ body {
     background-color: #f1f1f1;
     font-family: 'Poppins', sans-serif;
 }
+table .status {
+    font-weight: 600;
+    color: #FFC107;
+    background-color: rgba(255, 193, 7, 0.2);
+    padding: 2px 2px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+table .status-acc {
+    color: #4CAF50;
+    background-color: rgba(76, 175, 80, 0.2);
+    padding: 2px 2px;
+    border-radius: 8px;
+    text-align: center;
+}
+
