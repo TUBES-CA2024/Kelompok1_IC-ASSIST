@@ -24,7 +24,7 @@
     <?php require_once "sidebar.php"?>
     
     <div class="main-content" id="content">
-        
+        <?php require_once "dashboard.php"?>
     </div>
 
     <footer id="footer">

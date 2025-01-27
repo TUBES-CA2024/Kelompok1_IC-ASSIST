@@ -68,9 +68,7 @@ $(document).ready(function () {
 
     $('#errorMessage').text(''); 
 
-    // Redirect ke halaman ujian dengan nomor meja
     const targetURL = `${APP_URL}/soal?nomorMeja=${encodeURIComponent(nomorMejaInput)}`;
-    console.log("Redirecting to:", targetURL);
     window.location.href = targetURL;
   });
 });

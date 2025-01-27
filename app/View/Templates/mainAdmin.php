@@ -23,7 +23,7 @@
     <?php require_once "sidebarAdmin.php" ?>
 
     <div class="main-content" id="content">
-
+        <?php require_once "daftarPeserta.php" ?>
     </div>
 
     <footer id="footer">

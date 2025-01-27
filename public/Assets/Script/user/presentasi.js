@@ -28,12 +28,12 @@ $(document).ready(function() {
         var formData = new FormData(this); 
     
         $.ajax({
-            url: '/tubes_web/public/presentasi', // Endpoint untuk memproses file
+            url: '/tubes_web/public/presentasi', 
             type: 'POST',
             data: formData,
-            processData: false, // Jangan ubah data menjadi string query
-            contentType: false, // Jangan atur Content-Type
-            dataType: 'json', // Harapkan respons JSON dari server
+            processData: false, 
+            contentType: false, 
+            dataType: 'json', 
             success: function (response) {
                 if (response.status === 'success') {
                     alert(response.message || 'Berkas berhasil disimpan');
