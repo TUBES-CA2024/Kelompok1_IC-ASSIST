@@ -1,3 +1,4 @@
+const passwordInputLogin = document.getElementById('passwordLogin');
 const registerBtn = document.getElementById("register");
 const container = document.getElementById("container");
 const loginBtn = document.getElementById("login");
@@ -59,6 +60,21 @@ function validatePassword(password, confirmPassword) {
   }
   return { success: true, message: "Password Valid" };
 }
+
+function validatePasswordLogin(password) {
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+  if (!passwordRegex.test(password)) {
+    return {
+      success: false,
+      message:
+        "Password harus mengandung huruf besar, huruf kecil, dan minimal 8 karakter.",
+    };
+  }
+  return { success: true, message: "Password Valid" };
+
+}
+
 registerBtn.addEventListener("click", () => {
   container.classList.add("active");
 });
@@ -96,6 +112,10 @@ loginIconPass.addEventListener("click", () => {
 
 //ajax
 
+passwordInputLogin.addEventListener('input', function () {
+    passwordInputLogin.setCustomValidity(''); 
+    passwordInputLogin.reportValidity(); 
+});
 emailinput.addEventListener('input', function () {
     emailinput.setCustomValidity(''); // Bersihkan error
     emailinput.reportValidity(); // Perbarui tampilan error
@@ -172,7 +192,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.status === 'success') {
                     alert('Register Berhasil');
-                    window.location.href = '/tubes_web/public/login';
+                    document.getElementById('login').click();
                 } else {
                     alert('Register Gagal ' + response.message);
                     console.log(response.message);
@@ -187,6 +207,29 @@ $(document).ready(function () {
 
   $("#loginForm").submit(function (e) {
     e.preventDefault();
+
+    const stambuk = document.getElementById("stambuk").value;
+    const password = document.getElementById("passwordLogin").value;
+
+    const stambukResult = validateStambuk(stambuk);
+    const passwordResult = validatePasswordLogin(password);
+
+    let isValid = true;
+    if(!stambukResult.success) {
+      stambukInput.setCustomValidity(stambukResult.message);
+      stambukInput.reportValidity();
+      isValid = false;
+    }
+    if(!passwordResult.success) {
+      passwordInputLogin.setCustomValidity(passwordResult.message);
+      passwordInputLogin.reportValidity();
+    isValid = false;
+    }
+
+    if(!isValid) {
+      return;
+    }
+
     $.ajax({
       url: "/tubes_web/public/login/authenticate",
       type: "post",

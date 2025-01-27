@@ -25,7 +25,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
             <img src="<?= $photo ?>" alt="Profile Picture"
                 style="width: 150px; height: 150px; object-fit: cover; border-radius: 15px;">
             <div style="font-size: 1.1rem;">
-                <p>Username: <strong><?= $userName; ?></strong></p>
+                <p>Email: <strong><?= $userName; ?></strong></p>
                 <p>NIM: <strong><?= $stambuk; ?></strong></p>
             </div>
             <div style="display: flex; flex-direction: column; gap: 1rem;">
