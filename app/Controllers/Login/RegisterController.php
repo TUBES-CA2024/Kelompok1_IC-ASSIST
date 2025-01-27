@@ -11,7 +11,7 @@ class RegisterController extends Controller
     {
         try {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $name = $_POST['username'] ?? '';
+                $name = $_POST['email'] ?? '';
                 $stambuk = $_POST['stambuk'] ?? '';
                 $password = $_POST['password'] ?? '';
                 $confirmPassword = $_POST['konfirmasiPassword'] ?? '';
