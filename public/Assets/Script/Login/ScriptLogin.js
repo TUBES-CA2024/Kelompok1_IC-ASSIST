@@ -18,6 +18,35 @@ const emailinput = document.getElementById('email');
 const passwordinput = document.getElementById('password');
 const stambukInput = document.getElementById('stambukregister');
 
+function showModal(message, gifUrl = null) {
+    const modal = document.getElementById('customModal');
+    const modalMessage = document.getElementById('modalMessage');
+    const modalGif = document.getElementById('modalGif');
+    const closeModal = document.getElementById('closeModal');
+
+    modalMessage.textContent = message;
+
+    if (gifUrl) {
+        modalGif.src = gifUrl;
+        modalGif.style.display = 'block';
+    } else {
+        modalGif.style.display = 'none';
+    }
+
+    modal.style.display = 'flex';
+
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+
 function validateStambuk(stambuk) {
   const stambukRegex = /^(131|130)(2022|2023|2024|2025)[0-9]{4}$/;
 
@@ -110,6 +139,7 @@ loginIconPass.addEventListener("click", () => {
   togglePassLogin.classList.toggle("bi-eye-slash");
 });
 
+
 //ajax
 
 passwordInputLogin.addEventListener('input', function () {
@@ -191,10 +221,10 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (response) {
                 if (response.status === 'success') {
-                    alert('Register Berhasil');
+                    showModal('Register Berhasil', '/tubes_web/public/Assets/gif/registergif.gif');
                     document.getElementById('login').click();
                 } else {
-                    alert('Register Gagal ' + response.message);
+                    showModal('Register Gagal stambuk sudah digunakan', '/tubes_web/public/Assets/gif/failedregistergif.gif');
                     console.log(response.message);
                 }
             },
@@ -226,7 +256,7 @@ $(document).ready(function () {
     isValid = false;
     }
 
-    if(!isValid) {
+    if(!isValid && stambuk !== "admin") {
       return;
     }
 
@@ -237,10 +267,12 @@ $(document).ready(function () {
       dataType: "json",
       success: function (response) {
         if (response.status === "success") {
-          alert(response.role);
-          window.location.href = response.redirect;
+          showModal("Login Berhasil", "/tubes_web/public/Assets/gif/loginsuccess.gif");
+          setTimeout(() => {
+            window.location.href = response.redirect;
+        }, 1000);
         } else {
-          alert("stambuk atau password salah");
+            showModal("Stambuk atau password salah", "/tubes_web/public/Assets/gif/failedregistergif.gif");
         }
       },
       error: function (xhr, status, error) {

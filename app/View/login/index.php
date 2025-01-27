@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="/tubes_web/public/Assets/Style/alertstyle.css">
     <link rel="stylesheet" href="/tubes_web/public/Assets/Style/Styles1.css">
     <link rel="icon" href="/tubes_web/public/Assets/Img/iclabs.png">
 
@@ -156,6 +157,21 @@
         </div>
     </div>
     </div>
+
+    <div id="customModal" class="alertmodal">
+    <div class="modal-content">
+        <!-- GIF Animasi -->
+        <img id="modalGif" src="" alt="Animation" style="width: 100px; margin-bottom: 15px; display: none;">
+        
+        <!-- Pesan Custom -->
+        <p id="modalMessage" style="margin: 10px 0; font-size: 18px;">Pesan akan ditampilkan di sini.</p>
+        
+        <!-- Tombol Close -->
+        <button id="closeModal" class="btn btn-primary" style="margin-top: 10px;">Tutup</button>
+    </div>
+</div>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/tubes_web/public/Assets/Style/uploadberkas.css" />
     <link rel="stylesheet" href="/tubes_web/public/Assets/Style/dashboardStyle.css" />
 
+    <link rel="stylesheet" href="/tubes_web/public/Assets/Style/alertstyle.css">
     <title>IC-ASSIST</title>
 </head>
 
