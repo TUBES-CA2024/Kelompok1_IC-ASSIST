@@ -31,7 +31,7 @@ class RegisterController extends Controller
                 $user = new UserModel();
                 if ($user->isStambukExists($stambuk)) { 
                     header('Content-Type: application/json');
-                    echo json_encode(['status' => 'error', 'message' => "Please use a different stambuk. User with '$stambuk' already exists."]);
+                    echo json_encode(['status' => 'error', 'message' => "Gunakan stambuk lain '$stambuk' telah digunakan."]);
                     return;
                 }
     

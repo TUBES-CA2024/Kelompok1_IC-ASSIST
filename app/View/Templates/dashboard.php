@@ -129,19 +129,7 @@ $notifikasi = NotificationControllers::getMessageById() ?? [];
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const progressCircles = document.querySelectorAll(".progress");
-
-    progressCircles.forEach(progress => {
-      const circle = progress.querySelector("circle:last-child");
-      const radius = parseFloat(circle.getAttribute("r"));
-      const circumference = 2 * Math.PI * radius;
-      const percentage = parseFloat(progress.dataset.percentage || 0);
-
-      circle.style.strokeDasharray = `${circumference}`;
-      circle.style.strokeDashoffset = `${circumference * (1 - percentage / 100)}`;
-    });
-  });
+ 
 
 
   //  let customMessageModal = document.getElementById("customMessageModal");

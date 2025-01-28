@@ -37,11 +37,17 @@ function showModal(message, gifUrl = null) {
 
     closeModal.addEventListener('click', () => {
         modal.style.display = 'none';
+        if (onClose) {
+            onClose(); 
+        }
     });
 
     window.addEventListener('click', (event) => {
         if (event.target === modal) {
             modal.style.display = 'none';
+            if (onClose) {
+                onClose();
+            }
         }
     });
 }

@@ -13,7 +13,7 @@ class BiodataUser extends Model {
     protected $jurusan;
     protected $kelas;
     protected $stambuk;
-    protected $id_kelas;
+    protected $idKelas;
     protected $namaLengkap;
     protected $alamat;
     protected $jenisKelamin;
@@ -58,39 +58,56 @@ class BiodataUser extends Model {
     }
 
     public function save(BiodataUser $biodata) {
-        $query = "INSERT INTO " . static::$table . " 
-            (id_user, id_jurusan, stambuk, id_kelas, nama_lengkap, alamat, jenis_kelamin, tempat_lahir, tanggal_lahir, no_telp) 
-            VALUES 
-            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            $query = "INSERT INTO " . static::$table . " 
+                (id_user, id_jurusan, stambuk, id_kelas, nama_lengkap, alamat, jenis_kelamin, tempat_lahir, tanggal_lahir, no_telp) 
+                VALUES 
+                (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
-        $stmt = self::getDB()->prepare($query);
+            $stmt = self::getDB()->prepare($query);
     
-        $idJurusanData = $this->getIdJurusan($biodata->jurusan);
-        if (!$idJurusanData) {
-            throw new \Exception("Jurusan tidak ditemukan: " . $biodata->jurusan);
+            // Ambil ID Jurusan
+            $idJurusanData = $this->getIdJurusan($biodata->jurusan);
+            if (!$idJurusanData) {
+                error_log("Error: Jurusan tidak ditemukan - " . $biodata->jurusan);
+                return false;
+            }
+            $biodata->idJurusan = $idJurusanData['id'];
+    
+            // Ambil ID Kelas
+            $jenisKelamin = ucfirst($biodata->jenisKelamin);
+            $idKelasData = $this->getIdKelas($biodata->kelas);
+            if (!$idKelasData) {
+                error_log("Error: Kelas tidak ditemukan - " . $biodata->kelas);
+                return false;
+            }
+            $biodata->idKelas = $idKelasData['id']; // Pastikan variabel ini konsisten
+    
+            // Binding Parameter
+            $stmt->bindParam(1, $biodata->idUser);
+            $stmt->bindParam(2, $biodata->idJurusan);
+            $stmt->bindParam(3, $biodata->stambuk);
+            $stmt->bindParam(4, $biodata->idKelas);
+            $stmt->bindParam(5, $biodata->namaLengkap);
+            $stmt->bindParam(6, $biodata->alamat);
+            $stmt->bindParam(7, $jenisKelamin);
+            $stmt->bindParam(8, $biodata->tempatLahir);
+            $stmt->bindParam(9, $biodata->tanggalLahir);
+            $stmt->bindParam(10, $biodata->noHp);
+    
+            // Eksekusi Query
+            if ($stmt->execute()) {
+                return true; // Berhasil
+            } else {
+                error_log("Error: Gagal menyimpan biodata");
+                return false; // Gagal
+            }
+        } catch (\PDOException $e) {
+            error_log("SQL Error: " . $e->getMessage());
+            return false;
         }
-        $biodata->idJurusan = $idJurusanData['id'];
-        
-        $jenisKelamin = ucfirst($biodata->jenisKelamin);
-        $idKelasData = $this->getIdKelas($biodata->kelas);
-        if (!$idKelasData) {
-            throw new \Exception("Kelas tidak ditemukan: " . $biodata->kelas);
-        }
-        $biodata->id_kelas = $idKelasData['id'];
-        
-        $stmt->bindParam(1, $biodata->idUser);
-        $stmt->bindParam(2, $biodata->idJurusan);
-        $stmt->bindParam(3, $biodata->stambuk);
-        $stmt->bindParam(4, $biodata->id_kelas);
-        $stmt->bindParam(5, $biodata->namaLengkap);
-        $stmt->bindParam(6, $biodata->alamat);
-        $stmt->bindParam(7, $jenisKelamin);
-        $stmt->bindParam(8, $biodata->tempatLahir);
-        $stmt->bindParam(9, $biodata->tanggalLahir);
-        $stmt->bindParam(10, $biodata->noHp);
-        $stmt->execute();
-
     }
+    
     
 
     private function getIdJurusan($namaJurusan)   {

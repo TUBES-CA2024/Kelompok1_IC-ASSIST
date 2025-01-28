@@ -3,67 +3,72 @@ namespace App\Controllers\User;
 use App\Core\Controller;
 use App\Model\User\BiodataUser;
 
-class BiodataUserController extends Controller {
-    public static function isEmpty() {
+class BiodataUserController extends Controller
+{
+    public static function isEmpty()
+    {
         $biodata = new BiodataUser();
         $isEmpty = $biodata->isEmpty($_SESSION['user']['id']);
         return $isEmpty;
     }
-    public function saveBiodata() {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+    public function saveBiodata()
+    {
+        try {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
 
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            ob_clean();
             header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
-            return;
-        }
 
-        if (!isset($_SESSION['user']['id'])) {
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
-            return;
-        }
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
+                exit; // <-- Tambahkan exit setelah echo
+            }
 
-        $idUser = $_SESSION['user']['id'];
-        $jurusan = $_POST['jurusan'] ?? '';
-        $kelas = $_POST['kelas'] ?? '';
-        $nama = $_POST['nama'] ?? '';
-        $stambuk = $_SESSION['user']['stambuk'];
-        $gender = $_POST['gender'] ?? '';
-        $alamat = $_POST['alamat'] ?? '';
-        $tempatLahir = $_POST['tempatlahir'] ?? '';
-        $tanggalLahir = $_POST['tanggallahir'] ?? '';
-        $noHp = $_POST['telephone'] ?? '';
+            if (!isset($_SESSION['user']['id'])) {
+                echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
+                exit;
+            }
 
-        var_dump($jurusan);
-        var_dump($kelas);
-        if (empty($jurusan) || empty($kelas)  || empty($nama) || empty($gender) || empty($alamat) || empty($tempatLahir) || empty($tanggalLahir) || empty($noHp)) {
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'All fields are required']);
-            return;
-        }
+            $idUser = $_SESSION['user']['id'];
+            $jurusan = $_POST['jurusan'] ?? '';
+            $kelas = $_POST['kelas'] ?? '';
+            $nama = $_POST['nama'] ?? '';
+            $stambuk = $_SESSION['user']['stambuk'];
+            $gender = $_POST['gender'] ?? '';
+            $alamat = $_POST['alamat'] ?? '';
+            $tempatLahir = $_POST['tempatlahir'] ?? '';
+            $tanggalLahir = $_POST['tanggallahir'] ?? '';
+            $noHp = $_POST['telephone'] ?? '';
 
-        $biodata = new BiodataUser(
-            $idUser,
-            $jurusan,
-            $stambuk,
-            $kelas,
-            $nama,
-            $alamat,
-            $gender,
-            $tempatLahir,
-            $tanggalLahir,
-            $noHp
-        );
+            if (empty($jurusan) || empty($kelas) || empty($nama) || empty($gender) || empty($alamat) || empty($tempatLahir) || empty($tanggalLahir) || empty($noHp)) {
+                echo json_encode(['status' => 'error', 'message' => 'All fields are required']);
+                exit;
+            }
 
-        if ($biodata->save($biodata)) {
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'success', 'message' => 'Data berhasil disimpan']);
-        } else {
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'Data gagal disimpan']);
+            $biodata = new BiodataUser(
+                $idUser,
+                $jurusan,
+                $stambuk,
+                $kelas,
+                $nama,
+                $alamat,
+                $gender,
+                $tempatLahir,
+                $tanggalLahir,
+                $noHp
+            );
+
+            if ($biodata->save($biodata)) {
+                echo json_encode(['status' => 'success', 'message' => 'Data berhasil disimpan']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Data gagal disimpan']);
+            }
+            exit; // <-- Tambahkan exit untuk memastikan tidak ada output lain
+        } catch (\Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Data gagal disimpan: ' . $e->getMessage()]);
+            exit; // <-- Tambahkan exit untuk menghindari output tambahan
         }
     }
 }

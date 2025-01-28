@@ -16,10 +16,10 @@ $(document).ready(function() {
             contentType: false,
             success: function(response) {
                 if (response.status === 'success') {
-                    alert(response.message || 'Berkas berhasil disimpan');
+                    showModal("Berkas berhasil disimpan", "/tubes_web/public/Assets/gif/success.gif");
                     window.location.href = '/tubes_web/public/';
                 } else {
-                    alert(response.message || 'Berkas gagal disimpan');
+                    showModal("Berkas gagal disimpan", "/tubes_web/public/Assets/gif/failed.gif");
                     console.log(response.message);
                 }
             },
