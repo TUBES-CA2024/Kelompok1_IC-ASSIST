@@ -15,6 +15,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?=APP_URL?>/Assets/Style/exam.css" />
+    <link rel="stylesheet" href="<?=APP_URL?>/Assets/Style/alertstyle.css">
 </head>
 
 <body>
@@ -89,6 +90,28 @@ foreach ($results as $index => $result): ?>
             </div>
         </div>
     </div>
+    <div id="customModal" class="alertmodal">
+    <div class="modal-content">
+        <!-- GIF Animasi -->
+        <img id="modalGif" src="" alt="Animation" style="width: 100px; margin-bottom: 15px; display: none;">
+        
+        <!-- Pesan Custom -->
+        <p id="modalMessage" style="margin: 10px 0; font-size: 18px;">Pesan akan ditampilkan di sini.</p>
+        
+        <!-- Tombol Close -->
+        <button id="closeModal" class="btn btn-primary" style="margin-top: 10px;">Tutup</button>
+    </div>
+</div>
+
+<div id="confirmModal" class="modal">
+  <div class="modal-content">
+    <p id="confirmModalMessage"></p>
+    <div class="modal-buttons">
+      <button id="confirmModalConfirm" class="btn-confirm">Confirm</button>
+      <button id="confirmModalCancel" class="btn-cancel">Tidak</button>
+    </div>
+  </div>
+</div>
     <footer>
         <p>&copy; 2024 by ICLabs</p>
     </footer>

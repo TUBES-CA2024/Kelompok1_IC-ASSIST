@@ -51,8 +51,6 @@ function showModal(message, gifUrl = null) {
         }
     });
 }
-
-
 function validateStambuk(stambuk) {
   const stambukRegex = /^(131|130)(2022|2023|2024|2025)[0-9]{4}$/;
 
