@@ -98,7 +98,7 @@ class PresentasiUser extends Model {
 
         $idMahasiswa = $this->getIdMahasiswa($presentasiUser->id_mahasiswa);
         if (!$idMahasiswa || !isset($idMahasiswa['id'])) {
-            throw new Exception("Mahasiswa tidak ditemukan" + var_dump($idMahasiswa)); 
+            throw new Exception("Mahasiswa tidak ditemukan" );
         }
 
         $filePpt = $this->getFilePpt($presentasiUser->ppt, $presentasiUser->pptSize);
@@ -115,39 +115,33 @@ class PresentasiUser extends Model {
         $stmt->bindParam(2, $filePpt, PDO::PARAM_STR);
         $stmt->bindParam(3, $idMahasiswa, PDO::PARAM_STR);
 
-        $stmt->execute();
+       if($stmt->execute()) {
+           return true;
+       }
+       return false;
     }
     
     private function getFilePpt($berkas, $berkasSize) {
         $fileExt = strtolower(pathinfo($_FILES['ppt']['name'], PATHINFO_EXTENSION));
-        var_dump($fileExt);
         if ($fileExt !== $this->filePptAcc) {
             throw new Exception("Gunakan ekstensi PPTX untuk file ppt.");
         }
     
-        var_dump($berkasSize); 
         if ($berkasSize > $this->maxPptSize) {
             throw new Exception("Ukuran file terlalu besar.");
         }
     
         $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/pptUser/';
-        var_dump($uploadDir); 
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true); 
         }
     
         $newFileName = uniqid() . '.' . $fileExt;
-        var_dump($newFileName);
     
         if (empty($berkas)) {
-            var_dump($berkas);
-            throw new Exception("Path file sementara untuk ppt kosong.". var_dump($berkas));
+            throw new Exception("Path file sementara untuk ppt kosong.");
         }
-        var_dump($berkas); 
-    
-        $destination = $uploadDir . $newFileName;
-        var_dump($destination); 
-    
+        $destination = $uploadDir . $newFileName;    
         if (!move_uploaded_file($berkas, $destination)) {
             throw new Exception("Gagal memindahkan file ppt. Pastikan folder tujuan dapat diakses.");
         }

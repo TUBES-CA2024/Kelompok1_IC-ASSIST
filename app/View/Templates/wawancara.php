@@ -81,12 +81,12 @@
 </style>
 
 <main>
-    <h1 class="dashboard">Wawancara</h1>
+    <h1 class="dashboard">Jadwal Kegiatan</h1>
     <div class="recent-wawancara">
         <table>
             <thead>
                     <th>No</th>
-                    <th>Jenis-Wawancara</th>
+                    <th>Jenis Kegiatan</th>
                     <th>Lokasi</th>
                     <th>Tanggal</th>
                     <th>Waktu</th>
@@ -95,7 +95,7 @@
             <tbody>
                 <?php if (empty($wawancara)) : ?>
                     <tr>
-                        <td colspan="5">Belum ada jadwal wawancara</td>
+                        <td colspan="5">Belum ada Jadwal</td>
                     </tr>
                 <?php endif; $i = 1;?>
                 <?php foreach ($wawancara as $value) : ?>

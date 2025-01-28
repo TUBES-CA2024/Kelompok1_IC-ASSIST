@@ -47,62 +47,80 @@ class PresentasiUserController extends Controller
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
-            return;
-        }
-
-        if (!isset($_SESSION['user']['id'])) {
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
-            return;
-        }
-
-        if (!isset($_FILES['makalah']) || !is_array($_FILES['makalah']) || !isset($_FILES['ppt']) || !is_array($_FILES['ppt'])) {
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => 'File uploads are invalid']);
-            return;
-        }
-
-        if ($_FILES['makalah']['error'] !== UPLOAD_ERR_OK || $_FILES['ppt']['error'] !== UPLOAD_ERR_OK) {
-            $errors = [
-                UPLOAD_ERR_INI_SIZE => 'File exceeds maximum size',
-                UPLOAD_ERR_FORM_SIZE => 'File exceeds form size limit',
-                UPLOAD_ERR_PARTIAL => 'File only partially uploaded',
-                UPLOAD_ERR_NO_FILE => 'No file uploaded',
-                UPLOAD_ERR_NO_TMP_DIR => 'Missing temporary folder',
-                UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
-                UPLOAD_ERR_EXTENSION => 'A PHP extension stopped the file upload'
-            ];
-            $errorCode = $_FILES['makalah']['error'] !== UPLOAD_ERR_OK ? $_FILES['makalah']['error'] : $_FILES['ppt']['error'];
-            header('Content-Type: application/json');
-            echo json_encode(['status' => 'error', 'message' => $errors[$errorCode] ?? 'Unknown error']);
-            return;
-        }
-
-        $idUser = $_SESSION['user']['id'];
-        $makalah = $_FILES['makalah']['tmp_name'];
-        $ppt = $_FILES['ppt']['tmp_name'];
-        $makalahSize = $_FILES['makalah']['size'];
-        $pptSize = $_FILES['ppt']['size'];
-
+    
+        ob_start(); // Start output buffering
+    
         try {
-            $presentasiUser = new PresentasiUser(id_mahasiswa: $idUser, makalah: $makalah, ppt: $ppt, makalahSize: $makalahSize, pptSize: $pptSize);
-
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                ob_clean(); // Clear previous output
+                header('Content-Type: application/json');
+                echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
+                return;
+            }
+    
+            if (!isset($_SESSION['user']['id'])) {
+                ob_clean();
+                header('Content-Type: application/json');
+                echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
+                return;
+            }
+    
+            if (!isset($_FILES['makalah']) || !isset($_FILES['ppt'])) {
+                ob_clean();
+                header('Content-Type: application/json');
+                echo json_encode(['status' => 'error', 'message' => 'File uploads are invalid']);
+                return;
+            }
+    
+            if ($_FILES['makalah']['error'] !== UPLOAD_ERR_OK || $_FILES['ppt']['error'] !== UPLOAD_ERR_OK) {
+                $errors = [
+                    UPLOAD_ERR_INI_SIZE => 'File exceeds maximum size',
+                    UPLOAD_ERR_FORM_SIZE => 'File exceeds form size limit',
+                    UPLOAD_ERR_PARTIAL => 'File only partially uploaded',
+                    UPLOAD_ERR_NO_FILE => 'No file uploaded',
+                    UPLOAD_ERR_NO_TMP_DIR => 'Missing temporary folder',
+                    UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
+                    UPLOAD_ERR_EXTENSION => 'A PHP extension stopped the file upload',
+                ];
+                $errorCode = $_FILES['makalah']['error'] !== UPLOAD_ERR_OK ? $_FILES['makalah']['error'] : $_FILES['ppt']['error'];
+                ob_clean();
+                header('Content-Type: application/json');
+                echo json_encode(['status' => 'error', 'message' => $errors[$errorCode] ?? 'Unknown error']);
+                return;
+            }
+    
+            $idUser = $_SESSION['user']['id'];
+            $presentasiUser = new PresentasiUser(
+                id_mahasiswa: $idUser,
+                makalah: $_FILES['makalah']['tmp_name'],
+                ppt: $_FILES['ppt']['tmp_name'],
+                makalahSize: $_FILES['makalah']['size'],
+                pptSize: $_FILES['ppt']['size']
+            );
+    
             if ($presentasiUser->updateMakalahAndPpt($presentasiUser)) {
+                ob_clean();
                 header('Content-Type: application/json');
                 echo json_encode(['status' => 'success', 'message' => 'Makalah dan PPT berhasil disimpan']);
+                return;
             } else {
+                ob_clean();
                 header('Content-Type: application/json');
                 echo json_encode(['status' => 'error', 'message' => 'Makalah dan PPT gagal disimpan']);
+                return;
             }
         } catch (\Exception $e) {
+            ob_clean(); 
             header('Content-Type: application/json');
+            error_log("Error: " . $e->getMessage());
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+            return;
         }
     }
+    
+    
+    
+    
 
 
     public static function viewAll()

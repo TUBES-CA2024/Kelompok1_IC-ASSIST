@@ -154,6 +154,13 @@ $nama = ProfileController::viewBiodata() == null ? "Nama Lengkap" : ProfileContr
 
     <div>
         <div class="form-container">
+            <?php
+            if(!DashboardUserController::getBiodataStatus()) {
+                echo '<div class="alert alert-warning" role="alert">
+                Lengkapi biodata terlebih dahulu';
+                return;
+            }
+            ?>
             <form id="berkasForm" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="foto" class="form-label">Masukkan Foto 3x4</label>
