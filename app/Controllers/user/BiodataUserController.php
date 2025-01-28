@@ -65,10 +65,10 @@ class BiodataUserController extends Controller
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'Data gagal disimpan']);
             }
-            exit; // <-- Tambahkan exit untuk memastikan tidak ada output lain
+            exit;
         } catch (\Exception $e) {
             echo json_encode(['status' => 'error', 'message' => 'Data gagal disimpan: ' . $e->getMessage()]);
-            exit; // <-- Tambahkan exit untuk menghindari output tambahan
+            exit; 
         }
     }
 }

@@ -153,32 +153,41 @@ $nama = ProfileController::viewBiodata() == null ? "Nama Lengkap" : ProfileContr
     <h1 class="dashboard">Upload Berkas</h1>
 
     <div>
-        <!-- Form Section -->
         <div class="form-container">
             <form id="berkasForm" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="foto" class="form-label">Masukkan Foto 3x4</label>
-                    <input class="form-control" type="file" id="foto" name="foto" required
+                    <input class="form-control" type="file" id="foto" name="foto" accept="image/png, image/jpeg, image/jpg" required
                            <?php if (!DashboardUserController::getBiodataStatus()) echo 'disabled'; ?>>
                 </div>
 
                 <div class="mb-3">
                     <label for="cv" class="form-label">Masukkan CV</label>
-                    <input class="form-control" type="file" id="cv" name="cv" required
+                    <input class="form-control" type="file" id="cv" name="cv" accept="application/pdf" required
                            <?php if (!DashboardUserController::getBiodataStatus()) echo 'disabled'; ?>>
                 </div>
 
                 <div class="mb-3">
                     <label for="transkrip" class="form-label">Masukkan Transkrip Nilai</label>
-                    <input class="form-control" type="file" id="transkrip" name="transkrip" required
+                    <input class="form-control" type="file" id="transkrip" name="transkrip" accept="application/pdf" required
                            <?php if (!DashboardUserController::getBiodataStatus()) echo 'disabled'; ?>>
                 </div>
 
                 <div class="mb-3">
                     <label for="suratpernyataan" class="form-label">Masukkan Surat Pernyataan</label>
-                    <input class="form-control" type="file" id="suratpernyataan" name="suratpernyataan" required
+                    <input class="form-control" type="file" id="suratpernyataan" name="suratpernyataan" accept="application/pdf" required
                            <?php if (!DashboardUserController::getBiodataStatus()) echo 'disabled'; ?>>
                 </div>
+                <div style="display: flex; flex-direction: row; gap: 10px; margin-top: 20px; margin-bottom: 20px;">
+                <a id="downloadFile1" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #007bff; font-size: 16px;" href="#" download>
+    <div style="display: flex; width: 40px; height: 40px; background-color: #e6f0ff; border-radius: 8px;">
+        <i class="bx bx-file" style="font-size: 40px;"></i>
+    </div>
+    <span>Download Template CV</span>
+</a>
+
+
+</div>
 
                 <div class="d-grid">
                     <button type="submit" class="btn btn-submit" <?php if (!DashboardUserController::getBiodataStatus()) echo 'disabled'; ?>>Submit</button>

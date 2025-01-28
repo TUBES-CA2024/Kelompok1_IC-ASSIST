@@ -58,14 +58,12 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 if (response.status === 'success') {
-                    showModal('Biodata berhasil diperbarui', '/tubes_web/public/Assets/gif/success.gif', () => {
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 3000); // Tunggu 3 detik sebelum reload
-                    });
+                    showModal('Biodata berhasil diperbarui', '/tubes_web/public/Assets/gif/success.gif');
+          document.querySelector('a[data-page="profile"]').click();
                 } else {
                     showModal('Biodata gagal diperbarui', '/tubes_web/public/Assets/gif/failed.gif');
                 }
+                document.querySelector('a[data-page="profile"]').click();
             },
             error: function(xhr, status, error) {
                 console.log('Error:', xhr.responseText);
@@ -85,6 +83,8 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status === 'success') {
                     showModal('Biodata berhasil disimpan', '/tubes_web/public/Assets/gif/success.gif');
+          document.querySelector('a[data-page="biodata"]').click();
+
                 } else {
                     showModal(response.message || 'Biodata gagal disimpan', '/tubes_web/public/Assets/gif/failed.gif');
                     console.log(response.message);
