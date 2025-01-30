@@ -107,12 +107,22 @@ class BerkasUserController extends Controller
     }
     public static function viewBerkas()
     {
-        $user = new BerkasUser(0,0,0,0,0,0,0,0,0);
+        $user = new BerkasUser();
         $berkas = $user->getBerkas($_SESSION['user']['id']);
         if (!$berkas) {
             return null;
         }
         return $berkas;
+    }
+
+    public static function viewPhoto() {
+        $user = new BerkasUser();
+        $photo = $user->getBerkas($_SESSION['user']['id']);
+        if (!$photo) {
+            return null;
+        }
+        $firstPhoto = $photo[0];
+        return $firstPhoto;
     }
 
     public static function getBerkasAdmin()

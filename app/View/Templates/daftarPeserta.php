@@ -251,7 +251,6 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
             $('#modalFoto').attr('src', "/tubes_web/res/imageUser/" + (foto || 'default-image.jpg'));
             $('#modalFoto').attr('alt', `Foto ${nama}`);
 
-            // Set atribut untuk tombol download
             $('#downloadFotoButton').attr('data-download-url', foto ? `/tubes_web/res/imageUser/${foto}` : '#');
             $('#downloadCVButton').attr('data-download-url', cv ? `/tubes_web/res/berkasUser/${cv}` : '#');
             $('#downloadTranskripButton').attr('data-download-url', transkrip ? `/tubes_web/res/berkasUser/${transkrip}` : '#');

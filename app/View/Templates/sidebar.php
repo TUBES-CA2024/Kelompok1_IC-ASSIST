@@ -3,7 +3,7 @@ use app\Controllers\Profile\ProfileController;
 use App\Controllers\user\BerkasUserController;
 $role = ProfileController::viewUser()["role"];
 $userName = ProfileController::viewUser()["username"];
-$photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto"] ?? "default.png");
+$photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewPhoto()["foto"] ?? "default.png");
 ?>
 <div class="sidebar" id="sidebar">
     <div class="top">

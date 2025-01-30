@@ -36,7 +36,7 @@ function validatePhoneNumber(phoneNumber) {
     return {
       success: false,
       message:
-        "Format nomor telepon tidak valid. Harus diawali dengan +62, 62, atau 0 dan diikuti oleh angka 8.",
+        "nomor telepon tidak valid.",
     };
   }
 
@@ -49,7 +49,7 @@ function validateNoNumber(input) {
   if (!noNumberRegex.test(input)) {
     return {
       success: false,
-      message: "Input tidak valid: Nama tidak boleh mengandung angka.",
+      message: "Input tidak valid: tidak boleh mengandung angka.",
     };
   }
 
@@ -165,6 +165,7 @@ $(document).ready(function () {
       isValid = false;
     }
 
+    if(!isValid) return;
     $.ajax({
       url: "tubes_web/public/store",
       type: "post",

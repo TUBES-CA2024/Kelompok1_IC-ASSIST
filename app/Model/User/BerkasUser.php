@@ -220,13 +220,13 @@ class BerkasUser extends Model {
         $query = "SELECT * FROM " . static::$table . " WHERE id_mahasiswa = ?";
         $idMahasiswa = $this->getIdMahasiswa($id);
         $stmt = self::getDB()->prepare($query);
-        $stmt->bindParam(1,$idMahasiswa['id']);
+        $stmt->bindValue(1,$idMahasiswa['id']);
         $stmt->execute();
-        $stmt = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if(!$stmt) {
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if(!$result) {
             return null;
         }
-        return $stmt;
+        return $result;
     }
     
     public function updateAccepted($id) {

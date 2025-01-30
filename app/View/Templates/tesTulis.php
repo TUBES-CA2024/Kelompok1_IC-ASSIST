@@ -131,12 +131,12 @@ use App\Controllers\User\DashboardUserController;
         }
         if(!DashboardUserController::getBerkasStatus()){
             echo '<div class="alert alert-warning" role="alert">
-            Lengkapi biodata terlebih dahulu';
+            Lengkapi berkas terlebih dahulu';
             return;
         }
         if(!DashboardUserController::getBiodataStatus()){
             echo '<div class="alert alert-warning" role="alert">
-            Lengkapi berkas terlebih dahulu';
+            Lengkapi biodata terlebih dahulu';
             return;
         }
         ?>
