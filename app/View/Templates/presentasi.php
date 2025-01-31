@@ -59,7 +59,7 @@ $results = PresentasiUserController::viewAll();
               name="ppt" 
               accept=".ppt,.pptx" 
               required
-              <?php if ((DashboardUserController::getBiodataStatus() && DashboardUserController::getAbsensiTesTertulis() && DashboardUserController::getPptStatus())) echo 'disabled' ?>
+              <?php if ((!DashboardUserController::getBiodataStatus() || !DashboardUserController::getAbsensiTesTertulis() || !DashboardUserController::getPptStatus())) echo 'disabled' ?>
                 
             >
           </div>
@@ -72,7 +72,7 @@ $results = PresentasiUserController::viewAll();
               name="makalah" 
               accept="application/pdf" 
               required
-              <?php if ((DashboardUserController::getBiodataStatus() && DashboardUserController::getAbsensiTesTertulis() && DashboardUserController::getPptStatus())) echo 'disabled' ?>
+              <?php if ((!DashboardUserController::getBiodataStatus() || !DashboardUserController::getAbsensiTesTertulis() || !DashboardUserController::getPptStatus())) echo 'disabled' ?>
             >
           </div>
           <a 

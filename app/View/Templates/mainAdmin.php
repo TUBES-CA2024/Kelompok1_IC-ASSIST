@@ -26,11 +26,6 @@
         <?php require_once "daftarPeserta.php" ?>
     </div>
 
-    <footer id="footer">
-        <div class="container-gacor-footer">
-            <p>&copy; 2024 ICLABS. <a href="#">Privacy Policy</a></p>
-        </div>
-    </footer>
 
     <script> const APP_URL = '<?php echo APP_URL; ?>' </script>
     

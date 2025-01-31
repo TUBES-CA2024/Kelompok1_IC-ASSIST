@@ -39,7 +39,6 @@ $(document).ready(function () {
 
       var footer = document.getElementById('footer');
       if (!footer) {
-        console.warn("Footer tidak ditemukan dalam dokumen.");
         return;
       }
 

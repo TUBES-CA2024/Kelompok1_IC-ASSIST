@@ -9,6 +9,7 @@ $ruanganList = RuanganController::viewAllRuangan();
 <style>
     /* Import Font */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
     /* Primary Button */
     .btn-primary {
         background: linear-gradient(135deg, #3DC2EC, #3392cc);
@@ -139,53 +140,52 @@ $ruanganList = RuanganController::viewAllRuangan();
 
     .form-select {
         appearance: none;
-        background: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%233DC2EC' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 5.646a.5.5 0 0 1 .708 0L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E")
-            no-repeat right 12px center;
+        background: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%233DC2EC' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 5.646a.5.5 0 0 1 .708 0L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E") no-repeat right 12px center;
         background-size: 12px 12px;
     }
 </style>
 
 <main>
-    <h1 class="dashboard">Wawancara</h1>
-<button type="button" data-bs-toggle="modal" data-bs-target="#addJadwalModal" class="btn btn-primary mb-3">
-    Tambah mahasiswa
-</button>
+    <h1 class="dashboard">Jadwal Kegiatan</h1>
+    <button type="button" data-bs-toggle="modal" data-bs-target="#addJadwalModal" class="btn btn-primary mb-3">
+        Tambah Jadwal Kegiatan
+    </button>
 
-<table id="wawancaraMahasiswa" class="table table-striped rounded-table">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>Nama Lengkap</th>
-            <th>Stambuk</th>
-            <th>Ruangan</th>
-            <th>Jadwal Kegiatan</th>
-            <th>Waktu</th>
-            <th>Tanggal</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php $i = 1; ?>
-        <?php foreach ($wawancara as $row) { ?>
-            <tr data-id="<?= $row['id'] ?>" data-userid="<?= $row['id_mahasiswa'] ?>">
-                <td><?= $i ?></td>
-                <td>
-                    <span class="open-detail" data-bs-toggle="modal" data-bs-target="#wawancaraModal"
-                        data-nama="<?= $row['nama_lengkap'] ?>" data-stambuk="<?= $row['stambuk'] ?>"
-                        data-ruangan="<?= $row['ruangan'] ?>" data-jeniswawancara="<?= $row['jenis_wawancara'] ?>"
-                        data-waktu="<?= $row['waktu'] ?>" data-tanggal="<?= $row['tanggal'] ?>">
-                        <?= $row['nama_lengkap'] ?>
-                    </span>
-                </td>
-                <td><?= $row['stambuk'] ?></td>
-                <td><?= $row['ruangan'] ?></td>
-                <td><?= $row['jenis_wawancara'] ?></td>
-                <td><?= $row['waktu'] ?></td>
-                <td><?= $row['tanggal'] ?></td>
+    <table id="wawancaraMahasiswa" class="table table-striped rounded-table">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Lengkap</th>
+                <th>Stambuk</th>
+                <th>Ruangan</th>
+                <th>Jadwal Kegiatan</th>
+                <th>Waktu</th>
+                <th>Tanggal</th>
             </tr>
-            <?php $i++; ?>
-        <?php } ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php $i = 1; ?>
+            <?php foreach ($wawancara as $row) { ?>
+                <tr data-id="<?= $row['id'] ?>" data-userid="<?= $row['id_mahasiswa'] ?>">
+                    <td><?= $i ?></td>
+                    <td>
+                        <span class="open-detail" data-bs-toggle="modal" data-bs-target="#wawancaraModal"
+                            data-nama="<?= $row['nama_lengkap'] ?>" data-stambuk="<?= $row['stambuk'] ?>"
+                            data-ruangan="<?= $row['ruangan'] ?>" data-jeniswawancara="<?= $row['jenis_wawancara'] ?>"
+                            data-waktu="<?= $row['waktu'] ?>" data-tanggal="<?= $row['tanggal'] ?>">
+                            <?= $row['nama_lengkap'] ?>
+                        </span>
+                    </td>
+                    <td><?= $row['stambuk'] ?></td>
+                    <td><?= $row['ruangan'] ?></td>
+                    <td><?= $row['jenis_wawancara'] ?></td>
+                    <td><?= $row['waktu'] ?></td>
+                    <td><?= $row['tanggal'] ?></td>
+                </tr>
+                <?php $i++; ?>
+            <?php } ?>
+        </tbody>
+    </table>
 </main>
 
 <div class="modal fade" id="addJadwalModal" tabindex="-1" aria-labelledby="addJadwalModalLabel" aria-hidden="true">
@@ -209,6 +209,8 @@ $ruanganList = RuanganController::viewAllRuangan();
                         </select>
                         <button type="button" class="btn btn-secondary mt-2" id="addMahasiswaButton">Tambah
                             mahasiswa</button>
+                            <button type="button" class="btn btn-success mt-2" id="addAllMahasiswaButton">Tambah Semua</button>
+
                     </div>
                     <div class="mb-3">
                         <label for="selectedMahasiswa" class="form-label">Mahasiswa Terpilih</label>
@@ -394,6 +396,19 @@ $ruanganList = RuanganController::viewAllRuangan();
             mahasiswaDropdown.selectedIndex = 0;
         });
 
+        $(addAllMahasiswaButton).on("click", () => {
+            for (let i = 0; i < mahasiswaDropdown.options.length; i++) {
+                const option = mahasiswaDropdown.options[i];
+                const mahasiswaId = option.value;
+                const mahasiswaText = option.text;
+
+                if (mahasiswaId && !selectedMahasiswa.some(item => item.id === mahasiswaId)) {
+                    selectedMahasiswa.push({ id: mahasiswaId, text: mahasiswaText });
+                }
+            }
+            renderSelectedMahasiswa();
+        });
+
         $(addJadwalForm).on("submit", (e) => {
             e.preventDefault();
 
@@ -462,7 +477,7 @@ $ruanganList = RuanganController::viewAllRuangan();
             const waktu = $("#modalWaktu").text();
             const tanggal = $("#modalTanggal").text();
 
-            console.log ("id " + id);
+            console.log("id " + id);
             $("#updateWawancaraId").val(id);
             $("#updateRuangan").val(ruangan);
             $("#updateJenisWawancara").val(jenisWawancara);
@@ -490,14 +505,14 @@ $ruanganList = RuanganController::viewAllRuangan();
                 jenisWawancara,
             };
 
-            console.log( "id : "+ updateData.id);
-            console.log( "ruangan : "+ updateData.ruangan);
-            console.log( "tanggal : "+ updateData.tanggal);
-            console.log( "waktu : "+ updateData.waktu);
-            console.log( "jenis wawancara : "+ updateData.jenisWawancara);
+            console.log("id : " + updateData.id);
+            console.log("ruangan : " + updateData.ruangan);
+            console.log("tanggal : " + updateData.tanggal);
+            console.log("waktu : " + updateData.waktu);
+            console.log("jenis wawancara : " + updateData.jenisWawancara);
 
             $.ajax({
-                url: "<?=APP_URL?>/updatewawancara",
+                url: "<?= APP_URL ?>/updatewawancara",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(updateData),
@@ -521,7 +536,7 @@ $ruanganList = RuanganController::viewAllRuangan();
             if (!confirm("Apakah Anda yakin ingin menghapus jadwal wawancara ini?")) return;
 
             $.ajax({
-                url: "<?=APP_URL?>/deletewawancara",
+                url: "<?= APP_URL ?>/deletewawancara",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({ id }),

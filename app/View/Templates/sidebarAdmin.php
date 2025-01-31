@@ -52,9 +52,9 @@
         <li>
             <a href="#" data-page="wawancara">
                 <i class="bx bx-user-voice"></i>
-                <span class="nav-item">Wawancara</span>
+                <span class="nav-item">Jadwal Kegiatan</span>
             </a>
-            <span class="tooltip">Wawancara</span>
+            <span class="tooltip">Jadwal Kegiatan</span>
         </li>
         <li>
             <a href="#" data-page="daftarKehadiran">

@@ -124,6 +124,8 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
     }
 
     .modal-body {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1rem;
         padding: 20px;
         color: #555;
     }
@@ -328,8 +330,6 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <img id="modalFotoPresentasi" src="" alt="" style="width: 100%; max-height: 300px; object-fit: cover;">
-
                 <p><strong>Nama Lengkap:</strong> <span id="modalNamaPresentasi"></span></p>
                 <p><strong>Stambuk:</strong> <span id="modalStambukPresentasi"></span></p>
                 <p><strong>Judul Presentasi:</strong> <span id="modalJudulPresentasi"></span></p>
@@ -413,7 +413,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
             if (url && url !== '#') {
                 window.location.href = url;
             } else {
-                alert('Berkas tidak tersedia.');
+                showModal('Berkas tidak tersedia.');
             }
         });
         $('#downloadMakalahPresentasi').on('click', function () {
