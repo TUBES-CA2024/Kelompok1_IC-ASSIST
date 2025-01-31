@@ -16,130 +16,141 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
 ?>
 
 <style>
-       .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+    .modal-edit {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-edit-content {
+        background: #fff;
+        padding: 25px;
+        height: auto;
+        border-radius: 12px;
+        max-width: 700px;
+        width: 90%;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateY(-20px);
+            opacity: 0;
         }
 
-        .modal-content {
-            background: #fff;
-            padding: 25px;
-            border-radius: 12px;
-            max-width: 700px; /* Adjusted width */
-            width: 90%;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            animation: slideIn 0.3s ease-out;
+        to {
+            transform: translateY(0);
+            opacity: 1;
         }
+    }
 
-        @keyframes slideIn {
-            from {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
+    h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
+        text-align: center;
+    }
 
-        h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
-            text-align: center;
-        }
+    /* Grid layout for form */
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        /* Two columns */
+        gap: 20px;
+        /* Spacing between grid items */
+    }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Two columns */
-            gap: 20px; /* Spacing between grid items */
-        }
+    .form-group {
+        margin-bottom: 10px;
+    }
 
-        .form-row {
-            display: flex;
-            gap: 20px; 
-        }
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #555;
+    }
 
-        .form-group {
-            flex: 1; 
-            margin-bottom: 0; /* Reset margin for grid layout */
-        }
+    input[type="text"],
+    input[type="date"],
+    select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #555;
-        }
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    select:focus {
+        border-color: #007BFF;
+        outline: none;
+    }
 
-        input[type="text"],
-        input[type="date"],
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s ease;
-        }
+    /* Buttons */
+    .form-actions {
+        grid-column: span 2;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+    }
 
-        input[type="text"]:focus,
-        input[type="date"]:focus,
-        select:focus {
-            border-color: #007BFF;
-            outline: none;
-        }
+    button {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
-        .form-actions {
-            grid-column: span 2; 
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px; 
-            margin-top: 20px;
-        }
+    button[type="submit"] {
+        padding: 12px 20px;
+        font-size: 14px;
+        background: #007BFF;
+        color: #fff;
+        border-radius: 6px;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
 
-        button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    button[type="submit"]:hover {
+        background: #0056b3;
+    }
 
-        button[type="submit"] {
-            background: #007BFF;
-            color: #fff;
-        }
+    #closeModal {
+        padding: 6px 14px;
+        font-size: 12px;
+        background: #FF0000;
+        color: #fff;
+        border-radius: 6px;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
 
-        button[type="submit"]:hover {
-            background: #0056b3;
-        }
-
-        #closeModal {
-            background: #FF0000;
-            color: #fff;
-        }
-
-        #closeModal:hover {
-            background: #cc0000;
-        }
-
+    #closeModal:hover {
+        background: #cc0000;
+    }
 </style>
+
 <main>
     <h1 class="dashboard">Profile</h1>
     <div class="profile-container"
         style="display: grid; grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem; max-width: 900px; margin: 0 auto;">
-        <!-- Profile Section -->
         <div class="profile-card"
             style="background-color: #fff; border-radius: 20px; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); padding: 2.5rem; display: grid; grid-template-columns: auto 1fr auto; gap: 1.5rem; align-items: center;">
             <img src="<?= $photo ?>" alt="Profile Picture"
@@ -201,59 +212,133 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
 
 
 
-<div id="editProfileModal" class="modal">
-    <div class="modal-content">
+<div id="editProfileModal" class="modal-edit" style="display: none;">
+    <div class="modal-edit-content">
         <h2>Edit Profile</h2>
         <form id="editProfileForm">
-            <div class="form-group">
-                <label for="nama">Nama Lengkap</label>
-                <input type="text" id="nama" name="nama" value="<?= $nama; ?>">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" name="nama" value="<?= $nama; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="jurusan">Jurusan</label>
+                    <select id="jurusan" name="jurusan">
+                        <option value="Teknik Informatika" <?= $jurusan === 'Teknik Informatika' ? 'selected' : ''; ?>>
+                            Teknik Informatika</option>
+                        <option value="Sistem Informasi" <?= $jurusan === 'Sistem Informasi' ? 'selected' : ''; ?>>Sistem
+                            Informasi</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="kelas">Kelas</label>
+                    <select id="kelas" name="kelas" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="alamat">Alamat</label>
+                    <input type="text" id="alamat" name="alamat" value="<?= $alamat; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="jenisKelamin">Jenis Kelamin</label>
+                    <select id="jenisKelamin" name="jenisKelamin">
+                        <option value="Pria" <?= $jenisKelamin === "Pria" ? "selected" : ""; ?>>Pria</option>
+                        <option value="Wanita" <?= $jenisKelamin === "Wanita" ? "selected" : ""; ?>>Wanita</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tempatLahir">Tempat Lahir</label>
+                    <input type="text" id="tempatLahir" name="tempatLahir" value="<?= $tempatLahir; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="tanggalLahir">Tanggal Lahir</label>
+                    <input type="date" id="tanggalLahir" name="tanggalLahir" value="<?= $tanggalLahir; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="noHp">No Telephone</label>
+                    <input type="text" id="noHp" name="noHp" value="<?= $noHp; ?>">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="jurusan">Jurusan</label>
-                <select id="jurusan" name="jurusan">
-                    <option value="Teknik Informatika" <?= $jurusan === 'Teknik Informatika' ? 'selected' : ''; ?>>Teknik Informatika</option>
-                    <option value="Sistem Informasi" <?= $jurusan === 'Sistem Informasi' ? 'selected' : ''; ?>>Sistem Informasi</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="kelas">Kelas</label>
-                <select id="kelas" name="kelas" required></select>
-            </div>
-            <div class="form-group">
-                <label for="alamat">Alamat</label>
-                <input type="text" id="alamat" name="alamat" value="<?= $alamat; ?>">
-            </div>
-            <div class="form-group">
-                <label for="jenisKelamin">Jenis Kelamin</label>
-                <select id="jenisKelamin" name="jenisKelamin" onchange="updateKelasOptions()">
-                    <option value="Pria" <?= $jenisKelamin === "Pria" ? "selected" : ""; ?>>Pria</option>
-                    <option value="Wanita" <?= $jenisKelamin === "Wanita" ? "selected" : ""; ?>>Wanita</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="tempatLahir">Tempat Lahir</label>
-                <input type="text" id="tempatLahir" name="tempatLahir" value="<?= $tempatLahir; ?>">
-            </div>
-            <div class="form-group">
-                <label for="tanggalLahir">Tanggal Lahir</label>
-                <input type="date" id="tanggalLahir" name="tanggalLahir" value="<?= $tanggalLahir; ?>">
-            </div>
-            <div class="form-group">
-                <label for="noHp">No Telephone</label>
-                <input type="text" id="noHp" name="noHp" value="<?= $noHp; ?>">
-            </div>
-            <div class="form-group" style="text-align: right;">
-                <button type="submit" style="width:100%; margin-bottom:10px;">Save Changes</button>
-                <button type="button" id="closeModal">Cancel</button>
+            <div class="form-actions">
+                <button type="submit">Save Changes</button>
+                <button type="reset" id="closeModal">Cancel</button>
             </div>
         </form>
     </div>
 </div>
-
 <script>
 
+    function showModal(message, gifUrl = null) {
+        const modal = document.getElementById("customModal");
+        const modalMessage = document.getElementById("modalMessage");
+        const modalGif = document.getElementById("modalGif");
+        const closeModal = document.getElementById("closeModal");
+
+        modalMessage.textContent = message;
+
+        if (gifUrl) {
+            modalGif.src = gifUrl;
+            modalGif.style.display = "block";
+        } else {
+            modalGif.style.display = "none";
+        }
+
+        modal.style.display = "flex";
+
+        closeModal.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    }
+    function validatePhoneNumber(phoneNumber) {
+        const phoneRegex = /^(?:\+62|62|0)(8[1-9][0-9]{6,9})$/;
+
+        if (!phoneRegex.test(phoneNumber)) {
+            return {
+                success: false,
+                message:
+                    "nomor telepon tidak valid.",
+            };
+        }
+
+        return { success: true, message: "Nomor telepon valid." };
+    }
+
+    function validateNoNumber(input) {
+        const noNumberRegex = /^[^0-9]*$/;
+
+        if (!noNumberRegex.test(input)) {
+            return {
+                success: false,
+                message: "Input tidak valid: tidak boleh mengandung angka.",
+            };
+        }
+
+        return { success: true, message: "Input valid: Tidak ada angka." };
+    }
+
+
     $(document).ready(function () {
+        const phoneInput = document.getElementById("noHp");
+        const namaInput = document.getElementById("nama");
+        const tempatLahirInput = document.getElementById("tempatLahir");
+        
+        phoneInput.addEventListener("input", function () {
+            phoneInput.setCustomValidity("");
+            phoneInput.reportValidity();
+        });
+        namaInput.addEventListener("input", function () {
+            namaInput.setCustomValidity("");
+            namaInput.reportValidity();
+        });
+        tempatLahirInput.addEventListener("input", function () {
+            tempatLahirInput.setCustomValidity("");
+            tempatLahirInput.reportValidity();
+        });
         $('#editProfileButton').click(function () {
             $('#editProfileModal').css('display', 'flex');
             updateKelasOptions();
@@ -295,7 +380,6 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
 
         $('#editProfileForm').submit(function (e) {
             e.preventDefault();
-
             const formData = {
                 nama: $('#nama').val(),
                 jurusan: $('#jurusan').val(),
@@ -308,24 +392,49 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
             };
 
             console.log("Form Data:", formData);
+            const phoneNumber = document.getElementById("noHp").value;
+            const tempatLahir = document.getElementById("tempatLahir").value;
+            const nama = document.getElementById("nama").value;
 
+            let isValid = true;
+
+            if (!validateNoNumber(nama).success) {
+                namaInput.setCustomValidity(validateNoNumber(nama).message);
+                namaInput.reportValidity();
+                isValid = false;
+            }
+            if (!validateNoNumber(tempatLahir).success) {
+                tempatLahirInput.setCustomValidity(validateNoNumber(tempatLahir).message);
+                tempatLahirInput.reportValidity();
+                isValid = false;
+            }
+            if (!validatePhoneNumber(phoneNumber).success) {
+                phoneInput.setCustomValidity(validatePhoneNumber(phoneNumber).message);
+                phoneInput.reportValidity();
+                isValid = false;
+            }
+
+            if (!isValid) return;
             $.ajax({
                 url: '/tubes_web/public/updatebiodata',
                 method: 'POST',
                 data: formData,
                 success: function (response) {
-                    if (response.status === 'success') {
-                        alert(response.message || 'Data berhasil diperbarui');
-                        window.location.reload();
-                    } else {
-                        alert("data berhasil diperbarui");
-                        window.location.reload();
+                    try {
+                        const parsedResponse = typeof response === 'string' ? JSON.parse(response) : response;
+                        console.log('Parsed Response:', parsedResponse);
+
+                        if (parsedResponse.status === 'success') {
+                            showModal('Data berhasil diperbarui', '/tubes_web/public/Assets/gif/success.gif');
+                        } else {
+                            console.log('Error:', parsedResponse.message);
+                            showModal('Data gagal diperbarui', '/tubes_web/public/Assets/gif/failed.gif');
+                        }
+                    } catch (error) {
+                        console.error('Error parsing response:', error);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.log('Error:', xhr.responseText);
-                    alert('Terjadi kesalahan: ' + error);
                 }
+
             });
         });
 

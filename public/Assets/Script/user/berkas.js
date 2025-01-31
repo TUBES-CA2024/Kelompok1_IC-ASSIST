@@ -26,7 +26,6 @@ function showModal(message, gifUrl = null) {
     });
 }
 
-//template cv
 document.getElementById("downloadFile1").setAttribute("href", "/path/to/template_cv.pdf");
 
 $(document).ready(function () {

@@ -218,16 +218,21 @@ class BerkasUser extends Model {
     
     public function getBerkas($id) {
         $query = "SELECT * FROM " . static::$table . " WHERE id_mahasiswa = ?";
+        
         $idMahasiswa = $this->getIdMahasiswa($id);
-        $stmt = self::getDB()->prepare($query);
-        $stmt->bindValue(1,$idMahasiswa['id']);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if(!$result) {
+    
+        if ($idMahasiswa === null) {
             return null;
         }
-        return $result;
+    
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindValue(1, $idMahasiswa['id']);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        return $result ?: null; 
     }
+    
     
     public function updateAccepted($id) {
         $query = "UPDATE " . static::$table . " SET accepted = 1 WHERE id_mahasiswa = ?";

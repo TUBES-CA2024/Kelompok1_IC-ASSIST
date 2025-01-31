@@ -63,7 +63,7 @@ $noHp = ProfileController::viewBiodata() == null ? "No Telephone" : ProfileContr
                     <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat" required>
                 </div>
                 <div class="form-group">
-                    <label for="tempatlahir" class="form-label">Tempat Lahir</label>
+                    <label for="tempatlahir" class="form-label">Kota Asal</label>
                     <input type="text" class="form-control" id="tempatlahir" name="tempatlahir" placeholder="Tempat Lahir" required>
                 </div>
             </div>

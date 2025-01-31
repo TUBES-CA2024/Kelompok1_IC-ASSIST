@@ -61,12 +61,17 @@ class ProfileController extends Controller {
                 noHp: $noHp
             );
     
-            $biodata->updateBiodata($biodata);
-    
-            echo json_encode([
-                'status' => 'success',
-                'message' => 'Data berhasil diperbarui.'
-            ]);
+            if($biodata->updateBiodata($biodata)) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Data berhasil diperbarui.'
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Gagal memperbarui biodata.'
+                ]);
+            }
         } catch (\Exception $e) {
             echo json_encode([
                 'status' => 'error',

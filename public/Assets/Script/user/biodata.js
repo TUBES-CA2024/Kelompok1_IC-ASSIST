@@ -1,6 +1,3 @@
-const telephoneInput = document.getElementById("telephone");
-const tempatLahirInput = document.getElementById("tempatlahir");
-const namaInput = document.getElementById("nama");
 
 function showModal(message, gifUrl = null) {
   const modal = document.getElementById("customModal");
@@ -57,6 +54,10 @@ function validateNoNumber(input) {
 }
 
 $(document).ready(function () {
+  const telephoneInput = document.getElementById("telephone");
+const tempatLahirInput = document.getElementById("tempatlahir");
+const namaInput = document.getElementById("nama");
+
   // Logout Button
   $("#logoutButton").click(function (e) {
     e.preventDefault();
@@ -89,38 +90,6 @@ $(document).ready(function () {
     });
   });
 
-  $("#editProfileForm").submit(function (e) {
-    e.preventDefault();
-
-    $.ajax({
-      url: "/tubes_web/public/updatebiodata",
-      type: "POST",
-      data: $(this).serialize(),
-      dataType: "json",
-      success: function (response) {
-        if (response.status === "success") {
-          showModal(
-            "Biodata berhasil diperbarui",
-            "/tubes_web/public/Assets/gif/success.gif"
-          );
-          document.querySelector('a[data-page="profile"]').click();
-        } else {
-          showModal(
-            "Biodata gagal diperbarui",
-            "/tubes_web/public/Assets/gif/failed.gif"
-          );
-        }
-        document.querySelector('a[data-page="profile"]').click();
-      },
-      error: function (xhr, status, error) {
-        console.log("Error:", xhr.responseText);
-        showModal(
-          "Terjadi kesalahan: " + error,
-          "/tubes_web/public/Assets/gif/failed.gif"
-        );
-      },
-    });
-  });
   telephoneInput.addEventListener("input", function () {
     telephoneInput.setCustomValidity("");
     telephoneInput.reportValidity();

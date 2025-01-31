@@ -121,7 +121,6 @@ $ruanganList = RuanganController::viewAllRuangan();
         gap: 10px;
     }
 
-    /* Form Styles */
     .form-control,
     .form-select {
         border-radius: 8px;
@@ -159,7 +158,7 @@ $ruanganList = RuanganController::viewAllRuangan();
             <th>Nama Lengkap</th>
             <th>Stambuk</th>
             <th>Ruangan</th>
-            <th>Jenis Wawancara</th>
+            <th>Jadwal Kegiatan</th>
             <th>Waktu</th>
             <th>Tanggal</th>
         </tr>
@@ -236,9 +235,12 @@ $ruanganList = RuanganController::viewAllRuangan();
                         <input type="time" class="form-control" id="waktu" required>
                     </div>
                     <div class="mb-3">
-                        <label for="wawancara" class="form-label">Jenis Wawancara</label>
+                        <label for="wawancara" class="form-label">Jenis Kegiatan</label>
                         <select class="form-select" id="wawancara" required>
-                            <option value="" disabled selected>-- Pilih Jenis Wawancara --</option>
+                            <option value="" disabled selected>-- Pilih Jenis Kegiatan --</option>
+                            <option value="Tes Tertulis">Tes Tertulis</option>
+                            <option value="Presentasi">Presentasi</option>
+                            <option value="wawancara kepala lab II">Wawancara Kepala Lab II</option>
                             <option value="wawancara asisten">Wawancara Asisten</option>
                             <option value="wawancara kepala lab I">Wawancara Kepala Lab I</option>
                             <option value="wawancara kepala lab II">Wawancara Kepala Lab II</option>
