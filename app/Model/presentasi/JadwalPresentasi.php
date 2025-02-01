@@ -21,8 +21,8 @@ class JadwalPresentasi extends Model
         $this->waktu = $waktu;
     }
     public function getJadwalPresentasi()
-{
-    $sql = "SELECT 
+    {
+        $sql = "SELECT 
         m.stambuk AS stambuk,
         m.nama_lengkap AS nama_lengkap,
         p.judul AS judul_presentasi,
@@ -35,42 +35,39 @@ class JadwalPresentasi extends Model
         presentasi p ON p.id_mahasiswa = m.id
     JOIN 
         jadwal_presentasi jp ON jp.id_presentasi = p.id";
-    
-    $stmt = self::getDB()->prepare($sql);
-    $stmt->execute();
-    $results = $stmt->fetchAll(\PDO::FETCH_ASSOC); // Ambil hasil sebagai array asosiatif
-    
-    $finalResults = [];
-    
-    foreach ($results as $result) {
-        $ruangan = $this->getRuangan($result['id_ruangan']);
-        $finalResults[] = [
-            'stambuk' => $result['stambuk'],
-            'nama' => $result['nama_lengkap'],
-            'judul_presentasi' => $result['judul_presentasi'],
-            'ruangan' => $ruangan['nama'],
-            'tanggal' => $result['tanggal'],
-            'waktu' => $result['waktu']
-        ];
+
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->execute();
+        $results = $stmt->fetchAll(\PDO::FETCH_ASSOC); 
+
+        $finalResults = [];
+
+        foreach ($results as $result) {
+            $ruangan = $this->getRuangan($result['id_ruangan']);
+            $finalResults[] = [
+                'stambuk' => $result['stambuk'],
+                'nama' => $result['nama_lengkap'],
+                'judul_presentasi' => $result['judul_presentasi'],
+                'ruangan' => $ruangan['nama'],
+                'tanggal' => $result['tanggal'],
+                'waktu' => $result['waktu']
+            ];
+        }
+
+        return $finalResults;
     }
 
-    return $finalResults; 
-}
 
-    
-    // id ruangan = 1 , 2 ,3 ,4 5
-    // id mahasiswa = 6 ,7 ,8 ,9
     public function save(JadwalPresentasi $jadwalPresentasi, $mahasiswas)
     {
-        // looping 1
         foreach ($mahasiswas as $mahasiswa) {
             $sql = "INSERT INTO " . static::$table . " 
             (id_presentasi,id_ruangan,tanggal,waktu) VALUES (?,?,?,?)";
-            $idRuangan = (int) $jadwalPresentasi->id_ruangan; //id 1
-            $idPresentasi = (int) $mahasiswa['id']; // id 6
+            $idRuangan = (int) $jadwalPresentasi->id_ruangan;
+            $idPresentasi = (int) $mahasiswa['id'];
             $date = $this->validateAndFormatDate($jadwalPresentasi->tanggal);
             $time = $this->validateAndFormatTime($jadwalPresentasi->waktu);
-            $stmt = self::getDB()->prepare($sql); 
+            $stmt = self::getDB()->prepare($sql);
             $stmt->bindParam(1, $idPresentasi);
             $stmt->bindParam(2, $idRuangan);
             $stmt->bindParam(3, $date);
@@ -83,8 +80,10 @@ class JadwalPresentasi extends Model
         return true;
 
     }
-    private function getId() {
-        $sql = "SELECT id_presentasi FROM " . static::$table ;
+
+    private function getId()
+    {
+        $sql = "SELECT id_presentasi FROM " . static::$table;
         $stmt = self::getDB()->prepare($sql);
         $stmt->execute();
         return $stmt->fetch();
@@ -112,7 +111,8 @@ class JadwalPresentasi extends Model
         return null;
     }
 
-    private function getRuangan($id) {
+    private function getRuangan($id)
+    {
         $sql = "SELECT nama FROM ruangan WHERE id = ? limit 1";
         $stmt = self::getDB()->prepare($sql);
         $stmt->bindParam(1, $id);

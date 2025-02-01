@@ -35,4 +35,7 @@ class JadwalWawancara extends Model {
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    public function getAllKegiatanFilterByIdRuangan($id) {
+        $sql = "SELECT jw.id, jw.id_wawancara, jw.id_ruangan, jw.tanggal, jw.waktu, w.id_mahasiswa, w.jenis_wawancara, w.absensi FROM " . self::$table . " jw JOIN wawancara w ON jw.id_wawancara = w.id"; 
+    }
 }

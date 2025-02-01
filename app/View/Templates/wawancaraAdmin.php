@@ -5,6 +5,7 @@ use App\Controllers\presentasi\RuanganController;
 $wawancara = WawancaraController::getAll();
 $mahasiswaList = MahasiswaController::viewAllMahasiswa();
 $ruanganList = RuanganController::viewAllRuangan();
+$colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
 ?>
 <style>
     /* Import Font */
@@ -151,6 +152,16 @@ $ruanganList = RuanganController::viewAllRuangan();
         Tambah Jadwal Kegiatan
     </button>
 
+    <div class="d-flex gap-2 mb-3">
+        <?php foreach ($ruanganList as $index => $ruangan): ?>
+            <button id="filter-<?= $ruangan['id'] ?>" class="btn text-white filter-btn" data-id="<?= (int) $ruangan['id'] ?>"
+                style="background-color: <?= $colors[$index % count($colors)] ?>;">
+                <?= $ruangan['nama'] ?>
+            </button>
+        <?php endforeach; ?>
+        <button id="filter-all" class="btn btn-dark filter-btn" data-id=0>Semua</button>
+    </div>
+
     <table id="wawancaraMahasiswa" class="table table-striped rounded-table">
         <thead>
             <tr>
@@ -163,7 +174,7 @@ $ruanganList = RuanganController::viewAllRuangan();
                 <th>Tanggal</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="table-body">
             <?php $i = 1; ?>
             <?php foreach ($wawancara as $row) { ?>
                 <tr data-id="<?= $row['id'] ?>" data-userid="<?= $row['id_mahasiswa'] ?>">
@@ -209,7 +220,8 @@ $ruanganList = RuanganController::viewAllRuangan();
                         </select>
                         <button type="button" class="btn btn-secondary mt-2" id="addMahasiswaButton">Tambah
                             mahasiswa</button>
-                            <button type="button" class="btn btn-success mt-2" id="addAllMahasiswaButton">Tambah Semua</button>
+                        <button type="button" class="btn btn-success mt-2" id="addAllMahasiswaButton">Tambah
+                            Semua</button>
 
                     </div>
                     <div class="mb-3">
@@ -555,5 +567,54 @@ $ruanganList = RuanganController::viewAllRuangan();
             });
         });
 
+        $(".filter-btn").click(function () {
+            let ruanganId = parseInt($(this).attr("data-id"), 10); 
+
+            let requestData = { id: ruanganId };
+            console.log(requestData);
+            $.ajax({
+                url: "<?= APP_URL ?>/ruangan/getfilter",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(requestData),
+                success: function (response) {
+                    if (response.status === "success") {
+                        let tableBody = $("#table-body");
+                        tableBody.empty(); 
+                        let i = 1;
+                        response.data.forEach(row => {
+                            tableBody.append(`
+                            <tr data-id="${row.id}" data-userid="${row.id_mahasiswa}">
+                                <td>${i}</td>
+                                <td>
+                                    <span class="open-detail" data-bs-toggle="modal" data-bs-target="#wawancaraModal"
+                                        data-nama="${row.nama_lengkap}" data-stambuk="${row.stambuk}"
+                                        data-ruangan="${row.ruangan}" data-jeniswawancara="${row.jenis_wawancara}"
+                                        data-waktu="${row.waktu}" data-tanggal="${row.tanggal}">
+                                        ${row.nama_lengkap}
+                                    </span>
+                                </td>
+                                <td>${row.stambuk}</td>
+                                <td>${row.ruangan}</td>
+                                <td>${row.jenis_wawancara}</td>
+                                <td>${row.waktu}</td>
+                                <td>${row.tanggal}</td>
+                            </tr>
+                        `);
+                            i++;
+                        });
+
+                    } else {
+                        // showModal()
+                        console.log("Error:", response.message);
+                        console.log()
+                    }
+                },
+                error: function (xhr) {
+                    console.error("Error:", xhr.responseText);
+                    alert("Terjadi kesalahan dalam mengambil data. Silakan coba lagi.");
+                }
+            });
+        });
     });
 </script>
