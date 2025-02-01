@@ -10,6 +10,13 @@ class NilaiAkhir extends Model {
     protected $id_mahasiswa;
     protected $nilai;
 
+    public function __construct(
+        $id_mahasiswa = null,
+        $nilai = null
+    ) {
+        $this->id_mahasiswa = $id_mahasiswa;
+        $this->nilai = $nilai;
+    }
     public function saveNilai($id) {
         $total_nilai = 0;
     $poin_per_benar = 10;
@@ -70,8 +77,16 @@ class NilaiAkhir extends Model {
         return $result ? $result : null;
     }
 
+    public function updateTotalNilai() {
+        $sql = "UPDATE " . static::$table . " SET total_nilai = :nilai WHERE id_mahasiswa = :id_mahasiswa";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindParam(':nilai', $this->nilai);
+        $stmt->bindParam(':id_mahasiswa', $this->id_mahasiswa);
+        return $stmt->execute();
+    }
+
     public function getAllNilai() {
-        $sql = "SELECT m.id, m.nama_lengkap, m.stambuk, n.nilai FROM mahasiswa m
+        $sql = "SELECT m.id, m.nama_lengkap, m.stambuk, n.nilai, n.total_nilai as total FROM mahasiswa m
                 JOIN nilai_akhir n ON m.id = n.id_mahasiswa";
         $stmt = self::getDB()->prepare($sql);
         $stmt->execute();

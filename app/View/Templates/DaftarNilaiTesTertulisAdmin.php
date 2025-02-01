@@ -4,9 +4,9 @@ use App\Controllers\Exam\NilaiAkhirController;
 $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
 ?>
 <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-     .table-striped {
+    .table-striped {
         background-color: white;
         border-radius: 12px;
         overflow: hidden;
@@ -66,6 +66,7 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
     .btn.nama-button:focus {
         outline: none;
     }
+
     .custom-modal {
         position: fixed;
         top: 0;
@@ -84,14 +85,14 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
     }
 
     .custom-modal-content {
-    max-height: 80vh; 
-    background: #fff;
-    overflow-y: auto; */
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    font-family: 'Poppins', sans-serif;
-}
+        max-height: 80vh;
+        background: #fff;
+        overflow-y: auto;
+        */ border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        font-family: 'Poppins', sans-serif;
+    }
 
 
     .close-modal {
@@ -103,55 +104,92 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
     }
 
     .soal-jawaban-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-top: 20px;
-}
-
-.soal-jawaban-card {
-    background: rgba(255, 255, 255, 0.8); /* Transparansi */
-    border: 1px solid rgba(0, 0, 0, 0.1); /* Border tipis */
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Shadow untuk kedalaman */
-    padding: 16px;
-    flex: 1 1 calc(50% - 16px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.soal-jawaban-card:hover {
-    transform: translateY(-5px); /* Efek hover */
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2); /* Shadow lebih besar */
-}
-
-.soal-jawaban-card h6 {
-    font-size: 1.1rem;
-    color: rgba(0, 0, 0, 0.8); /* Warna font modern */
-    margin-bottom: 8px;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif; /* Font Poppins */
-}
-
-.soal-jawaban-card p {
-    font-size: 0.95rem;
-    color: rgba(0, 0, 0, 0.6); /* Warna teks lebih lembut */
-    margin: 4px 0;
-    font-family: 'Poppins', sans-serif; /* Font Poppins */
-}
-
-.soal-jawaban-card strong {
-    color: rgba(0, 0, 0, 0.9); /* Warna teks tebal */
-    font-weight: 600;
-}
-
-@media (max-width: 768px) {
-    .soal-jawaban-card {
-        flex: 1 1 100%; /* Pada layar kecil, kartu mengambil seluruh lebar */
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 20px;
     }
-}
+
+    .soal-jawaban-card {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        padding: 16px;
+        flex: 1 1 calc(50% - 16px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .soal-jawaban-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .soal-jawaban-card h6 {
+        font-size: 1.1rem;
+        color: rgba(0, 0, 0, 0.8);
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .soal-jawaban-card p {
+        font-size: 0.95rem;
+        color: rgba(0, 0, 0, 0.6);
+        margin: 4px 0;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .soal-jawaban-card strong {
+        color: rgba(0, 0, 0, 0.9);
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .soal-jawaban-card {
+            flex: 1 1 100%;
+        }
+    }
+
+    .input-container {
+        position: relative;
+        width: 100%;
+        max-width: 300px;
+        margin-top: 20px;
+    }
+
+    #nilaiAkhir {
+        width: 100%;
+        padding: 12px 40px 12px 15px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        outline: none;
+        transition: 0.3s ease-in-out;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #nilaiAkhir:focus {
+        border-color: #007bff;
+        box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+    }
+
+    .icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+        font-size: 18px;
+        transition: 0.3s ease-in-out;
+    }
+
+    #nilaiAkhir:focus+.icon {
+        color: #007bff;
+    }
 </style>
 
 <main>
@@ -164,6 +202,7 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
                 <th>Nama</th>
                 <th>Stambuk</th>
                 <th>Nilai Tes tertulis</th>
+                <th>Nilai Keseluruhan</th>
             </tr>
         </thead>
         <tbody>
@@ -176,12 +215,14 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
                         <button class="btn nama-button" data-id="<?= htmlspecialchars($value['id'] ?? '') ?>"
                             data-nama="<?= htmlspecialchars($value['nama_lengkap'] ?? 'Tidak ada nama') ?>"
                             data-stambuk="<?= htmlspecialchars($value['stambuk'] ?? 'Tidak ada stambuk') ?>"
-                            data-nilai="<?= htmlspecialchars($value['nilai'] ?? 'Tidak ada nilai') ?>">
+                            data-nilai="<?= htmlspecialchars($value['nilai'] ?? 'Tidak ada nilai') ?>"
+                            data-total="<?= htmlspecialchars($value['total'] ?? 'Tidak ada nilai') ?>">
                             <?= htmlspecialchars($value['nama_lengkap'] ?? 'Tidak ada nama') ?>
                         </button>
                     </td>
                     <td><?= htmlspecialchars($value['stambuk'] ?? 'Tidak ada stambuk') ?></td>
                     <td><?= htmlspecialchars($value['nilai'] ?? 'Tidak ada nilai') ?></td>
+                    <td><?= htmlspecialchars($value['total'] ?? 'Tidak ada nilai') ?></td>
                 </tr>
                 <?php
                 $i++;
@@ -190,7 +231,6 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
     </table>
 </main>
 
-<!-- Custom Modal -->
 <div id="customModal" class="custom-modal hidden">
     <div class="custom-modal-content">
         <span id="closeModal" class="close-modal">&times;</span>
@@ -198,9 +238,17 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
         <p><strong>Nama:</strong> <span id="modalNama">Tidak ada data</span></p>
         <p><strong>Stambuk:</strong> <span id="modalStambuk">Tidak ada data</span></p>
         <p><strong>Nilai Tes Tertulis:</strong> <span id="modalNilai">Tidak ada data</span></p>
+        <p><strong>Nilai Total : <span id="modalTotalNilai">Tidak ada data</span></strong></p>
         <div id="soalJawaban" style="margin-top: 20px;">
             <h5>Soal dan Jawaban</h5>
             <div id="soalJawabanList" class="soal-jawaban-cards"></div>
+            <div class="input-container">
+                <form id="formNilaiAkhir">
+                    <input type="number" id="nilaiAkhir" placeholder="Masukkan Nilai Akhir" max="100">
+
+                    <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -209,6 +257,67 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
 
 <script>
     $(document).ready(function () {
+        document.getElementById("nilaiAkhir").addEventListener("input", function () {
+            if (this.value > 100) {
+                this.value = 100;
+            }
+        });
+
+        function showModal(message, gifUrl = null) {
+            const modal = document.getElementById('customModal');
+            if (!modal) {
+                return;
+            }
+
+            const modalMessage = document.getElementById('modalMessage');
+            const modalGif = document.getElementById('modalGif');
+            const closeModal = document.getElementById('closeModal');
+
+            modalMessage.textContent = message;
+            modalGif.style.display = gifUrl ? 'block' : 'none';
+            if (gifUrl) modalGif.src = gifUrl;
+
+            modal.style.display = 'flex';
+
+            $(closeModal).off('click').on('click', function () {
+                modal.style.display = 'none';
+            });
+
+            $(window).off('click').on('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+
+        $('#formNilaiAkhir').on('submit', function (e) {
+            e.preventDefault();
+
+            const id = $('.nama-button').data('id');
+            const nilaiAkhir = $('#nilaiAkhir').val();
+
+            console.log("ID : ", id);
+            console.log("Nilai Akhir : ", nilaiAkhir);
+            $.ajax({
+                url: '<?= APP_URL ?>/updatenilaiakhir',
+                type: 'POST',
+                data: { id: id, nilai: nilaiAkhir },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'success') {
+                        showModal('Nilai berhasil di update', '/tubes_web/public/Assets/gif/success.gif');
+                    } else {
+                        showModal('Gagal mengupdate nilai', '/tubes_web/public/Assets/gif/failed.gif');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error updating nilai:', error);
+                    alert('Error saat mengupdate nilai.');
+                }
+            });
+        });
+
         $('.nama-button').on('click', function (e) {
             e.preventDefault();
 
@@ -216,13 +325,13 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
             const nama = $(this).data('nama') || 'Tidak ada data';
             const stambuk = $(this).data('stambuk') || 'Tidak ada data';
             const nilai = $(this).data('nilai') || 'Tidak ada data';
-
+            const nilaiAkhir = $(this).data('total') || 'Tidak ada data';
             console.log("ID:", id);
             $('#modalNama').text(nama);
             $('#modalStambuk').text(stambuk);
             $('#modalNilai').text(nilai);
+            $('#modalTotalNilai').text(nilaiAkhir);
 
-            // AJAX untuk fetch soal dan jawaban
             $.ajax({
                 url: '<?= APP_URL ?>/getsoaljawaban',
                 type: 'POST',
@@ -259,16 +368,13 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
                 }
             });
 
-            // Tampilkan modal
             $('#customModal').removeClass('hidden');
         });
 
-        // Tutup modal
         $('#closeModal').on('click', function () {
             $('#customModal').addClass('hidden');
         });
 
-        // Tutup modal jika klik di luar konten
         $('#customModal').on('click', function (e) {
             if ($(e.target).is('#customModal')) {
                 $('#customModal').addClass('hidden');
