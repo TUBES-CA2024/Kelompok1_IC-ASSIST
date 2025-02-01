@@ -1,4 +1,5 @@
 
+
 $(document).ready(function () {
   $('.sidebar a, .profile a, .dashboard a').on('click', function (e) {
     if (this.id === "startTestButton") return; 

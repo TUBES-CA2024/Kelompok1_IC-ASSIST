@@ -8,6 +8,7 @@ use App\Model\User\NotificationUser;
 class NotificationControllers extends Controller {
 
     public function sendMessage() {
+        header('Content-Type: application/json');
         ob_start(); 
     
         if (session_status() == PHP_SESSION_NONE) {

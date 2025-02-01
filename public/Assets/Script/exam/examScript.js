@@ -178,7 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (response.status === "success") {
-              console.log("Respons backend:", response);
               showModal(
                 "Jawaban berhasil disimpan. Silahkan menunggu pengumuman selanjutnya",
                 "/tubes_web/public/Assets/gif/glasshour.gif"
@@ -186,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
               resolve(response);
             } else {
               console.error(
-                "Error dari backend:",
+                "Error :",
                 response.message || "Tidak ada pesan error"
               );
               reject(

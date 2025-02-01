@@ -119,7 +119,7 @@ class UserModel extends Model {
         $query = "DELETE FROM " . static::$table . " WHERE id = ?";
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(1, $id);
-        $stmt->execute();
+        return $stmt->execute();
     }
     
 }

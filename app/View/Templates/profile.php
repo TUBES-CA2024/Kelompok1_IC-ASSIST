@@ -365,10 +365,12 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
                 type: 'POST',
                 success: function (response) {
                     if (response.status === 'success') {
-                        alert(response.message || 'Logout berhasil');
+                        showModal('Logout berhasil', '/tubes_web/public/Assets/gif/success.gif').setTimeout(() => {
                         window.location.href = '/tubes_web/public/';
+                            
+                        }, 2000);
                     } else {
-                        alert(response.message || 'Logout gagal');
+                        showModal('Logout gagal', '/tubes_web/public/Assets/gif/failed.gif');
                     }
                 },
                 error: function (xhr, status, error) {

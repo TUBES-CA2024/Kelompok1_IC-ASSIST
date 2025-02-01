@@ -13,7 +13,8 @@ class MahasiswaController extends Controller {
         return $mahasiswa == null ? [] : $mahasiswa;
     }
     public static function deleteMahasiswa() {
-        
+        header('Content-Type: application/json');
+        ob_clean();
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Content-Type: application/json');
             echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);

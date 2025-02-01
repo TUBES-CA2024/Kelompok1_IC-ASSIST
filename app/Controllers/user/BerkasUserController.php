@@ -7,34 +7,39 @@ use App\Model\User\Mahasiswa;
 
 class BerkasUserController extends Controller
 {
-    public static function isEmptyBerkas() {
-        $berkas = new BerkasUser(0,0,0,0,0,0,0,0,0);
+    public static function isEmptyBerkas()
+    {
+        $berkas = new BerkasUser(0, 0, 0, 0, 0, 0, 0, 0, 0);
         $isEmpty = $berkas->isEmpty($_SESSION['user']['id']);
-        if(!$isEmpty) {
+        if (!$isEmpty) {
             return false;
         }
         return true;
     }
-    public static function isAcceptedBerkas() {
-        $berkas = new BerkasUser(0,0,0,0,0,0,0,0,0);
+    public static function isAcceptedBerkas()
+    {
+        $berkas = new BerkasUser(0, 0, 0, 0, 0, 0, 0, 0, 0);
         $isAccepted = $berkas->isAcceptedBerkasUser();
-        if(!$isAccepted) {
+        if (!$isAccepted) {
             return false;
         }
         return true;
     }
-    public function updateAcceptedStatus() {
+    public function updateAcceptedStatus()
+    {
         try {
+            header('Content-Type: application/json');
+            ob_clean();
             $id = $_POST['id'] ?? null;
             if (!$id) {
                 http_response_code(400);
                 echo json_encode(['status' => 'error', 'message' => 'ID tidak diberikan']);
                 return;
             }
-    
+
             $berkas = new BerkasUser();
             $isAccepted = $berkas->updateAccepted($id);
-    
+
             if ($isAccepted) {
                 echo json_encode(['status' => 'success', 'message' => 'Status berhasil diperbarui']);
             } else {
@@ -46,7 +51,7 @@ class BerkasUserController extends Controller
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
-    
+
     public function saveBerkas()
     {
         if (session_status() == PHP_SESSION_NONE) {
@@ -115,7 +120,8 @@ class BerkasUserController extends Controller
         return $berkas;
     }
 
-    public static function viewPhoto() {
+    public static function viewPhoto()
+    {
         $user = new BerkasUser();
         $photo = $user->getBerkas($_SESSION['user']['id']);
         if (!$photo) {
@@ -141,7 +147,7 @@ class BerkasUserController extends Controller
                 throw new \Exception('Jenis berkas tidak disediakan');
             }
 
-            $type = $_GET['type']; 
+            $type = $_GET['type'];
             $allowedTypes = ['foto', 'cv', 'transkrip_nilai', 'surat_pernyataan'];
             if (!in_array($type, $allowedTypes)) {
                 throw new \Exception('Jenis berkas tidak valid');
@@ -180,7 +186,8 @@ class BerkasUserController extends Controller
             echo "Error: " . $e->getMessage();
         }
     }
-    public function updateBerkas() {
+    public function updateBerkas()
+    {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }

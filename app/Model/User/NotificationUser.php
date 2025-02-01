@@ -54,7 +54,7 @@ class NotificationUser extends Model {
         $stmt = self::getDB()->prepare($query);
         $stmt->bindParam(':id_mahasiswa', $notification->id_mahasiswa);
         $stmt->bindParam(':pesan', $notification->pesan);
-        $stmt->execute();
+        return $stmt->execute();
     }
 
     private function getIdMahasiswaByIdUser($id) {

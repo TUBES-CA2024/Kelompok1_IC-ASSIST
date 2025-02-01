@@ -14,53 +14,72 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
     }
 
     .table-modern {
-        background: linear-gradient(145deg, #ffffff, #f3f6fa); /* Gradient background */
-        border-radius: 16px; /* Rounded corners */
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Depth effect */
+        background: linear-gradient(145deg, #ffffff, #f3f6fa);
+        /* Gradient background */
+        border-radius: 16px;
+        /* Rounded corners */
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        /* Depth effect */
         overflow: hidden;
         border-collapse: separate;
-        border-spacing: 0; /* Remove gaps */
+        border-spacing: 0;
+        /* Remove gaps */
         width: 100%;
-        margin: 20px 0; /* Add spacing around the table */
+        margin: 20px 0;
+        /* Add spacing around the table */
     }
 
-    .table-modern th, .table-modern td {
-        padding: 16px 20px; /* Add padding for spacing */
+    .table-modern th,
+    .table-modern td {
+        padding: 16px 20px;
+        /* Add padding for spacing */
         text-align: left;
-        color: #333; /* Dark text for readability */
-        border-bottom: 1px solid #eaeaea; /* Light borders between rows */
+        color: #333;
+        /* Dark text for readability */
+        border-bottom: 1px solid #eaeaea;
+        /* Light borders between rows */
     }
 
     .table-modern th {
-        background-color: #f9fbfc; /* Subtle header background */
-        font-weight: 600; /* Bold font */
-        color: #555; /* Slightly darker text for headers */
-        font-size: 1rem; /* Adjust header font size */
+        background-color: #f9fbfc;
+        /* Subtle header background */
+        font-weight: 600;
+        /* Bold font */
+        color: #555;
+        /* Slightly darker text for headers */
+        font-size: 1rem;
+        /* Adjust header font size */
     }
 
     .table-modern tr:hover td {
-        background-color: rgba(61, 194, 236, 0.1); /* Highlight row on hover */
+        background-color: rgba(61, 194, 236, 0.1);
+        /* Highlight row on hover */
         cursor: pointer;
     }
 
     .table-modern tr:last-child td {
-        border-bottom: none; /* Remove bottom border for the last row */
+        border-bottom: none;
+        /* Remove bottom border for the last row */
     }
 
     .table-modern tbody tr:first-child td:first-child {
-        border-top-left-radius: 16px; /* Rounded top-left corner */
+        border-top-left-radius: 16px;
+        /* Rounded top-left corner */
     }
 
     .table-modern tbody tr:first-child td:last-child {
-        border-top-right-radius: 16px; /* Rounded top-right corner */
+        border-top-right-radius: 16px;
+        /* Rounded top-right corner */
     }
 
     .table-modern tbody tr:last-child td:first-child {
-        border-bottom-left-radius: 16px; /* Rounded bottom-left corner */
+        border-bottom-left-radius: 16px;
+        /* Rounded bottom-left corner */
     }
 
     .table-modern tbody tr:last-child td:last-child {
-        border-bottom-right-radius: 16px; /* Rounded bottom-right corner */
+        border-bottom-right-radius: 16px;
+        /* Rounded bottom-right corner */
     }
 
     .table-modern .action-icons img {
@@ -71,7 +90,8 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
     }
 
     .table-modern .action-icons img:hover {
-        transform: scale(1.1); /* Slight zoom on hover */
+        transform: scale(1.1);
+        /* Slight zoom on hover */
     }
 </style>
 
@@ -215,13 +235,71 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
 </div>
 
 <script>
+
     $(document).ready(function () {
+        function showModal(message, gifUrl = null) {
+            const modal = document.getElementById('customModal');
+            if (!modal) {
+                return;
+            }
+
+            const modalMessage = document.getElementById('modalMessage');
+            const modalGif = document.getElementById('modalGif');
+            const closeModal = document.getElementById('closeModal');
+
+            modalMessage.textContent = message;
+            modalGif.style.display = gifUrl ? 'block' : 'none';
+            if (gifUrl) modalGif.src = gifUrl;
+
+            modal.style.display = 'flex';
+
+            $(closeModal).off('click').on('click', function () {
+                modal.style.display = 'none';
+            });
+
+            $(window).off('click').on('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        function showConfirm(message, onConfirm = null, onCancel = null) {
+            const modal = document.getElementById('confirmModal');
+            if (!modal) {
+                
+                return;
+            }
+
+            const modalMessage = document.getElementById('confirmModalMessage');
+            const confirmButton = document.getElementById('confirmModalConfirm');
+            const cancelButton = document.getElementById('confirmModalCancel');
+
+            modalMessage.textContent = message;
+            modal.style.display = 'flex';
+
+            $(confirmButton).off('click').on('click', function () {
+                if (onConfirm) onConfirm();
+                modal.style.display = 'none';
+            });
+
+            $(cancelButton).off('click').on('click', function () {
+                if (onCancel) onCancel();
+                modal.style.display = 'none';
+            });
+
+            $(window).off('click').on('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
         const table = $('#daftar').DataTable();
 
         $('#detailModal').on('show.bs.modal', function (event) {
             const button = $(event.relatedTarget);
             const idMhs = button.closest('tr').data('id');
-            // Ambil data dari atribut data-*
             const nama = button.data('nama');
             const stambuk = button.data('stambuk');
             const jurusan = button.data('jurusan');
@@ -237,7 +315,6 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
             const surat = button.data('surat');
 
             $(this).data('id', idMhs);
-            // Set data ke modal
             $('#modalNama').text(nama);
             $('#modalStambuk').text(stambuk);
             $('#modalJurusan').text(jurusan);
@@ -257,11 +334,10 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
             $('#downloadSuratButton').attr('data-download-url', surat ? `/tubes_web/res/berkasUser/${surat}` : '#');
         });
 
-        // Listener untuk tombol download
         $('button[data-download-url]').on('click', function () {
             const url = $(this).data('download-url');
             if (url && url !== '#') {
-                window.location.href = url; // Lakukan download
+                window.location.href = url;
             } else {
                 alert('Berkas tidak tersedia.');
             }
@@ -269,11 +345,10 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
 
 
         $('#daftar tbody').on('click', 'img[alt="delete"]', function (event) {
-            event.stopPropagation(); // Hindari trigger event pada baris tabel
-            const id = $(this).closest('tr').data('id'); // Ambil ID mahasiswa dari data-id
-            const userid = $(this).closest('tr').data('userid'); // Ambil ID user dari data-userid
-
-            $('#deleteModal') // Simpan data ke modal
+            event.stopPropagation();
+            const id = $(this).closest('tr').data('id');
+            const userid = $(this).closest('tr').data('userid');
+            $('#deleteModal')
                 .data('id', id)
                 .data('userid', userid)
                 .modal('show');
@@ -286,7 +361,7 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
         });
 
         $('#acceptButton').on('click', function () {
-            const idToSend = $('#detailModal').data('id'); // Ambil ID dari modal
+            const idToSend = $('#detailModal').data('id');
             console.log('ID yang dikirim ke server: ', idToSend);
 
             if (!idToSend) {
@@ -294,16 +369,25 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
                 return;
             }
 
-            // Kirim data ke server
             $.ajax({
-                url: '<?=APP_URL?>/acceptberkas',
+                url: '<?= APP_URL ?>/acceptberkas',
                 type: 'POST',
-                data: {id: idToSend}    ,
+                data: { id: idToSend },
                 success: function (response) {
                     if (response.status === 'success') {
-                        alert('Data berhasil diaccept!');
+                        showModal(
+                            "Mahasiswa berhasil di terima",
+                            "/tubes_web/public/Assets/gif/success.gif"
+                        );
+                        document.querySelector('a[data-page="lihatPeserta"]').click();
                         $('#detailModal').modal('hide');
-                    } 
+                    } else {
+                        showModal(
+                            "Gagal menerima mahasiswa",
+                            "/tubes_web/public/Assets/gif/failed.gif"
+                        );
+                        console.log(response.message);
+                    }
                 },
                 error: function (xhr) {
                     console.error('Error: ', xhr.responseText);
@@ -313,31 +397,38 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
 
         $('#confirmDelete').on('click', function (e) {
             e.preventDefault();
-            const userid = $('#deleteModal').data('userid'); // Ambil data-userid dari modal
-            console.log(userid); // Untuk debugging
-
-            $.ajax({
-                url: '<?= APP_URL ?>/deletemhs',
-                type: 'POST',
-                data: { id: userid }, // Kirim userid ke server
-                dataType: 'json',
-                success: function (response) {
-                    if (response.status === 'success') {
-                        alert('Data berhasil dihapus!');
-                    } else {
-                        alert(response.message);
-                        console.log(response.message);
+            const userid = $('#deleteModal').data('userid');
+            console.log(userid);
+                $.ajax({
+                    url: '<?= APP_URL ?>/deletemhs',
+                    type: 'POST',
+                    data: { id: userid },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            showModal(
+                                "Mahasiswa berhasil dihapus",
+                                "/tubes_web/public/Assets/gif/success.gif"
+                            );
+                            document.querySelector('a[data-page="lihatPeserta"]').click();
+            $('#deleteModal').modal('hide');
+                           
+                        } else {
+                            showModal(
+                                "Gagal menghapus mahasiswa",
+                                "/tubes_web/public/Assets/gif/failed.gif"
+                            );
+            $('#deleteModal').modal('hide');
+                            console.log(response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('error: ', xhr.responseText);
+                        console.error('status: ', status);
+                        console.error('error: ', error);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error('error: ', xhr.responseText);
-                    console.error('status: ', status);
-                    console.error('error: ', error);
-                }
+                });
             });
-            alert('Berhasil Menghapus Data!');
-            $('#deleteModal').modal('hide'); // Tutup modal
-            location.reload();
         });
         $('#editForm').on('submit', function (e) {
             e.preventDefault();
@@ -352,9 +443,16 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
                 dataType: 'json',
                 success: function (response) {
                     if (response.status === 'success') {
+                        showModal(
+                            "Pesan berhasil dikirim",
+                            "/tubes_web/public/Assets/gif/success.gif"
+                        );
+                        document.querySelector('a[data-page="lihatPeserta"]').click();
                     } else {
-                        alert('Gagal mengirim pesan!');
-                        console.log(response.message);
+                        showModal(
+                            response.message || "Gagal mengirim pesan",
+                            "/tubes_web/public/Assets/gif/failed.gif"
+                        );
                     }
                 },
                 error: function (xhr, status, error, response) {
@@ -363,10 +461,7 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
                     console.log('error : ', error);
                 }
             });
-            alert('Pesan berhasil dikirim!');
             $('#editModal').modal('hide');
-
         });
 
-    });
 </script>
