@@ -6,7 +6,7 @@ $ruanganList = RuanganController::viewAllRuangan();
     /* Import Font */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-    
+
     .btn-primary {
         background: linear-gradient(135deg, #3DC2EC, #3392cc);
         color: white;
@@ -134,38 +134,40 @@ $ruanganList = RuanganController::viewAllRuangan();
 </style>
 
 <main>
-<h1 class="dashboard">Ruangan</h1>
+    <h1 class="dashboard">Ruangan</h1>
 
-<!-- Button Tambah Ruangan -->
-<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambahRuanganModal">
-    Tambah Ruangan
-</button>
+    <!-- Button Tambah Ruangan -->
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambahRuanganModal">
+        Tambah Ruangan
+    </button>
 
-<table class="table table-striped rounded-table" style="table-layout: auto; width: 100%; text-align: left;">
-    <thead class="table-dark">
-        <tr>
-            <th>No</th>
-            <th>Nama Ruangan</th>
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody id="jadwalTableBody">
-        <?php $i = 1; ?>
-        <?php foreach ($ruanganList as $ruangan) { ?>
+    <table class="table table-striped rounded-table" style="table-layout: auto; width: 100%; text-align: left;">
+        <thead class="table-dark">
             <tr>
-                <td><?= $i ?></td>
-                <td><?= $ruangan['nama'] ?></td>
-                <td>
-                    <div style="display: flex; gap:5%;">
-                        <img src="/tubes_web/public/Assets/Img/edit.svg" alt="edit" class="edit-button" data-id="<?= $ruangan['id'] ?>" style="cursor: pointer;">
-                        <img src="/tubes_web/public/Assets/Img/delete.svg" alt="delete" class="delete-button" data-id="<?= $ruangan['id'] ?>" style="cursor: pointer;">
-                    </div>
-                </td>
+                <th>No</th>
+                <th>Nama Ruangan</th>
+                <th>Aksi</th>
             </tr>
-            <?php $i++; ?>
-        <?php } ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody id="jadwalTableBody">
+            <?php $i = 1; ?>
+            <?php foreach ($ruanganList as $ruangan) { ?>
+                <tr>
+                    <td><?= $i ?></td>
+                    <td><?= $ruangan['nama'] ?></td>
+                    <td>
+                        <div style="display: flex; gap:5%;">
+                            <img src="/tubes_web/public/Assets/Img/edit.svg" alt="edit" class="edit-button"
+                                data-id="<?= $ruangan['id'] ?>" style="cursor: pointer;">
+                            <img src="/tubes_web/public/Assets/Img/delete.svg" alt="delete" class="delete-button"
+                                data-id="<?= $ruangan['id'] ?>" style="cursor: pointer;">
+                        </div>
+                    </td>
+                </tr>
+                <?php $i++; ?>
+            <?php } ?>
+        </tbody>
+    </table>
 </main>
 
 <!-- Modal Tambah Ruangan -->
@@ -180,7 +182,8 @@ $ruanganList = RuanganController::viewAllRuangan();
                 <form id="tambahRuanganForm">
                     <div class="mb-3">
                         <label for="namaRuangan" class="form-label">Nama Ruangan</label>
-                        <input type="text" class="form-control" id="namaRuangan" name="namaRuangan" placeholder="Masukkan nama ruangan" required>
+                        <input type="text" class="form-control" id="namaRuangan" name="namaRuangan"
+                            placeholder="Masukkan nama ruangan" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
@@ -201,7 +204,8 @@ $ruanganList = RuanganController::viewAllRuangan();
                     <input type="hidden" id="updateRuanganId">
                     <div class="mb-3">
                         <label for="updateNamaRuangan" class="form-label">Nama Ruangan</label>
-                        <input type="text" class="form-control" id="updateNamaRuangan" name="updateNamaRuangan" placeholder="Masukkan nama ruangan" required>
+                        <input type="text" class="form-control" id="updateNamaRuangan" name="updateNamaRuangan"
+                            placeholder="Masukkan nama ruangan" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
@@ -211,8 +215,66 @@ $ruanganList = RuanganController::viewAllRuangan();
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#tambahRuanganForm').on('submit', function(e) {
+    $(document).ready(function () {
+        function showModal(message, gifUrl = null) {
+            const modal = document.getElementById('customModal');
+            if (!modal) {
+                return;
+            }
+
+            const modalMessage = document.getElementById('modalMessage');
+            const modalGif = document.getElementById('modalGif');
+            const closeModal = document.getElementById('closeModal');
+
+            modalMessage.textContent = message;
+            modalGif.style.display = gifUrl ? 'block' : 'none';
+            if (gifUrl) modalGif.src = gifUrl;
+
+            modal.style.display = 'flex';
+
+            $(closeModal).off('click').on('click', function () {
+                modal.style.display = 'none';
+            });
+
+            $(window).off('click').on('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        function showConfirm(message, onConfirm = null, onCancel = null) {
+            const modal = document.getElementById('confirmModal');
+            if (!modal) {
+
+                return;
+            }
+
+            const modalMessage = document.getElementById('confirmModalMessage');
+            const confirmButton = document.getElementById('confirmModalConfirm');
+            const cancelButton = document.getElementById('confirmModalCancel');
+
+            modalMessage.textContent = message;
+            modal.style.display = 'flex';
+
+            $(confirmButton).off('click').on('click', function () {
+                if (onConfirm) onConfirm();
+                modal.style.display = 'none';
+            });
+
+            $(cancelButton).off('click').on('click', function () {
+                if (onCancel) onCancel();
+                modal.style.display = 'none';
+            });
+
+            $(window).off('click').on('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        $('#tambahRuanganForm').on('submit', function (e) {
             e.preventDefault();
 
             const formData = {
@@ -220,85 +282,85 @@ $ruanganList = RuanganController::viewAllRuangan();
             };
 
             $.ajax({
-                url: '<?=APP_URL?>/tambahruangan', 
+                url: '<?= APP_URL ?>/tambahruangan',
                 type: 'POST',
                 data: formData,
                 dataType: 'json',
-                success: function(response) {
+                success: function (response) {
                     if (response.status === 'success') {
-                        alert('Ruangan berhasil ditambahkan!');
-                        location.reload(); 
+                        showModal('Ruangan berhasil ditambahkan!', '/tubes_web/public/Assets/gif/success.gif');
+                        document.querySelector('a[data-page="ruangan"]').click();
+                        $('#tambahRuanganModal').modal('hide');
                     } else {
-                        alert('Gagal menambahkan ruangan: ' + response.message);
+                        showModal('Ruangan gagal ditambahkan: ' + response.message, '/tubes_web/public/Assets/gif/error.gif');
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.log('Error:', error);
                     alert('Terjadi kesalahan, coba lagi.');
                 }
             });
         });
 
-        $('.delete-button').on('click', function() {
+        $('.delete-button').on('click', function () {
             const id = $(this).data('id');
             console.log(id);
-            if (confirm('Apakah Anda yakin ingin menghapus ruangan ini?')) {
+            showConfirm('Apakah Anda yakin ingin menghapus ruangan ini?', function () {
                 $.ajax({
-                    url: '<?=APP_URL?>/deleteruangan',
+                    url: '<?= APP_URL ?>/deleteruangan',
                     type: 'POST',
                     data: { id: id },
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                         if (response.status === 'success') {
-                            alert('Ruangan berhasil dihapus!');
-                            location.reload();
+                            showModal('Ruangan berhasil dihapus!', '/tubes_web/public/Assets/gif/success.gif');
+                            document.querySelector('a[data-page="ruangan"]').click();
                         } else {
-                            alert('Gagal menghapus ruangan: ' + response.message);
+                            showModal('Gagal menghapus ruangan: ' + response.message, '/tubes_web/public/Assets/gif/error.gif');
                         }
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error('Error:', error);
                         alert('Terjadi kesalahan, coba lagi.');
                     }
                 });
-            }
-        });
-
-        // Update Ruangan
-        $('.edit-button').on('click', function() {
-            const id = $(this).data('id');
-            const currentName = $(this).closest('tr').find('td:nth-child(2)').text();
-
-            $('#updateRuanganId').val(id);
-            $('#updateNamaRuangan').val(currentName);
-
-            $('#updateRuanganModal').modal('show');
-        });
-
-        $('#updateRuanganForm').on('submit', function(e) {
-            e.preventDefault();
-
-            const id = $('#updateRuanganId').val();
-            const namaRuangan = $('#updateNamaRuangan').val();
-            console.log(id, namaRuangan);
-            $.ajax({
-                url: '<?=APP_URL?>/updateruangan',
-                type: 'POST',
-                data: { id: id, namaRuangan: namaRuangan },
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status === 'success') {
-                        alert('Ruangan berhasil diperbarui!');
-                        location.reload();
-                    } else {
-                        alert('Gagal memperbarui ruangan: ' + response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                    alert('Terjadi kesalahan, coba lagi.');
-                }
             });
         });
-    });
+            $('.edit-button').on('click', function () {
+                const id = $(this).data('id');
+                const currentName = $(this).closest('tr').find('td:nth-child(2)').text();
+
+                $('#updateRuanganId').val(id);
+                $('#updateNamaRuangan').val(currentName);
+
+                $('#updateRuanganModal').modal('show');
+            });
+
+            $('#updateRuanganForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const id = $('#updateRuanganId').val();
+                const namaRuangan = $('#updateNamaRuangan').val();
+                console.log(id, namaRuangan);
+                $.ajax({
+                    url: '<?= APP_URL ?>/updateruangan',
+                    type: 'POST',
+                    data: { id: id, namaRuangan: namaRuangan },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status === 'success') {
+                           showModal('Ruangan berhasil diperbarui!', '/tubes_web/public/Assets/gif/success.gif');
+                            document.querySelector('a[data-page="ruangan"]').click();
+                            $('#updateRuanganModal').modal('hide');
+                        } else {
+                            showModal('Gagal memperbarui ruangan: ' + response.message, '/tubes_web/public/Assets/gif/failed.gif');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan, coba lagi.');
+                    }
+                });
+            });
+        });
 </script>
