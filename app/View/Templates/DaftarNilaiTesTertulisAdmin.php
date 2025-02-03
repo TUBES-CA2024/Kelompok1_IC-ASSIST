@@ -256,47 +256,46 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
 
 
 <script>
+    function showModal(message, gifUrl = null) {
+        const modal = document.getElementById('customModal');
+        if (!modal) {
+            return;
+        }
+
+        const modalMessage = document.getElementById('modalMessage');
+        const modalGif = document.getElementById('modalGif');
+        const closeModal = document.getElementById('closeModal');
+
+        modalMessage.textContent = message;
+        modalGif.style.display = gifUrl ? 'block' : 'none';
+        if (gifUrl) modalGif.src = gifUrl;
+
+        modal.style.display = 'flex';
+
+        $(closeModal).off('click').on('click', function () {
+            modal.style.display = 'none';
+        });
+
+        $(window).off('click').on('click', function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+
     $(document).ready(function () {
+
         document.getElementById("nilaiAkhir").addEventListener("input", function () {
             if (this.value > 100) {
                 this.value = 100;
             }
         });
-
-        function showModal(message, gifUrl = null) {
-            const modal = document.getElementById('customModal');
-            if (!modal) {
-                return;
-            }
-
-            const modalMessage = document.getElementById('modalMessage');
-            const modalGif = document.getElementById('modalGif');
-            const closeModal = document.getElementById('closeModal');
-
-            modalMessage.textContent = message;
-            modalGif.style.display = gifUrl ? 'block' : 'none';
-            if (gifUrl) modalGif.src = gifUrl;
-
-            modal.style.display = 'flex';
-
-            $(closeModal).off('click').on('click', function () {
-                modal.style.display = 'none';
-            });
-
-            $(window).off('click').on('click', function (event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-        }
-
-
         $('#formNilaiAkhir').on('submit', function (e) {
             e.preventDefault();
 
-            const id = $('.nama-button').data('id');
+            const id = $(this).data('id');
             const nilaiAkhir = $('#nilaiAkhir').val();
-
+            
             console.log("ID : ", id);
             console.log("Nilai Akhir : ", nilaiAkhir);
             $.ajax({
@@ -306,9 +305,9 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
                 dataType: 'json',
                 success: function (response) {
                     if (response.status === 'success') {
-                        showModal('Nilai berhasil di update', '/tubes_web/public/Assets/gif/success.gif');
+                        alert('mantap');
                     } else {
-                        showModal('Gagal mengupdate nilai', '/tubes_web/public/Assets/gif/failed.gif');
+                        alert('Error saat mengupdate nilai.');
                     }
                 },
                 error: function (xhr, status, error) {
@@ -317,7 +316,6 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
                 }
             });
         });
-
         $('.nama-button').on('click', function (e) {
             e.preventDefault();
 
@@ -331,7 +329,7 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
             $('#modalStambuk').text(stambuk);
             $('#modalNilai').text(nilai);
             $('#modalTotalNilai').text(nilaiAkhir);
-
+            $('#formNilaiAkhir').data('id', id);
             $.ajax({
                 url: '<?= APP_URL ?>/getsoaljawaban',
                 type: 'POST',

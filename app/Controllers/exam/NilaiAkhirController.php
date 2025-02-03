@@ -57,7 +57,6 @@ class NilaiAkhirController extends Controller
     public function updateTotalNilai()
     {
         try {
-            header('Content-Type: application/json');
             ob_clean();
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
@@ -80,8 +79,8 @@ class NilaiAkhirController extends Controller
                 ]);
                 return;
             }
-            $nilaiAkhir = new NilaiAkhir($id, $nilai);
-            if ($nilaiAkhir->updateTotalNilai()) {
+            $nilaiAkhir = new NilaiAkhir();
+            if ($nilaiAkhir->updateTotalNilai($id, $nilai)) {
                 echo json_encode([
                     'status' => 'success',
                     'message' => 'Nilai berhasil diupdate'
