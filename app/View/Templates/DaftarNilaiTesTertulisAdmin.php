@@ -256,34 +256,34 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
 
 
 <script>
-    function showModal(message, gifUrl = null) {
-        const modal = document.getElementById('customModal');
-        if (!modal) {
-            return;
-        }
-
-        const modalMessage = document.getElementById('modalMessage');
-        const modalGif = document.getElementById('modalGif');
-        const closeModal = document.getElementById('closeModal');
-
-        modalMessage.textContent = message;
-        modalGif.style.display = gifUrl ? 'block' : 'none';
-        if (gifUrl) modalGif.src = gifUrl;
-
-        modal.style.display = 'flex';
-
-        $(closeModal).off('click').on('click', function () {
-            modal.style.display = 'none';
-        });
-
-        $(window).off('click').on('click', function (event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-    }
-
     $(document).ready(function () {
+        function showModal(message, gifUrl = null) {
+            const modal = document.getElementById('customModal');
+            if (!modal) {
+                return;
+            }
+
+            const modalMessage = document.getElementById('modalMessage');
+            const modalGif = document.getElementById('modalGif');
+            const closeModal = document.getElementById('closeModal');
+
+            modalMessage.textContent = message;
+            modalGif.style.display = gifUrl ? 'block' : 'none';
+            if (gifUrl) modalGif.src = gifUrl;
+
+            modal.style.display = 'flex';
+
+            $(closeModal).off('click').on('click', function () {
+                modal.style.display = 'none';
+            });
+
+            $(window).off('click').on('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+
+                }
+            });
+        }
 
         document.getElementById("nilaiAkhir").addEventListener("input", function () {
             if (this.value > 100) {
@@ -295,7 +295,7 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
 
             const id = $(this).data('id');
             const nilaiAkhir = $('#nilaiAkhir').val();
-            
+
             console.log("ID : ", id);
             console.log("Nilai Akhir : ", nilaiAkhir);
             $.ajax({
@@ -305,9 +305,13 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
                 dataType: 'json',
                 success: function (response) {
                     if (response.status === 'success') {
-                        alert('mantap');
+                        showModal('Nilai berhasil ditambahkan!', '/tubes_web/public/Assets/gif/success.gif');
+                        document.querySelector('a[data-page="lihatnilai"').click();
                     } else {
-                        alert('Error saat mengupdate nilai.');
+                        showModal(
+                            'Error saat mengupdate nilai',
+                            '/tubes_web/public/Assets/gif/failed.gif'
+                        );
                     }
                 },
                 error: function (xhr, status, error) {
