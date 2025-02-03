@@ -4,262 +4,234 @@ $allSoal = ExamController::viewAllSoal();
 ?>
 
 <style>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-    
-    .table-striped {
-        background-color: white;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        margin-top: 20px;
-        font-size: 0.95rem;
-    }
+  <style>@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-    .table-striped th,
-    .table-striped td {
-        padding: 16px 20px;
-        text-align: left;
-        color: #555;
-    }
+  .table-striped {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 20px;
+    font-size: 0.95rem;
+  }
 
-    .table-striped th {
-        background-color: #3DC2EC;
-        color: white;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
+  .table-striped th,
+  .table-striped td {
+    padding: 16px 20px;
+    text-align: left;
+    color: #555;
+  }
 
-    .table-striped tr:nth-child(odd) {
-        background-color: #f8faff;
-    }
+  .table-striped th {
+    background-color: #3DC2EC;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
 
-    .table-striped tr:nth-child(even) {
-        background-color: #e8f4fc;
-    }
+  .table-striped tr:nth-child(odd) {
+    background-color: #f8faff;
+  }
 
-    .table-striped tr:hover {
-        background-color: rgba(61, 194, 236, 0.2);
-        cursor: pointer;
-    }
+  .table-striped tr:nth-child(even) {
+    background-color: #e8f4fc;
+  }
 
-    .rounded-table {
-        border-radius: 12px;
-        overflow: hidden;
-    }
+  .table-striped tr:hover {
+    background-color: rgba(61, 194, 236, 0.2);
+    cursor: pointer;
+  }
 
-    .btn-primary {
-        background: linear-gradient(135deg, #3DC2EC, #3392cc);
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+  .rounded-table {
+    border-radius: 12px;
+    overflow: hidden;
+  }
 
-    .btn-primary:hover {
-        background: linear-gradient(135deg, #3392cc, #3DC2EC);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-        transform: translateY(-2px);
-    }
+  .btn-primary {
+    background: linear-gradient(135deg, #3DC2EC, #3392cc);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
 
-    .btn-primary:focus {
-        outline: none;
-    }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #3392cc, #3DC2EC);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
 
-    .btn-danger {
-        background-color: #dc3545;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
+  .btn-primary:focus {
+    outline: none;
+  }
 
-    .btn-danger:hover {
-        background-color: #c82333;
-    }
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
 
-    .btn-secondary {
-        background-color: #6c757d;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
+  .btn-danger:hover {
+    background-color: #c82333;
+  }
 
-    .btn-secondary:hover {
-        background-color: #5a6268;
-    }
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
 
-    /* Modal Styles */
-    .modal-content {
-        border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        font-family: 'Poppins', sans-serif;
-    }
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
 
-    .modal-header {
-        background: linear-gradient(135deg, #3DC2EC, #3392cc);
-        color: white;
-        border-bottom: none;
-        border-radius: 12px 12px 0 0;
-        padding: 20px;
-    }
+  /* Modal Styles */
+  .modal-content {
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    font-family: 'Poppins', sans-serif;
+  }
 
-    .modal-header h5 {
-        font-size: 1.5rem;
-        font-weight: 600;
-    }
+  .modal-header {
+    background: linear-gradient(135deg, #3DC2EC, #3392cc);
+    color: white;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    padding: 20px;
+  }
 
-    .modal-body {
-        padding: 20px;
-        color: #555;
-    }
+  .modal-header h5 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
 
-    .modal-footer {
-        border-top: none;
-        padding: 20px;
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-    }
+  .modal-body {
+    padding: 20px;
+    color: #555;
+  }
 
-    /* Form Inputs */
-    .form-control {
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        padding: 10px 15px;
-        font-size: 1rem;
-        transition: border-color 0.3s ease;
-    }
+  .modal-footer {
+    border-top: none;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
 
-    .form-control:focus {
-        border-color: #3DC2EC;
-        box-shadow: 0 0 5px rgba(61, 194, 236, 0.5);
-        outline: none;
-    }
+  /* Form Inputs */
+  .form-control {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
 
-    .form-check-input:checked {
-        background-color: #3DC2EC;
-        border-color: #3DC2EC;
-    }
+  .form-control:focus {
+    border-color: #3DC2EC;
+    box-shadow: 0 0 5px rgba(61, 194, 236, 0.5);
+    outline: none;
+  }
 
-    .form-check-label {
-        font-size: 0.95rem;
-        color: #555;
-    }
+  .form-check-input:checked {
+    background-color: #3DC2EC;
+    border-color: #3DC2EC;
+  }
+
+  .form-check-label {
+    font-size: 0.95rem;
+    color: #555;
+  }
 </style>
 
 </style>
 <main>
   <h1 class="dashboard">Tes Tertulis</h1>
-<button type="button" data-bs-toggle="modal" data-bs-target="#addSoalModal" class="btn btn-primary mb-3">
-   Soal
-</button>
+  <button type="button" data-bs-toggle="modal" data-bs-target="#addSoalModal" class="btn btn-primary mb-3">
+    Soal
+  </button>
 
-<table class="table table-striped rounded-table ">
-  <thead class="table-dark">
-    <tr>
-      <th>No</th>
-      <th>Deskripsi</th>
-      <th>Gambar Soal</th>
-      <th>Pilihan</th>
-      <th>Jawaban</th>
-    </tr>
-  </thead>
-  <tbody id="soalTableBody">
-    <?php $i = 1; ?>
-    <?php foreach ($allSoal as $soal): ?>
-      <tr class="soal-row" data-id="<?= $soal['id'] ?>" data-deskripsi="<?= htmlspecialchars($soal['deskripsi']) ?>"
-        data-gambar="<?= htmlspecialchars($soal['gambar']) ?>" data-pilihan="<?= htmlspecialchars($soal['pilihan']) ?>"
-        data-jawaban="<?= htmlspecialchars($soal['jawaban']) ?>">
-        <td><?= $i++ ?></td>
-        <td><?= $soal['deskripsi'] ?></td>
-        <td>
-          <?php if ($soal['gambar'] !== 'Bukan soal bergambar'): ?>
-            <img src="/tubes_web/public/Assets/Img/soal/<?= htmlspecialchars($soal['gambar']) ?>" alt="soal.png"
-              style="width: 4cm; height: 3cm;">
-          <?php else: ?>
-            Bukan Gambar Soal
-          <?php endif; ?>
-        </td>
-        <td><?= $soal['pilihan'] ?></td>
-        <td><?= $soal['jawaban'] ?></td>
+  <table class="table table-striped rounded-table ">
+    <thead class="table-dark">
+      <tr>
+        <th>No</th>
+        <th>Deskripsi</th>
+        <th>Pilihan</th>
+        <th>Jawaban</th>
       </tr>
-    <?php endforeach; ?>
-  </tbody>
-</table>
+    </thead>
+    <tbody id="soalTableBody">
+      <?php $i = 1; ?>
+      <?php foreach ($allSoal as $soal): ?>
+        <tr class="soal-row" data-id="<?= $soal['id'] ?>" data-deskripsi="<?= htmlspecialchars($soal['deskripsi']) ?>"
+          data-pilihan="<?= htmlspecialchars($soal['pilihan']) ?>"
+          data-jawaban="<?= htmlspecialchars($soal['jawaban']) ?>">
+          <td><?= $i++ ?></td>
+          <td><?= $soal['deskripsi'] ?></td>
+          <td><?= $soal['pilihan'] ?></td>
+          <td><?= $soal['jawaban'] ?></td>
+        </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
 
-<div class="modal fade" id="addSoalModal" tabindex="-1" aria-labelledby="addSoalModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form id="addSoalForm" enctype="multipart/form-data">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addSoalModalLabel">Tambah Soal</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="deskripsi" class="form-label"><b>Deskripsi</b></label>
-            <textarea class="form-control" id="deskripsi" name="deskripsi" required></textarea>
+  <div class="modal fade" id="addSoalModal" tabindex="-1" aria-labelledby="addSoalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="addSoalForm" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addSoalModalLabel">Tambah Soal</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-
-          <div class="mb-3">
-            <label class="form-label"><b>Soal Bergambar?</b> </label><br>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="tipeSoal" id="iya" value="iya" checked>
-              <label class="form-check-label" for="iya">Iya</label>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="deskripsi" class="form-label"><b>Deskripsi</b></label>
+              <textarea class="form-control" id="deskripsi" name="deskripsi" required></textarea>
             </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="tipeSoal" id="tidak" value="tidak">
-              <label class="form-check-label" for="tidak">Tidak</label>
+            <div class="mb-3">
+              <label class="form-label"><b>Tipe Jawaban</b></label><br>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="tipeJawaban" id="pilihanGanda" value="pilihan_ganda"
+                  checked>
+                <label class="form-check-label" for="pilihanGanda">Pilihan Ganda</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="tipeJawaban" id="textBox" value="textbox">
+                <label class="form-check-label" for="textBox">Textbox</label>
+              </div>
+            </div>
+
+            <div id="pilihanGandaInput" class="mb-3">
+              <label for="pilihan" class="form-label"><b>Pilihan</b></label>
+              <textarea class="form-control" id="pilihan" name="pilihan"
+                placeholder="Pisahkan dengan koma, contoh: A,B,C,D"></textarea>
+            </div>
+
+            <div id="jawabanGandaInput" class="mb-3">
+              <label for="jawaban" class="form-label"><b>Jawaban</b></label>
+              <textarea class="form-control" id="jawaban" name="jawaban"
+                placeholder="Masukkan jawaban yang benar dari pilihan"></textarea>
             </div>
           </div>
-
-          <div class="mb-3">
-            <label for="gambar" class="form-label"><b>Gambar Soal</b></label>
-            <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            <button type="submit" class="btn btn-primary">Tambah</button>
           </div>
-
-          <div class="mb-3">
-            <label class="form-label"><b>Tipe Jawaban</b></label><br>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="tipeJawaban" id="pilihanGanda" value="pilihan_ganda"
-                checked>
-              <label class="form-check-label" for="pilihanGanda">Pilihan Ganda</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="tipeJawaban" id="textBox" value="textbox">
-              <label class="form-check-label" for="textBox">Textbox</label>
-            </div>
-          </div>
-
-          <div id="pilihanGandaInput" class="mb-3">
-            <label for="pilihan" class="form-label"><b>Pilihan</b></label>
-            <textarea class="form-control" id="pilihan" name="pilihan"
-              placeholder="Pisahkan dengan koma, contoh: A,B,C,D"></textarea>
-          </div>
-
-          <div id="jawabanGandaInput" class="mb-3">
-            <label for="jawaban" class="form-label"><b>Jawaban</b></label>
-            <textarea class="form-control" id="jawaban" name="jawaban"
-              placeholder="Masukkan jawaban yang benar dari pilihan"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-          <button type="submit" class="btn btn-primary">Tambah</button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
-</div>
 </main>
 
 <div class="modal fade" id="updateSoalModal" tabindex="-1" aria-labelledby="updateSoalModalLabel" aria-hidden="true">
@@ -275,21 +247,6 @@ $allSoal = ExamController::viewAllSoal();
           <div class="mb-3">
             <label for="updateDeskripsi" class="form-label"><b>Deskripsi</b></label>
             <textarea class="form-control" id="updateDeskripsi" name="deskripsi" required></textarea>
-          </div>
-          <div class="mb-3">
-            <label class="form-label"><b>Soal Bergambar?</b> </label><br>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="updateTipeSoal" id="updateIya" value="iya" checked>
-              <label class="form-check-label" for="updateIya">Iya</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="updateTipeSoal" id="updateTidak" value="tidak">
-              <label class="form-check-label" for="updateTidak">Tidak</label>
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="updateGambar" class="form-label"><b>Gambar Soal</b></label>
-            <input type="file" class="form-control" id="updateGambar" name="gambar" accept="image/*">
           </div>
           <div class="mb-3">
             <label class="form-label"><b>Tipe Jawaban</b></label><br>
@@ -333,8 +290,6 @@ $allSoal = ExamController::viewAllSoal();
       </div>
       <div class="modal-body">
         <p><strong>Deskripsi:</strong> <span id="modalDeskripsi"></span></p>
-        <p><strong>Gambar Soal:</strong> <br><img id="modalGambar" src="" alt="Gambar Soal" style="max-width: 100%;">
-        </p>
         <p><strong>Pilihan:</strong> <span id="modalPilihan"></span></p>
         <p><strong>Jawaban:</strong> <span id="modalJawaban"></span></p>
       </div>
@@ -349,20 +304,71 @@ $allSoal = ExamController::viewAllSoal();
 
 <script>
   $(document).ready(function () {
+
+    function showModal(message, gifUrl = null) {
+      const modal = document.getElementById('customModal');
+      if (!modal) {
+        return;
+      }
+
+      const modalMessage = document.getElementById('modalMessage');
+      const modalGif = document.getElementById('modalGif');
+      const closeModal = document.getElementById('closeModal');
+
+      modalMessage.textContent = message;
+      modalGif.style.display = gifUrl ? 'block' : 'none';
+      if (gifUrl) modalGif.src = gifUrl;
+
+      modal.style.display = 'flex';
+
+      $(closeModal).off('click').on('click', function () {
+        modal.style.display = 'none';
+      });
+
+      $(window).off('click').on('click', function (event) {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
+    function showConfirm(message, onConfirm = null, onCancel = null) {
+      const modal = document.getElementById('confirmModal');
+      if (!modal) {
+        return;
+      }
+
+      const modalMessage = document.getElementById('confirmModalMessage');
+      const confirmButton = document.getElementById('confirmModalConfirm');
+      const cancelButton = document.getElementById('confirmModalCancel');
+
+      modalMessage.textContent = message;
+      modal.style.display = 'flex';
+
+      $(confirmButton).off('click').on('click', function () {
+        if (onConfirm) onConfirm();
+        modal.style.display = 'none';
+      });
+
+      $(cancelButton).off('click').on('click', function () {
+        if (onCancel) onCancel();
+        modal.style.display = 'none';
+      });
+
+      $(window).off('click').on('click', function (event) {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
     $(".soal-row").on("click", function () {
       const id = $(this).data("id");
       const deskripsi = $(this).data("deskripsi");
-      const gambar = $(this).data("gambar");
       const pilihan = $(this).data("pilihan");
       const jawaban = $(this).data("jawaban");
 
       $("#modalDeskripsi").text(deskripsi);
-      if (gambar !== 'Bukan soal bergambar') {
-    $("#modalGambar").attr("src", "/tubes_web/public/Assets/Img/soal/" + gambar);
-} else {
-    $("#modalGambar").removeAttr("src");
-}
-
       $("#modalPilihan").text(pilihan);
       $("#modalJawaban").text(jawaban);
 
@@ -382,20 +388,6 @@ $allSoal = ExamController::viewAllSoal();
       }
     });
 
-    $('input[name="tipeSoal"]').on("change", function () {
-      if ($(this).val() === "iya") {
-        $("#gambar").closest(".mb-3").show();
-      } else {
-        $("#gambar").closest(".mb-3").hide();
-      }
-    });
-
-    if ($('input[name="tipeSoal"]:checked').val() === "iya") {
-      $("#gambar").closest(".mb-3").show();
-    } else {
-      $("#gambar").closest(".mb-3").hide();
-    }
-
     if ($('input[name="tipeJawaban"]:checked').val() === "pilihan_ganda") {
       $("#pilihanGandaInput").show();
       $("#jawabanGandaInput").show();
@@ -404,8 +396,6 @@ $allSoal = ExamController::viewAllSoal();
       $("#jawabanGandaInput").hide();
     }
 
-    //update soal
-    // Update soal logic
     $('input[name="updateTipeJawaban"]').on("change", function () {
       if ($(this).val() === "pilihan_ganda") {
         $("#updatePilihanGandaInput").show();
@@ -438,18 +428,12 @@ $allSoal = ExamController::viewAllSoal();
       $("#updateJawabanGandaInput").hide();
     }
 
-
     $("#addSoalForm").on("submit", function (e) {
       e.preventDefault();
 
       const formData = new FormData();
       formData.append("deskripsi", $("#deskripsi").val());
       formData.append("tipeSoal", $('input[name="tipeSoal"]:checked').val());
-
-      const gambarInput = $("#gambar")[0].files[0];
-      if (gambarInput) {
-        formData.append("gambar", gambarInput);
-      }
 
       formData.append("tipeJawaban", $('input[name="tipeJawaban"]:checked').val());
 
@@ -459,7 +443,6 @@ $allSoal = ExamController::viewAllSoal();
       }
 
       console.log("deskripsi: ", formData.get("deskripsi"));
-      console.log("gambar: ", formData.get("gambar"));
       console.log("pilihan: ", formData.get("pilihan"));
       console.log("jawaban: ", formData.get("jawaban"));
 
@@ -473,25 +456,16 @@ $allSoal = ExamController::viewAllSoal();
           'X-Requested-With': 'XMLHttpRequest'
         },
         success: function (response) {
-          try {
-            const jsonResponse = JSON.parse(response);
-            if (jsonResponse.status === 'testing') {
-              console.log(jsonResponse.message);
-            }
-            if (jsonResponse.status === 'success') {
-              alert('Soal berhasil ditambahkan!');
-              location.reload();
-            } else {
-              alert(jsonResponse.message);
-            }
-          } catch (error) {
-            console.error('Error parsing response:', error);
-            alert('Terjadi kesalahan, coba lagi.');
+          if (response.status === 'success') {
+            showModal('soal berhasil ditambahkan!', '/tubes_web/public/Assets/gif/success.gif');
+            document.querySelector('a[data-page="tesTulis"]').click();
+          } else {
+            showModal('soal berhasil ditambahkan!', '/tubes_web/public/Assets/gif/success.gif');
+            document.querySelector('a[data-page="tesTulis"]').click();
           }
         },
         error: function (xhr) {
           console.error('Error:', xhr.responseText);
-          alert('Terjadi kesalahan server. Silakan coba lagi.');
         }
       });
 
@@ -502,43 +476,37 @@ $allSoal = ExamController::viewAllSoal();
     $("#deleteButton").on("click", function () {
       const id = $(this).data("id");
       console.log("id: ", id);
-      if (confirm("Apakah Anda yakin ingin menghapus soal ini?")) {
+      showConfirm('Apakah Anda yakin ingin menghapus ruangan ini?', function () {
         $.ajax({
           url: '<?= APP_URL ?>/deletesoal',
           type: 'POST',
           data: { id },
           success: function (response) {
             if (response.status === 'success') {
-              alert('Soal berhasil dihapus!');
-              location.reload();
+              showModal('Soal berhasil dihapus!', '/tubes_web/public/Assets/gif/success.gif');
+              document.querySelector('a[data-page="tesTulis"]').click();
             } else {
-              alert(response.message);
+              showModal('Soal gagal gagal dihapus: ' + response.message, '/tubes_web/public/Assets/gif/failed.gif');
+              document.querySelector('a[data-page="tesTulis"]').click();
+
             }
           },
           error: function (xhr) {
             console.error('Error:', xhr.responseText);
           }
         });
-
         $('#detailModal').modal('hide');
-      }
+      });
     });
 
     $("#editButton").on("click", function () {
       const id = $(this).data("id");
       const deskripsi = $("#modalDeskripsi").text();
-      const gambar = $("#modalGambar").attr("src");
       const pilihan = $("#modalPilihan").text();
       const jawaban = $("#modalJawaban").text();
 
-      // Isi data ke form update
       $("#updateSoalId").val(id);
       $("#updateDeskripsi").val(deskripsi);
-      if (gambar) {
-        $('input[name="updateTipeSoal"][value="iya"]').prop("checked", true);
-      } else {
-        $('input[name="updateTipeSoal"][value="tidak"]').prop("checked", true);
-      }
       $("#updatePilihan").val(pilihan);
       $("#updateJawaban").val(jawaban);
       $("#detailModal").modal("hide");
@@ -546,62 +514,55 @@ $allSoal = ExamController::viewAllSoal();
     });
 
     $("#updateSoalForm").on("submit", function (e) {
-  e.preventDefault();
+      e.preventDefault();
 
-  const formData = new FormData();
-  formData.append("id", $("#updateSoalId").val());
-  formData.append("deskripsi", $("#updateDeskripsi").val());
-  formData.append("tipeSoal", $('input[name="updateTipeSoal"]:checked').val());
+      const formData = new FormData();
+      formData.append("id", $("#updateSoalId").val());
+      formData.append("deskripsi", $("#updateDeskripsi").val());
+      formData.append("tipeSoal", $('input[name="updateTipeSoal"]:checked').val());
 
-  const gambarInput = $("#updateGambar")[0]?.files[0];
-if (gambarInput) {
-  formData.append("gambar", gambarInput);
-} else {
-  formData.append("gambar",'');
-}
-  formData.append("tipeJawaban", $('input[name="updateTipeJawaban"]:checked').val());
+      formData.append("tipeJawaban", $('input[name="updateTipeJawaban"]:checked').val());
 
-  if ($('input[name="updateTipeJawaban"]:checked').val() === "pilihan_ganda") {
-    formData.append("pilihan", $("#updatePilihan").val());
-    formData.append("jawaban", $("#updateJawaban").val());
-  } 
-  console.log("id: ", formData.get("id"));
-  console.log("deskripsi: ", formData.get("deskripsi"));
-  console.log("gambar: ", formData.get("gambar"));
-  console.log("pilihan: ", formData.get("pilihan"));
-  console.log("jawaban: ", formData.get("jawaban"));
-
-  $.ajax({
-    url: '/tubes_web/public/updatesoal', 
-    type: 'POST',
-    data: formData,
-    contentType: false,
-    processData: false,
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-    },
-    success: function (response) {
-      try {
-        const jsonResponse = JSON.parse(response);
-        if (jsonResponse.status === 'success') {
-          alert('Soal berhasil diperbarui!');
-          location.reload();
-        } else {
-          alert(jsonResponse.message);
-          console.log(jsonResponse.message);
-        }
-      } catch (error) {
-        console.log('Error parsing response:', error);
-        alert('Terjadi kesalahan, coba lagi.');
+      if ($('input[name="updateTipeJawaban"]:checked').val() === "pilihan_ganda") {
+        formData.append("pilihan", $("#updatePilihan").val());
+        formData.append("jawaban", $("#updateJawaban").val());
       }
-    },
-    error: function (xhr) {
-      console.error('Error:', xhr.responseText);
-      alert('Terjadi kesalahan server. Silakan coba lagi.');
-    },
-  });
+      console.log("id: ", formData.get("id"));
+      console.log("deskripsi: ", formData.get("deskripsi"));
+      console.log("pilihan: ", formData.get("pilihan"));
+      console.log("jawaban: ", formData.get("jawaban"));
 
-  $("#updateSoalModal").modal("hide");
-});
+      $.ajax({
+        url: '/tubes_web/public/updatesoal',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+        success: function (response) {
+          try {
+            const jsonResponse = JSON.parse(response);
+            if (jsonResponse.status === 'success') {
+              showModal('Soal berhasil diupdate!', '/tubes_web/public/Assets/gif/success.gif');
+              document.querySelector('a[data-page="tesTulis"]').click();
+            } else {
+              showModal('Soal gagal diupdate: ' + jsonResponse.message, '/tubes_web/public/Assets/gif/failed.gif');
+              document.querySelector('a[data-page="tesTulis"]').click();
+            }
+          } catch (error) {
+            console.log('Error parsing response:', error);
+            alert('Terjadi kesalahan, coba lagi.');
+          }
+        },
+        error: function (xhr) {
+          console.error('Error:', xhr.responseText);
+          alert('Terjadi kesalahan server. Silakan coba lagi.');
+        },
+      });
+
+      $("#updateSoalModal").modal("hide");
+    });
   });
 </script>

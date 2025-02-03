@@ -47,16 +47,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
 foreach ($results as $index => $result): ?>
     <div class="question" data-id-soal="<?= htmlspecialchars($result['id']) ?>" style="display: none;">
         <h3>Question <?= $index + 1 ?></h3>
-
-        <?php if (!empty($result['gambar']) && $result['gambar'] != 'Bukan soal bergambar'): ?>
-    <img src="/tubes_web/public/Assets/Img/soal/<?= htmlspecialchars($result['gambar']) ?>"
-         alt="Gambar Soal <?= $index + 1 ?>"
-         style="display: block; margin: 20px auto; max-width: 100%; max-height: 420px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
-<?php endif; ?>
-
-
         <p><?= htmlspecialchars($result['deskripsi']) ?></p>
-
         <?php if ($result['status_soal'] === 'pilihan_ganda'): ?>
             <ul class="options">
                 <?php
@@ -92,13 +83,10 @@ foreach ($results as $index => $result): ?>
     </div>
     <div id="customModal" class="alertmodal">
     <div class="modal-content">
-        <!-- GIF Animasi -->
         <img id="modalGif" src="" alt="Animation" style="width: 100px; margin-bottom: 15px; display: none;">
         
-        <!-- Pesan Custom -->
         <p id="modalMessage" style="margin: 10px 0; font-size: 18px;">Pesan akan ditampilkan di sini.</p>
         
-        <!-- Tombol Close -->
         <button id="closeModal" class="btn btn-primary" style="margin-top: 10px;">Tutup</button>
     </div>
 </div>
