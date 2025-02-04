@@ -46,7 +46,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
             <?php
 foreach ($results as $index => $result): ?>
     <div class="question" data-id-soal="<?= htmlspecialchars($result['id']) ?>" style="display: none;">
-        <h3>Question <?= $index + 1 ?></h3>
+        <h3>Soal <?= $index + 1 ?></h3>
         <p><?= htmlspecialchars($result['deskripsi']) ?></p>
         <?php if ($result['status_soal'] === 'pilihan_ganda'): ?>
             <ul class="options">

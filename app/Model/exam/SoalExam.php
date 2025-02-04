@@ -90,4 +90,10 @@ class SoalExam extends Model {
         return $stmt->execute();
     }
     
+    public function getCountSoal() {
+        $sql = "SELECT COUNT(*) as total FROM " . static::$table;
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 }

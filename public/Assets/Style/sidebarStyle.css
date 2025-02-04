@@ -220,7 +220,7 @@
 
 .main-content {
     position: relative;
-    background: linear-gradient(135deg, #3DC2EC, #74EBD5); /* Gradien modern */
+    background-color: var(--color-info-light);
     min-height: 100vh; /* Sedikit lebih kecil untuk proporsi */
     top: 0;
     left: 80px; /* Sesuaikan dengan sidebar */
