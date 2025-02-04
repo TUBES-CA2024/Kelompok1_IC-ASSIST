@@ -29,40 +29,39 @@ $ruanganList = RuanganController::viewAllRuangan();
         outline: none;
     }
 
-    /* Table Styles */
-    .table-striped {
+    .table-hover {
         background-color: white;
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         width: 100%;
-        margin: 20px 0;
+        margin-top: 20px;
+        font-size: 0.95rem;
     }
 
-    .table-striped th,
-    .table-striped td {
+    .table-hover th,
+    .table-hover td {
         padding: 16px 20px;
         text-align: left;
         color: #555;
     }
 
-    .table-striped th {
-        background-color: #f9fbfc;
+    .table-hover th {
+        background-color: #3DC2EC;
+        color: white;
         font-weight: 600;
-        font-size: 1rem;
-        color: #333;
         text-transform: uppercase;
     }
 
-    .table-striped tr:nth-child(odd) {
+    .table-hover tr:nth-child(odd) {
         background-color: #f8faff;
     }
 
-    .table-striped tr:nth-child(even) {
+    .table-hover tr:nth-child(even) {
         background-color: #e8f4fc;
     }
 
-    .table-striped tr:hover {
+    .table-hover tr:hover {
         background-color: rgba(61, 194, 236, 0.2);
         cursor: pointer;
     }
@@ -141,7 +140,7 @@ $ruanganList = RuanganController::viewAllRuangan();
         Tambah Ruangan
     </button>
 
-    <table class="table table-striped rounded-table" style="table-layout: auto; width: 100%; text-align: left;">
+    <table class="table table-hover rounded-table" style="table-layout: auto; width: 100%; text-align: left;">
         <thead class="table-dark">
             <tr>
                 <th>No</th>
@@ -326,41 +325,41 @@ $ruanganList = RuanganController::viewAllRuangan();
                 });
             });
         });
-            $('.edit-button').on('click', function () {
-                const id = $(this).data('id');
-                const currentName = $(this).closest('tr').find('td:nth-child(2)').text();
+        $('.edit-button').on('click', function () {
+            const id = $(this).data('id');
+            const currentName = $(this).closest('tr').find('td:nth-child(2)').text();
 
-                $('#updateRuanganId').val(id);
-                $('#updateNamaRuangan').val(currentName);
+            $('#updateRuanganId').val(id);
+            $('#updateNamaRuangan').val(currentName);
 
-                $('#updateRuanganModal').modal('show');
-            });
+            $('#updateRuanganModal').modal('show');
+        });
 
-            $('#updateRuanganForm').on('submit', function (e) {
-                e.preventDefault();
+        $('#updateRuanganForm').on('submit', function (e) {
+            e.preventDefault();
 
-                const id = $('#updateRuanganId').val();
-                const namaRuangan = $('#updateNamaRuangan').val();
-                console.log(id, namaRuangan);
-                $.ajax({
-                    url: '<?= APP_URL ?>/updateruangan',
-                    type: 'POST',
-                    data: { id: id, namaRuangan: namaRuangan },
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response.status === 'success') {
-                           showModal('Ruangan berhasil diperbarui!', '/tubes_web/public/Assets/gif/success.gif');
-                            document.querySelector('a[data-page="ruangan"]').click();
-                            $('#updateRuanganModal').modal('hide');
-                        } else {
-                            showModal('Gagal memperbarui ruangan: ' + response.message, '/tubes_web/public/Assets/gif/failed.gif');
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error:', error);
-                        alert('Terjadi kesalahan, coba lagi.');
+            const id = $('#updateRuanganId').val();
+            const namaRuangan = $('#updateNamaRuangan').val();
+            console.log(id, namaRuangan);
+            $.ajax({
+                url: '<?= APP_URL ?>/updateruangan',
+                type: 'POST',
+                data: { id: id, namaRuangan: namaRuangan },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'success') {
+                        showModal('Ruangan berhasil diperbarui!', '/tubes_web/public/Assets/gif/success.gif');
+                        document.querySelector('a[data-page="ruangan"]').click();
+                        $('#updateRuanganModal').modal('hide');
+                    } else {
+                        showModal('Gagal memperbarui ruangan: ' + response.message, '/tubes_web/public/Assets/gif/failed.gif');
                     }
-                });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan, coba lagi.');
+                }
             });
         });
+    });
 </script>

@@ -6,7 +6,7 @@ $allSoal = ExamController::viewAllSoal();
 <style>
   <style>@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-  .table-striped {
+  .table-hover {
     background-color: white;
     border-radius: 12px;
     overflow: hidden;
@@ -16,29 +16,29 @@ $allSoal = ExamController::viewAllSoal();
     font-size: 0.95rem;
   }
 
-  .table-striped th,
-  .table-striped td {
+  .table-hover th,
+  .table-hover td {
     padding: 16px 20px;
     text-align: left;
     color: #555;
   }
 
-  .table-striped th {
+  .table-hover th {
     background-color: #3DC2EC;
     color: white;
     font-weight: 600;
     text-transform: uppercase;
   }
 
-  .table-striped tr:nth-child(odd) {
+  .table-hover tr:nth-child(odd) {
     background-color: #f8faff;
   }
 
-  .table-striped tr:nth-child(even) {
+  .table-hover tr:nth-child(even) {
     background-color: #e8f4fc;
   }
 
-  .table-striped tr:hover {
+  .table-hover tr:hover {
     background-color: rgba(61, 194, 236, 0.2);
     cursor: pointer;
   }
@@ -159,10 +159,10 @@ $allSoal = ExamController::viewAllSoal();
 <main>
   <h1 class="dashboard">Tes Tertulis</h1>
   <button type="button" data-bs-toggle="modal" data-bs-target="#addSoalModal" class="btn btn-primary mb-3">
-    Soal
+    Tambah Soal
   </button>
 
-  <table class="table table-striped rounded-table ">
+  <table class="table table-hover rounded-table ">
     <thead class="table-dark">
       <tr>
         <th>No</th>

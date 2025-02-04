@@ -6,42 +6,47 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-    .table-striped {
-        background-color: white;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        margin-top: 20px;
-        font-size: 0.95rem;
-    }
+    .table-hover {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 20px;
+    font-size: 0.95rem;
+  }
 
-    .table-striped th,
-    .table-striped td {
-        padding: 16px 20px;
-        text-align: left;
-        color: #555;
-    }
+  .table-hover th,
+  .table-hover td {
+    padding: 16px 20px;
+    text-align: left;
+    color: #555;
+  }
 
-    .table-striped th {
-        background-color: #3DC2EC;
-        color: white;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
+  .table-hover th {
+    background-color: #3DC2EC;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
 
-    .table-striped tr:nth-child(odd) {
-        background-color: #f8faff;
-    }
+  .table-hover tr:nth-child(odd) {
+    background-color: #f8faff;
+  }
 
-    .table-striped tr:nth-child(even) {
-        background-color: #e8f4fc;
-    }
+  .table-hover tr:nth-child(even) {
+    background-color: #e8f4fc;
+  }
 
-    .table-striped tr:hover {
-        background-color: rgba(61, 194, 236, 0.2);
-        cursor: pointer;
-    }
+  .table-hover tr:hover {
+    background-color: rgba(61, 194, 236, 0.2);
+    cursor: pointer;
+  }
+
+  .rounded-table {
+    border-radius: 12px;
+    overflow: hidden;
+  }
 
     /* Button Styles */
     .btn.nama-button {
@@ -195,7 +200,7 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
 <main>
 
     <h1 class="dashboard">Daftar Nilai</h1>
-    <table id="daftar-nilai" class="table table-striped rounded-table">
+    <table id="daftar-nilai" class="table table-hover rounded-table">
         <thead>
             <tr>
                 <th>No</th>

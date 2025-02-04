@@ -58,39 +58,39 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
         background-color: #c82333;
     }
 
-    .table-striped {
+    .table-hover {
         background-color: white;
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         width: 100%;
         margin-top: 20px;
+        font-size: 0.95rem;
     }
 
-    .table-striped th,
-    .table-striped td {
+    .table-hover th,
+    .table-hover td {
         padding: 16px 20px;
         text-align: left;
         color: #555;
     }
 
-    .table-striped th {
-        background-color: #f9fbfc;
+    .table-hover th {
+        background-color: #3DC2EC;
+        color: white;
         font-weight: 600;
-        font-size: 1rem;
-        color: #333;
         text-transform: uppercase;
     }
 
-    .table-striped tr:nth-child(odd) {
+    .table-hover tr:nth-child(odd) {
         background-color: #f8faff;
     }
 
-    .table-striped tr:nth-child(even) {
+    .table-hover tr:nth-child(even) {
         background-color: #e8f4fc;
     }
 
-    .table-striped tr:hover {
+    .table-hover tr:hover {
         background-color: rgba(61, 194, 236, 0.2);
         cursor: pointer;
     }
@@ -186,7 +186,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
 
 <main>
     <h1 class="dashboard">Presentasi </h1>
-    <table id="presentasiMahasiswa" class="table table-striped rounded-table">
+    <table id="presentasiMahasiswa" class="table table-hover rounded-table">
         <thead>
             <tr>
                 <th>No</th>
@@ -353,7 +353,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
                 if (url && url !== '#') {
                     window.location.href = url;
                 } else {
-                   showModal('Makalah tidak tersedia');
+                    showModal('Makalah tidak tersedia');
                 }
             });
 

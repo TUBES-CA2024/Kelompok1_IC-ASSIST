@@ -34,40 +34,39 @@ $colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
         outline: none;
     }
 
-    /* Table Styles */
-    .table-striped {
+    .table-hover {
         background-color: white;
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         width: 100%;
-        margin: 20px 0;
+        margin-top: 20px;
+        font-size: 0.95rem;
     }
 
-    .table-striped th,
-    .table-striped td {
+    .table-hover th,
+    .table-hover td {
         padding: 16px 20px;
         text-align: left;
         color: #555;
     }
 
-    .table-striped th {
-        background-color: #f9fbfc;
+    .table-hover th {
+        background-color: #3DC2EC;
+        color: white;
         font-weight: 600;
-        font-size: 1rem;
-        color: #333;
         text-transform: uppercase;
     }
 
-    .table-striped tr:nth-child(odd) {
+    .table-hover tr:nth-child(odd) {
         background-color: #f8faff;
     }
 
-    .table-striped tr:nth-child(even) {
+    .table-hover tr:nth-child(even) {
         background-color: #e8f4fc;
     }
 
-    .table-striped tr:hover {
+    .table-hover tr:hover {
         background-color: rgba(61, 194, 236, 0.2);
         cursor: pointer;
     }
@@ -154,15 +153,15 @@ $colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
 
     <div class="d-flex gap-2 mb-3">
         <?php foreach ($ruanganList as $index => $ruangan): ?>
-            <button id="filter-<?= $ruangan['id'] ?>" class="btn text-white filter-btn" data-id="<?= (int) $ruangan['id'] ?>"
-                style="background-color: <?= $colors[$index % count($colors)] ?>;">
+            <button id="filter-<?= $ruangan['id'] ?>" class="btn text-white filter-btn"
+                data-id="<?= (int) $ruangan['id'] ?>" style="background-color: <?= $colors[$index % count($colors)] ?>;">
                 <?= $ruangan['nama'] ?>
             </button>
         <?php endforeach; ?>
         <button id="filter-all" class="btn btn-dark filter-btn" data-id=0>Semua</button>
     </div>
 
-    <table id="wawancaraMahasiswa" class="table table-striped rounded-table">
+    <table id="wawancaraMahasiswa" class="table table-hover rounded-table">
         <thead>
             <tr>
                 <th>No</th>
@@ -568,7 +567,7 @@ $colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
         });
 
         $(".filter-btn").click(function () {
-            let ruanganId = parseInt($(this).attr("data-id"), 10); 
+            let ruanganId = parseInt($(this).attr("data-id"), 10);
 
             let requestData = { id: ruanganId };
             console.log(requestData);
@@ -580,7 +579,7 @@ $colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
                 success: function (response) {
                     if (response.status === "success") {
                         let tableBody = $("#table-body");
-                        tableBody.empty(); 
+                        tableBody.empty();
                         let i = 1;
                         response.data.forEach(row => {
                             tableBody.append(`

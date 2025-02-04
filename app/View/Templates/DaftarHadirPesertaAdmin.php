@@ -1,15 +1,15 @@
 <?php
-    use App\Controllers\user\AbsensiUserController;
-    use App\Controllers\user\MahasiswaController;
-    $absensiList = AbsensiUserController::viewAbsensi();
-    $mahasiswaList = MahasiswaController::viewAllMahasiswa();
+use App\Controllers\user\AbsensiUserController;
+use App\Controllers\user\MahasiswaController;
+$absensiList = AbsensiUserController::viewAbsensi();
+$mahasiswaList = MahasiswaController::viewAllMahasiswa();
 ?>
 
 <style>
     /* Import Font */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-  
+
 
     /* Primary Button */
     .btn-primary {
@@ -35,39 +35,39 @@
     }
 
     /* Table Styles */
-    .table-striped {
+    .table-hover {
         background-color: white;
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         width: 100%;
-        margin: 20px 0;
+        margin-top: 20px;
+        font-size: 0.95rem;
     }
 
-    .table-striped th,
-    .table-striped td {
+    .table-hover th,
+    .table-hover td {
         padding: 16px 20px;
         text-align: left;
         color: #555;
     }
 
-    .table-striped th {
-        background-color: #f9fbfc;
+    .table-hover th {
+        background-color: #3DC2EC;
+        color: white;
         font-weight: 600;
-        font-size: 1rem;
-        color: #333;
         text-transform: uppercase;
     }
 
-    .table-striped tr:nth-child(odd) {
+    .table-hover tr:nth-child(odd) {
         background-color: #f8faff;
     }
 
-    .table-striped tr:nth-child(even) {
+    .table-hover tr:nth-child(even) {
         background-color: #e8f4fc;
     }
 
-    .table-striped tr:hover {
+    .table-hover tr:hover {
         background-color: rgba(61, 194, 236, 0.2);
         cursor: pointer;
     }
@@ -129,8 +129,7 @@
 
     .form-select {
         appearance: none;
-        background: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%233DC2EC' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 5.646a.5.5 0 0 1 .708 0L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E")
-            no-repeat right 12px center;
+        background: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%233DC2EC' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 5.646a.5.5 0 0 1 .708 0L8 11.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E") no-repeat right 12px center;
         background-size: 12px 12px;
     }
 
@@ -171,48 +170,50 @@
 </style>
 
 <main>
-<h1 class="dashboard">Daftar Hadir</h1>
-<button type="button" data-bs-toggle="modal" data-bs-target="#addMahasiswaModal" class="btn btn-primary mb-3">
-  Tambah Kehadiran Mahasiswa
-</button>
-<table id="presentasiMahasiswa" class="table table-striped rounded-table">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>Nama Lengkap</th>
-            <th>Stambuk</th>
-            <th>Tes tertulis</th>
-            <th>Presentasi</th>
-            <th>Wawancara I</th>
-            <th>Wawancara II</th>
-            <th>Wawancara III</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php $i = 1; ?>
-        <?php foreach ($absensiList as $row) { ?>
-            <tr data-id="<?= $row['id'] ?>" data-userid="<?= $row['id'] ?>">
-                <td><?= $i ?></td>
-                <td>
-                    <span class="open-detail" data-bs-toggle="modal" data-bs-target="#detailAbsensiModal"
-                        data-nama="<?= $row['nama_lengkap'] ?>" data-stambuk="<?= $row['stambuk'] ?>"
-                        data-absensiwawancarai="<?= $row['absensi_wawancara_I'] ?>" data-absensiwawancaraii="<?= $row['absensi_wawancara_II']?>"
-                        data-absensiwawancaraiii="<?= $row['absensi_wawancara_III'] ?>"
-                        data-absensitestertulis="<?= $row['absensi_tes_tertulis'] ?>" data-absensipresentasi="<?= $row['absensi_presentasi'] ?>">
-                        <?= $row['nama_lengkap'] ?>
-                    </span>
-                </td>
-                <td><?= $row['stambuk'] ?></td>
-                <td><?= $row['absensi_tes_tertulis'] ?></td>
-                <td><?= $row['absensi_presentasi'] ?></td>
-                <td><?= $row['absensi_wawancara_I'] ?></td>
-                <td><?= $row['absensi_wawancara_II'] ?></td>
-                <td><?= $row['absensi_wawancara_III'] ?></td>
+    <h1 class="dashboard">Daftar Hadir</h1>
+    <button type="button" data-bs-toggle="modal" data-bs-target="#addMahasiswaModal" class="btn btn-primary mb-3">
+        Tambah Kehadiran Mahasiswa
+    </button>
+    <table id="presentasiMahasiswa" class="table table-hover rounded-table">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Lengkap</th>
+                <th>Stambuk</th>
+                <th>Tes tertulis</th>
+                <th>Presentasi</th>
+                <th>Wawancara I</th>
+                <th>Wawancara II</th>
+                <th>Wawancara III</th>
             </tr>
-            <?php $i++; ?>
-        <?php } ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php $i = 1; ?>
+            <?php foreach ($absensiList as $row) { ?>
+                <tr data-id="<?= $row['id'] ?>" data-userid="<?= $row['id'] ?>">
+                    <td><?= $i ?></td>
+                    <td>
+                        <span class="open-detail" data-bs-toggle="modal" data-bs-target="#detailAbsensiModal"
+                            data-nama="<?= $row['nama_lengkap'] ?>" data-stambuk="<?= $row['stambuk'] ?>"
+                            data-absensiwawancarai="<?= $row['absensi_wawancara_I'] ?>"
+                            data-absensiwawancaraii="<?= $row['absensi_wawancara_II'] ?>"
+                            data-absensiwawancaraiii="<?= $row['absensi_wawancara_III'] ?>"
+                            data-absensitestertulis="<?= $row['absensi_tes_tertulis'] ?>"
+                            data-absensipresentasi="<?= $row['absensi_presentasi'] ?>">
+                            <?= $row['nama_lengkap'] ?>
+                        </span>
+                    </td>
+                    <td><?= $row['stambuk'] ?></td>
+                    <td><?= $row['absensi_tes_tertulis'] ?></td>
+                    <td><?= $row['absensi_presentasi'] ?></td>
+                    <td><?= $row['absensi_wawancara_I'] ?></td>
+                    <td><?= $row['absensi_wawancara_II'] ?></td>
+                    <td><?= $row['absensi_wawancara_III'] ?></td>
+                </tr>
+                <?php $i++; ?>
+            <?php } ?>
+        </tbody>
+    </table>
 </main>
 
 <div class="modal fade" id="addMahasiswaModal" tabindex="-1" aria-labelledby="addJadwalModalLabel" aria-hidden="true">
@@ -234,7 +235,8 @@
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <button type="button" class="btn btn-secondary mt-2" id="addMahasiswaButton">Tambah mahasiswa</button>
+                        <button type="button" class="btn btn-secondary mt-2" id="addMahasiswaButton">Tambah
+                            mahasiswa</button>
                     </div>
                     <div class="mb-3">
                         <label for="selectedMahasiswa" class="form-label">Mahasiswa Terpilih</label>
@@ -293,7 +295,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="detailAbsensiModal" tabindex="-1" aria-labelledby="detailAbsensiModalLabel" aria-hidden="true">
+<div class="modal fade" id="detailAbsensiModal" tabindex="-1" aria-labelledby="detailAbsensiModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -367,110 +370,110 @@
 
 <script>
     $(document).ready(function () {
-    const mahasiswaSelect = $("#mahasiswa");
-    const selectedMahasiswaList = $("#selectedMahasiswaList");
-    const addMahasiswaButton = $("#addMahasiswaButton");
-    const addJadwalForm = $("#addJadwalForm");
+        const mahasiswaSelect = $("#mahasiswa");
+        const selectedMahasiswaList = $("#selectedMahasiswaList");
+        const addMahasiswaButton = $("#addMahasiswaButton");
+        const addJadwalForm = $("#addJadwalForm");
 
-    addMahasiswaButton.on("click", function () {
-        const mahasiswaId = mahasiswaSelect.val();
-        const selectedOption = mahasiswaSelect.find(":selected");
+        addMahasiswaButton.on("click", function () {
+            const mahasiswaId = mahasiswaSelect.val();
+            const selectedOption = mahasiswaSelect.find(":selected");
 
-        if (!mahasiswaId) {
-            alert("Silakan pilih mahasiswa terlebih dahulu.");
-            return;
-        }
+            if (!mahasiswaId) {
+                alert("Silakan pilih mahasiswa terlebih dahulu.");
+                return;
+            }
 
-        const existingItem = selectedMahasiswaList.children().filter(function () {
-            return $(this).data("id") === mahasiswaId;
+            const existingItem = selectedMahasiswaList.children().filter(function () {
+                return $(this).data("id") === mahasiswaId;
+            });
+
+            if (existingItem.length > 0) {
+                alert("Mahasiswa sudah ada di daftar terpilih.");
+                return;
+            }
+
+            const listItem = $("<li>", {
+                class: "list-group-item d-flex justify-content-between align-items-center",
+                "data-id": mahasiswaId,
+                text: " CCA" + mahasiswaId + " " + selectedOption.text(),
+            });
+
+            const removeButton = $("<button>", {
+                class: "btn btn-sm btn-danger",
+                text: "Hapus",
+                click: function () {
+                    listItem.remove();
+                },
+            });
+
+            listItem.append(removeButton);
+            selectedMahasiswaList.append(listItem);
+
+            mahasiswaSelect.prop("selectedIndex", 0);
         });
 
-        if (existingItem.length > 0) {
-            alert("Mahasiswa sudah ada di daftar terpilih.");
-            return;
-        }
+        addJadwalForm.on("submit", function (event) {
+            event.preventDefault();
 
-        const listItem = $("<li>", {
-            class: "list-group-item d-flex justify-content-between align-items-center",
-            "data-id": mahasiswaId,
-            text: " CCA" + mahasiswaId + " " + selectedOption.text() ,
+            const mahasiswaTerpilih = selectedMahasiswaList.children().map(function () {
+                return $(this).data("id");
+            }).get();
+
+            if (mahasiswaTerpilih.length === 0) {
+                alert("Silakan tambahkan mahasiswa ke daftar terpilih.");
+                return;
+            }
+
+            const tanggal = $("#tanggal").val();
+            const waktu = $("#waktu").val();
+            const wawancara1 = $("#absensiWawancara1").val();
+            const wawancara2 = $("#absensiWawancara2").val();
+            const wawancara3 = $("#absensiWawancara3").val();
+            const tesTertulis = $("#absensiTesTertulis").val();
+            const presentasi = $("#absensiPresentasi").val();
+
+            if (!wawancara1 || !wawancara2 || !wawancara3 || !tesTertulis || !presentasi) {
+                alert("Silakan lengkapi semua field absensi dan jadwal.");
+                return;
+            }
+
+            const formData = {
+                mahasiswa: mahasiswaTerpilih,
+                wawancara1: wawancara1,
+                wawancara2: wawancara2,
+                wawancara3: wawancara3,
+                tesTertulis: tesTertulis,
+                presentasi: presentasi
+            };
+            // console.log(Array.isArray(formData.mahasiswa));
+            // console.log( "Mahasiswa : " + formData.mahasiswa);
+            // console.log( "Wawancara1 : " + formData.wawancara1);
+            // console.log( "Wawancara2 : " + formData.wawancara2);
+            // console.log( "Wawancara3 : " + formData.wawancara3);
+            // console.log( "Tes Tertulis : " + formData.tesTertulis);
+            // console.log( "Presentasi : " + formData.presentasi);
+
+            $.ajax({
+                url: "<?= APP_URL ?>/absensi",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(formData),
+                success: function (response) {
+                    if (response.status === 'tes') {
+                        console.log(response.message);
+                    }
+                    if (response.status === "success") {
+                        alert(response.message);
+
+                    } else {
+                        console.log(response.message)
+                        alert(response.message);
+                    }
+                },
+            });
         });
-
-        const removeButton = $("<button>", {
-            class: "btn btn-sm btn-danger",
-            text: "Hapus",
-            click: function () {
-                listItem.remove();
-            },
-        });
-
-        listItem.append(removeButton);
-        selectedMahasiswaList.append(listItem);
-
-        mahasiswaSelect.prop("selectedIndex", 0);
-    });
-
-    addJadwalForm.on("submit", function (event) {
-        event.preventDefault();
-
-        const mahasiswaTerpilih = selectedMahasiswaList.children().map(function () {
-            return $(this).data("id");
-        }).get();
-
-        if (mahasiswaTerpilih.length === 0) {
-            alert("Silakan tambahkan mahasiswa ke daftar terpilih.");
-            return;
-        }
-
-        const tanggal = $("#tanggal").val();
-        const waktu = $("#waktu").val();
-        const wawancara1 = $("#absensiWawancara1").val();
-        const wawancara2 = $("#absensiWawancara2").val();
-        const wawancara3 = $("#absensiWawancara3").val();
-        const tesTertulis = $("#absensiTesTertulis").val();
-        const presentasi = $("#absensiPresentasi").val();
-
-        if (!wawancara1 || !wawancara2 || !wawancara3 || !tesTertulis || !presentasi) {
-            alert("Silakan lengkapi semua field absensi dan jadwal.");
-            return;
-        }
-
-        const formData = {
-            mahasiswa: mahasiswaTerpilih,
-            wawancara1: wawancara1,
-            wawancara2: wawancara2,
-            wawancara3: wawancara3,
-            tesTertulis: tesTertulis,
-            presentasi: presentasi
-        };
-        // console.log(Array.isArray(formData.mahasiswa));
-        // console.log( "Mahasiswa : " + formData.mahasiswa);
-        // console.log( "Wawancara1 : " + formData.wawancara1);
-        // console.log( "Wawancara2 : " + formData.wawancara2);
-        // console.log( "Wawancara3 : " + formData.wawancara3);
-        // console.log( "Tes Tertulis : " + formData.tesTertulis);
-        // console.log( "Presentasi : " + formData.presentasi);
-
-        $.ajax({
-            url: "<?= APP_URL ?>/absensi",
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(formData),
-            success: function (response) {
-                if(response.status === 'tes') {
-                    console.log(response.message);
-                }
-                if (response.status === "success") {
-                    alert(response.message);
-                    
-                } else {
-                    console.log(response.message)
-                    alert(response.message);
-                }
-            },
-        });
-    });
-    let originalValues = {};
+        let originalValues = {};
         const saveButton = $("#saveDetailAbsensi");
 
         $(document).on("click", ".open-detail", function () {
