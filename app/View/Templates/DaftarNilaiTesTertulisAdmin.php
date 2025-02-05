@@ -182,15 +182,6 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
         box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
     }
 
-    .icon {
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #aaa;
-        font-size: 18px;
-        transition: 0.3s ease-in-out;
-    }
 
     #nilaiAkhir:focus+.icon {
         color: #007bff;
@@ -200,7 +191,8 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
 <main>
 
     <h1 class="dashboard">Daftar Nilai</h1>
-    <table id="daftar-nilai" class="table table-hover rounded-table">
+    <table id="daftar-nilai" class="table table-hover 
+    rounded-table">
         <thead>
             <tr>
                 <th>No</th>

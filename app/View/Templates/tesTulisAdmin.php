@@ -226,7 +226,8 @@ $allSoal = ExamController::viewAllSoal();
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-            <button type="submit" class="btn btn-primary">Tambah</button>
+            <button type="button" class="btn btn-primary" id="addSoalButton">Tambah Soal</button>
+            <button type="submit" class="btn btn-primary" id="submitAllSoalButton">Kirim semua soal</button>
           </div>
         </form>
       </div>
@@ -428,28 +429,43 @@ $allSoal = ExamController::viewAllSoal();
       $("#updateJawabanGandaInput").hide();
     }
 
-    $("#addSoalForm").on("submit", function (e) {
-      e.preventDefault();
+    //adding soal logic
+    let soalArray = [];
 
-      const formData = new FormData();
-      formData.append("deskripsi", $("#deskripsi").val());
-      formData.append("tipeSoal", $('input[name="tipeSoal"]:checked').val());
+    $('#addSoalButton').on('click', function () {
+      const soal = {};
 
-      formData.append("tipeJawaban", $('input[name="tipeJawaban"]:checked').val());
+      soal.deskripsi = $("#deskripsi").val();
+      soal.tipeJawaban = $('input[name="tipeJawaban"]:checked').val();
+      soal.pilihan = $("#pilihan").val();
+      soal.jawaban = $("#jawaban").val();
 
-      if ($('input[name="tipeJawaban"]:checked').val() === "pilihan_ganda") {
-        formData.append("pilihan", $("#pilihan").val());
-        formData.append("jawaban", $("#jawaban").val());
+      if (soal.deskripsi === '' || soal.tipeJawaban === '') {
+        showModal('Deskripsi dan tipe jawaban harus diisi');
+        return;
       }
 
-      console.log("deskripsi: ", formData.get("deskripsi"));
-      console.log("pilihan: ", formData.get("pilihan"));
-      console.log("jawaban: ", formData.get("jawaban"));
+      if (soal.tipeJawaban === 'pilihan_ganda' && (soal.pilihan === '' || soal.jawaban === '')) {
+        showModal('Pilihan dan jawaban harus diisi');
+        return;
+      }
+
+      soalArray.push(soal);
+      console.log("Soal yang ditambahkan: ", soal);
+      console.log("Semua soal yang telah ditambahkan: ", soalArray);
+
+      $('#addSoalForm')[0].reset();
+    })
+    $("#submitAllSoalButton").on("click", function (e) {
+      if(soalArray.length === 0) {
+        showModal('Tidak ada soal yang ditambahkan');
+        return;
+      }
 
       $.ajax({
         url: '/tubes_web/public/addingsoal',
         type: 'POST',
-        data: formData,
+        data: JSON.stringify({soals : soalArray}),
         contentType: false,
         processData: false,
         headers: {
@@ -458,10 +474,14 @@ $allSoal = ExamController::viewAllSoal();
         success: function (response) {
           if (response.status === 'success') {
             showModal('soal berhasil ditambahkan!', '/tubes_web/public/Assets/gif/success.gif');
+            soalArray = [];
+            $('#addSoalForm')[0].reset();
             document.querySelector('a[data-page="tesTulis"]').click();
+            console.log(response.message);
           } else {
             showModal('soal berhasil ditambahkan!', '/tubes_web/public/Assets/gif/success.gif');
             document.querySelector('a[data-page="tesTulis"]').click();
+            console.log(response.message);
           }
         },
         error: function (xhr) {
