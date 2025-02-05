@@ -1,0 +1,56 @@
+[
+    {
+        "deskripsi": "tes json 1",
+        "tipeJawaban": "pilihan_ganda",
+        "pilihan": "[\"1\",\"2\",\"3\",\"4\"]",
+        "jawaban": "1"
+    },
+    {
+        "deskripsi": "tes json 2",
+        "tipeJawaban": "textbox",
+        "pilihan": "",
+        "jawaban": ""
+    },
+    {
+        "deskripsi": "tes json 3",
+        "tipeJawaban": "textbox",
+        "pilihan": "",
+        "jawaban": ""
+    },
+    {
+        "deskripsi": "soal 1",
+        "tipeJawaban": "textbox",
+        "pilihan": "",
+        "jawaban": ""
+    },
+    {
+        "deskripsi": "soal 2",
+        "tipeJawaban": "pilihan_ganda",
+        "pilihan": "[\"a\",\"b\",\"c\",\"d\"]",
+        "jawaban": "a"
+    },
+    {
+        "deskripsi": "soal 3",
+        "tipeJawaban": "pilihan_ganda",
+        "pilihan": "[\"a\",\"c\",\"e\",\"f\"]",
+        "jawaban": "f"
+    },
+    {
+        "deskripsi": "soal 4",
+        "tipeJawaban": "textbox",
+        "pilihan": "",
+        "jawaban": ""
+    },
+    {
+        "deskripsi": "1",
+        "tipeJawaban": "textbox",
+        "pilihan": "",
+        "jawaban": ""
+    },
+    {
+        "deskripsi": "2",
+        "tipeJawaban": "pilihan_ganda",
+        "pilihan": "[\"a\",\"v\",\"c\",\"d\"]",
+        "jawaban": "d"
+    }
+]

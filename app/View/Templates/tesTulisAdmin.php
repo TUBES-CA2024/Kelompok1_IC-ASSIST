@@ -153,6 +153,25 @@ $allSoal = ExamController::viewAllSoal();
     font-size: 0.95rem;
     color: #555;
   }
+  #soalListContainer {
+    display: flex;
+    flex-wrap: wrap; /* Membuat soal bisa terbungkus jika perlu */
+    gap: 10px; /* Memberikan jarak antar soal */
+    max-height: 300px; /* Batas tinggi untuk scroll */
+    overflow-y: hidden; /* Menyembunyikan overflow vertikal */
+    overflow-x: auto; /* Scroll horizontal jika soal lebih banyak */
+    padding: 10px;
+}
+
+.soal-item {
+    min-width: 200px; /* Lebar minimal soal */
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
 </style>
 
 </style>
@@ -223,6 +242,8 @@ $allSoal = ExamController::viewAllSoal();
               <textarea class="form-control" id="jawaban" name="jawaban"
                 placeholder="Masukkan jawaban yang benar dari pilihan"></textarea>
             </div>
+
+            <div id="soalListContainer"></div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -233,6 +254,7 @@ $allSoal = ExamController::viewAllSoal();
       </div>
     </div>
   </div>
+
 </main>
 
 <div class="modal fade" id="updateSoalModal" tabindex="-1" aria-labelledby="updateSoalModalLabel" aria-hidden="true">
@@ -432,8 +454,30 @@ $allSoal = ExamController::viewAllSoal();
     //adding soal logic
     let soalArray = [];
 
+    function renderSoals() {
+      const soalListContainer = $("#soalListContainer"); // Tempat untuk menampilkan daftar soal
+      soalListContainer.empty(); // Clear dulu jika ada soal yang sudah ditambahkan sebelumnya
+
+      soalArray.forEach((soal, index) => {
+        // Buat elemen HTML untuk menampilkan soal
+        const soalElement = `
+            <div class="soal-item">
+                <h5>Soal ${index + 1}:</h5>
+                <p><strong>Deskripsi:</strong> ${soal.deskripsi}</p>
+                <p><strong>Tipe Jawaban:</strong> ${soal.tipeJawaban}</p>
+                ${soal.tipeJawaban === 'pilihan_ganda' ?
+            `<p><strong>Pilihan:</strong> ${soal.pilihan}</p>
+                     <p><strong>Jawaban:</strong> ${soal.jawaban}</p>`
+            : ''}
+                <hr>
+            </div>
+        `;
+        soalListContainer.append(soalElement); // Tambahkan soal ke container
+      });
+    }
+
     $('#addSoalButton').on('click', function () {
-      const soal = {};
+      const soal = {}; 
 
       soal.deskripsi = $("#deskripsi").val();
       soal.tipeJawaban = $('input[name="tipeJawaban"]:checked').val();
@@ -454,10 +498,13 @@ $allSoal = ExamController::viewAllSoal();
       console.log("Soal yang ditambahkan: ", soal);
       console.log("Semua soal yang telah ditambahkan: ", soalArray);
 
+      renderSoals();
+
       $('#addSoalForm')[0].reset();
-    })
+    });
+
     $("#submitAllSoalButton").on("click", function (e) {
-      if(soalArray.length === 0) {
+      if (soalArray.length === 0) {
         showModal('Tidak ada soal yang ditambahkan');
         return;
       }
@@ -465,23 +512,17 @@ $allSoal = ExamController::viewAllSoal();
       $.ajax({
         url: '/tubes_web/public/addingsoal',
         type: 'POST',
-        data: JSON.stringify({soals : soalArray}),
-        contentType: false,
-        processData: false,
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        },
+        data: JSON.stringify({ soals: soalArray }),
+        contentType: 'application/json',
         success: function (response) {
           if (response.status === 'success') {
-            showModal('soal berhasil ditambahkan!', '/tubes_web/public/Assets/gif/success.gif');
+            showModal('Soal berhasil ditambahkan!', '/tubes_web/public/Assets/gif/success.gif');
             soalArray = [];
-            $('#addSoalForm')[0].reset();
+            $('#addSoalForm')[0].reset(); 
+            renderSoals(); 
             document.querySelector('a[data-page="tesTulis"]').click();
-            console.log(response.message);
           } else {
-            showModal('soal berhasil ditambahkan!', '/tubes_web/public/Assets/gif/success.gif');
-            document.querySelector('a[data-page="tesTulis"]').click();
-            console.log(response.message);
+            showModal( response.message ||'Soal gagal ditambahkan', '/tubes_web/public/Assets/gif/failed.gif');
           }
         },
         error: function (xhr) {
@@ -492,11 +533,12 @@ $allSoal = ExamController::viewAllSoal();
       $('#addSoalModal').modal('hide');
     });
 
-
     $("#deleteButton").on("click", function () {
       const id = $(this).data("id");
       console.log("id: ", id);
-      showConfirm('Apakah Anda yakin ingin menghapus ruangan ini?', function () {
+      $('#detailModal').modal('hide');
+      showConfirm('Apakah Anda yakin ingin menghapus soal ini?', function () {
+        $('#detailModal').modal('hide');
         $.ajax({
           url: '<?= APP_URL ?>/deletesoal',
           type: 'POST',

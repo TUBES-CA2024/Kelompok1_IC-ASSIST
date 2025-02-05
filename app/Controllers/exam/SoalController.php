@@ -24,7 +24,30 @@ class SoalController extends Controller
                 throw new \Exception('Tidak ada soal untuk disimpan');
             }
     
-            // Proses seluruh soal yang diterima
+            // Tentukan path untuk file JSON
+            $fileName = rand(1000, 9999) . 'soals.json';
+            $dir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/documents/';
+            $filePath = $dir . $fileName; 
+    
+            // Cek dan buat direktori jika belum ada
+            if (!is_dir($dir)) {
+                if (!mkdir($dir, 0777, true)) {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Gagal membuat direktori'
+                    ]);
+                    exit();
+                }
+            }
+    
+            $existingData = [];
+            if (file_exists($filePath)) {
+                $existingData = json_decode(file_get_contents($filePath), true);
+                if (!$existingData) {
+                    $existingData = []; 
+                }
+            }
+    
             foreach ($soals['soals'] as $soal) {
                 $deskripsi = $soal['deskripsi'] ?? '';
                 $tipeJawaban = $soal['tipeJawaban'] ?? '';
@@ -36,59 +59,37 @@ class SoalController extends Controller
                     $pilihan = json_encode($pilihanArray);
                 }
     
-                $data = [
+                $existingData[] = [
                     'deskripsi' => $deskripsi,
                     'tipeJawaban' => $tipeJawaban,
                     'pilihan' => $pilihan,
                     'jawaban' => $jawaban
                 ];
-    
-                // Menyimpan soal ke dalam file JSON
-                $json_data = json_encode($data, JSON_PRETTY_PRINT);
-                $dir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/documents/';
-                $fileName = uniqid('soal-', true) . '.json';
-                $filePath = $dir . $fileName;
-    
-                // Cek dan buat direktori jika belum ada
-                if (!is_dir($dir)) {
-                    if (!mkdir($dir, 0777, true)) {
-                        echo json_encode([
-                            'status' => 'error',
-                            'message' => 'Gagal membuat direktori'
-                        ]);
-                        exit();
-                    }
-                }
-    
-                // Menyimpan file JSON
-                if (!file_put_contents($filePath, $json_data)) {
-                    echo json_encode([
-                        'status' => 'error',
-                        'message' => 'Soal gagal dibuat JSON'
-                    ]);
-                    exit();
-                }
-    
-                $soalExam = new SoalExam(
-                    $deskripsi,
-                    $pilihan,
-                    $jawaban,
-                    $tipeJawaban
-                );
-    
-                if ($soalExam->getJawaban() === null) {
-                    $soalExam->saveWithoutAnswer($soalExam);
-                } else {
-                    $soalExam->save($soalExam);
-                }
             }
     
-            echo json_encode([
-                'status' => 'success',
-                'message' => 'Soal berhasil disimpan'
-            ]);
-            http_response_code(200);
-    
+            $json_data = json_encode($existingData, JSON_PRETTY_PRINT);
+            
+            if (!file_put_contents($filePath, $json_data)) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Soal gagal disimpan ke file JSON'
+                ]);
+                exit();
+            }
+            $soal = new SoalExam(deskripsi: $fileName);
+            if($soal->saveJson($soal)) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Soal berhasil disimpan'
+                ]);
+                http_response_code(200);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Soal gagal disimpan'
+                ]);
+                http_response_code(500);
+            }   
         } catch (\Exception $e) {
             echo json_encode([
                 'status' => 'error',
@@ -97,6 +98,8 @@ class SoalController extends Controller
             http_response_code(500);
         }
     }
+    
+    
     
     public function deleteSoal()
     {

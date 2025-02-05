@@ -1,0 +1,14 @@
+[
+    {
+        "deskripsi": "testing",
+        "tipeJawaban": "textbox",
+        "pilihan": "",
+        "jawaban": ""
+    },
+    {
+        "deskripsi": "mantap",
+        "tipeJawaban": "pilihan_ganda",
+        "pilihan": "[\"123\",\"245\",\"231\",\"555\"]",
+        "jawaban": "555"
+    }
+]

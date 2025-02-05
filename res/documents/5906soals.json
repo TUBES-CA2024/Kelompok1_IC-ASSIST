@@ -1,0 +1,14 @@
+[
+    {
+        "deskripsi": "testing ",
+        "tipeJawaban": "textbox",
+        "pilihan": "",
+        "jawaban": ""
+    },
+    {
+        "deskripsi": "pilgan",
+        "tipeJawaban": "pilihan_ganda",
+        "pilihan": "[\"a\",\"b\",\"c\",\"d\"]",
+        "jawaban": "b"
+    }
+]

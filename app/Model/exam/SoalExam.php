@@ -5,6 +5,7 @@ use App\Core\Model;
 use PDO;
 class SoalExam extends Model {
     protected static $table = 'soal';
+    protected static $tempTable = 'soal_temp';
     protected $id;
     protected $deskripsi;
     protected $pilihan;
@@ -60,6 +61,12 @@ class SoalExam extends Model {
         return $stmt->execute();
     }
 
+    public function saveJson(SoalExam $soal) {
+        $sql = "INSERT INTO " . static::$tempTable . " (nama) VALUES (?)";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindParam(1, $soal->deskripsi);
+        return $stmt->execute();
+    }
     public function saveWithoutAnswer(SoalExam $soal) {
         $sql = "INSERT INTO " . static::$table . " (deskripsi,pilihan,status_soal) VALUES (?,?,?)";
         $stmt = self::getDB()->prepare($sql);
