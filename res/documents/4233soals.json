@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "deskripsi": "gacor",
+        "tipeJawaban": "textbox",
+        "pilihan": "",
+        "jawaban": ""
+    },
+    {
+        "id": 2,
+        "deskripsi": "testing",
+        "tipeJawaban": "textbox",
+        "pilihan": "",
+        "jawaban": ""
+    },
+    {
+        "id": 3,
+        "deskripsi": "mantap",
+        "tipeJawaban": "textbox",
+        "pilihan": "",
+        "jawaban": ""
+    }
+]

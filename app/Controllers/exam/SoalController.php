@@ -6,7 +6,43 @@ use App\Model\exam\SoalExam;
 
 class SoalController extends Controller
 {
-    public function getSoalWithJson()
+
+    public function updateSoalJson() {
+        try {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            if (!isset($_SESSION['user']['id'])) {
+                throw new \Exception('User tidak terautentikasi');
+            }
+            $id = $_POST['id'] ?? '';
+            $status = $_POST['status'] ?? '';
+            $soal = new SoalExam($id);
+
+            if($soal->updateTempTable($status)) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Soal berhasil diupdate'
+                ]);
+                http_response_code(200);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Soal gagal diupdate'
+                ]);
+                http_response_code(500);
+            }
+
+        } catch (\Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+            http_response_code(500);
+        }
+    }
+
+    public function getAllSoalWithJson()
     {
         try {
             if (session_status() === PHP_SESSION_NONE) {
@@ -22,10 +58,7 @@ class SoalController extends Controller
             $results = null;
             $dir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/documents/';
             
-            // echo json_encode([
-            //     'status' => 'testing',
-            //     'allSoal' => $soals['nama']
-            // ]);
+
             if ($soals && !empty($soals['nama'])) {
                 $file = $dir . $soals['nama'];
                 if (file_exists($file)) {
@@ -42,6 +75,7 @@ class SoalController extends Controller
                 
                 echo json_encode([
                     'tstatus' => 'success',
+                    'id' => $soals['id'],
                     'allSoal' => $results
                 ]);
                 exit;
@@ -92,23 +126,22 @@ class SoalController extends Controller
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
-
+    
             if (!isset($_SESSION['user']['id'])) {
                 throw new \Exception('User tidak terautentikasi');
             }
-
+    
             $soals = json_decode(file_get_contents('php://input'), true); // Decode JSON menjadi array
-
+    
             if (empty($soals['soals'])) {
                 throw new \Exception('Tidak ada soal untuk disimpan');
             }
-
+    
             // Tentukan path untuk file JSON
             $fileName = rand(1000, 9999) . 'soals.json';
             $dir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/documents/';
             $filePath = $dir . $fileName;
-
-            // Cek dan buat direktori jika belum ada
+    
             if (!is_dir($dir)) {
                 if (!mkdir($dir, 0777, true)) {
                     echo json_encode([
@@ -118,7 +151,7 @@ class SoalController extends Controller
                     exit();
                 }
             }
-
+    
             $existingData = [];
             if (file_exists($filePath)) {
                 $existingData = json_decode(file_get_contents($filePath), true);
@@ -126,28 +159,31 @@ class SoalController extends Controller
                     $existingData = [];
                 }
             }
-
+    
             foreach ($soals['soals'] as $soal) {
+                $id = $soal['id'] ?? '';
                 $deskripsi = $soal['deskripsi'] ?? '';
                 $tipeJawaban = $soal['tipeJawaban'] ?? '';
                 $pilihan = $soal['pilihan'] ?? 'bukan soal pilihan';
                 $jawaban = $soal['jawaban'] ?? null;
-
+    
                 if ($tipeJawaban === 'pilihan_ganda' && !empty($pilihan)) {
                     $pilihanArray = explode(',', $pilihan);
-                    $pilihan = json_encode($pilihanArray);
+                    // Simpan sebagai array, bukan string JSON
+                    $pilihan = $pilihanArray;
                 }
-
+    
                 $existingData[] = [
+                    'id' => $id,
                     'deskripsi' => $deskripsi,
                     'tipeJawaban' => $tipeJawaban,
                     'pilihan' => $pilihan,
                     'jawaban' => $jawaban
                 ];
             }
-
+    
             $json_data = json_encode($existingData, JSON_PRETTY_PRINT);
-
+    
             if (!file_put_contents($filePath, $json_data)) {
                 echo json_encode([
                     'status' => 'error',
@@ -177,6 +213,7 @@ class SoalController extends Controller
             http_response_code(500);
         }
     }
+    
 
 
 

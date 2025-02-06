@@ -13,17 +13,20 @@ class SoalExam extends Model {
     protected $status;
 
     public function __construct(
+        $id = null,
         $deskripsi = null,
         $pilihan = null,
         $jawaban = null,
         $status = null
     ) {
         if($jawaban == null) {
+            $this->id = $id;
             $this->deskripsi = $deskripsi;
             $this->pilihan = $pilihan;
             $this->status = $status;
         } 
          else {
+            $this->id = $id;
             $this->deskripsi = $deskripsi;
             $this->pilihan = $pilihan;
             $this->jawaban = $jawaban;
@@ -35,11 +38,29 @@ class SoalExam extends Model {
         return $this->jawaban;
     }
     
+    public function getId() {
+        return $this->id;
+    }
     public function getAll() {
         $query = "SELECT * FROM " . self::$table;
         $stmt = self::getDB()->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
+    }
+
+    public function getActiveSoal() {
+        $query = "SELECT * FROM " . self::$table . " WHERE status = aktif";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    
+    public function updateTempTable($status) {
+        $query = "UPDATE " . self::$tempTable . " SET status = ? WHERE id = ?";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(1, $status);
+        $stmt->bindParam(2, $this->id);
+        return $stmt->execute();
     }
 
     public function getAllTemp() {
@@ -48,7 +69,7 @@ class SoalExam extends Model {
         $stmt->execute();
         return $stmt->fetchAll();
     }
-
+    // json
     public function getAllTempByYears($year) {
         $query = "SELECT * FROM " . self::$tempTable . " WHERE YEAR(created_at) = :year LIMIT 1";
         $stmt = self::getDB()->prepare($query);

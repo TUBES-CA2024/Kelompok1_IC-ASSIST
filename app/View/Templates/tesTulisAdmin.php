@@ -155,25 +155,30 @@ $years = SoalController::getYears();
     font-size: 0.95rem;
     color: #555;
   }
+
   #soalListContainer {
     display: flex;
-    flex-wrap: wrap; /* Membuat soal bisa terbungkus jika perlu */
-    gap: 10px; /* Memberikan jarak antar soal */
-    max-height: 300px; /* Batas tinggi untuk scroll */
-    overflow-y: hidden; /* Menyembunyikan overflow vertikal */
-    overflow-x: auto; /* Scroll horizontal jika soal lebih banyak */
+    flex-wrap: wrap;
+    /* Membuat soal bisa terbungkus jika perlu */
+    gap: 10px;
+    /* Memberikan jarak antar soal */
+    max-height: 300px;
+    /* Batas tinggi untuk scroll */
+    overflow-y: hidden;
+    /* Menyembunyikan overflow vertikal */
+    overflow-x: auto;
+    /* Scroll horizontal jika soal lebih banyak */
     padding: 10px;
-}
+  }
 
-.soal-item {
-    min-width: 200px; /* Lebar minimal soal */
+  .soal-item {
+    min-width: 200px;
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
     background-color: #f9f9f9;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
+  }
 </style>
 
 <main>
@@ -182,32 +187,37 @@ $years = SoalController::getYears();
     Tambah Soal
   </button>
   <div id="year-buttons" class="mb-3">
-        <?php if (!empty($years)): ?>
-            <?php foreach ($years as $year): ?>
-                <button class="btn btn-primary year-btn" data-year="<?= $year; ?>">
-                    <?= $year; ?>
-                </button>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Tidak ada data tahun.</p>
-        <?php endif; ?>
-    </div>
+    <?php if (!empty($years)): ?>
+      <?php foreach ($years as $year): ?>
+        <button class="btn btn-primary year-btn" data-year="<?= $year; ?>">
+          <?= $year; ?>
+        </button>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <p>Tidak ada data tahun.</p>
+    <?php endif; ?>
+  </div>
 
-    <!-- Tabel Soal -->
-    <table class="table table-hover rounded-table">
-        <thead class="table-dark">
-            <tr>
-                <th>No</th>
-                <th>Deskripsi</th>
-                <th>Tipe Jawaban</th>
-                <th>Pilihan</th>
-                <th>Jawaban</th>
-            </tr>
-        </thead>
-        <tbody id="soalTableBody">
-            <!-- Data soal akan di-load melalui AJAX -->
-        </tbody>
-    </table>
+  <div id="action-buttons" class="mb-3">
+    <button id="updateSelected" class="btn btn-success">Update</button>
+    <button id="deleteSelected" class="btn btn-danger">Delete</button>
+  </div>
+
+  <!-- Tabel Soal -->
+  <table class="table table-hover rounded-table">
+    <thead class="table-dark">
+      <tr>
+        <th>No</th>
+        <th>Deskripsi</th>
+        <th>Tipe Jawaban</th>
+        <th>Pilihan</th>
+        <th>Jawaban</th>
+      </tr>
+    </thead>
+    <tbody id="soalTableBody">
+      <!-- Data soal akan di-load melalui AJAX -->
+    </tbody>
+  </table>
 
 
   <div class="modal fade" id="addSoalModal" tabindex="-1" aria-labelledby="addSoalModalLabel" aria-hidden="true">
@@ -247,7 +257,7 @@ $years = SoalController::getYears();
               <textarea class="form-control" id="jawaban" name="jawaban"
                 placeholder="Masukkan jawaban yang benar dari pilihan"></textarea>
             </div>
-
+            
             <div id="soalListContainer"></div>
           </div>
           <div class="modal-footer">
@@ -333,350 +343,327 @@ $years = SoalController::getYears();
 <script>
   $(document).ready(function () {
 
-    function showModal(message, gifUrl = null) {
-      const modal = document.getElementById('customModal');
-      if (!modal) {
-        return;
-      }
+/********************************************
+ * Helper Functions: showModal & showConfirm
+ ********************************************/
+function showModal(message, gifUrl = null) {
+  const modal = document.getElementById('customModal');
+  if (!modal) {
+    return;
+  }
+  const modalMessage = document.getElementById('modalMessage');
+  const modalGif = document.getElementById('modalGif');
+  const closeModal = document.getElementById('closeModal');
 
-      const modalMessage = document.getElementById('modalMessage');
-      const modalGif = document.getElementById('modalGif');
-      const closeModal = document.getElementById('closeModal');
+  modalMessage.textContent = message;
+  modalGif.style.display = gifUrl ? 'block' : 'none';
+  if (gifUrl) modalGif.src = gifUrl;
 
-      modalMessage.textContent = message;
-      modalGif.style.display = gifUrl ? 'block' : 'none';
-      if (gifUrl) modalGif.src = gifUrl;
+  modal.style.display = 'flex';
 
-      modal.style.display = 'flex';
+  $(closeModal).off('click').on('click', function () {
+    modal.style.display = 'none';
+  });
 
-      $(closeModal).off('click').on('click', function () {
-        modal.style.display = 'none';
-      });
-
-      $(window).off('click').on('click', function (event) {
-        if (event.target === modal) {
-          modal.style.display = 'none';
-        }
-      });
+  $(window).off('click').on('click', function (event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
     }
+  });
+}
 
-    function showConfirm(message, onConfirm = null, onCancel = null) {
-      const modal = document.getElementById('confirmModal');
-      if (!modal) {
-        return;
-      }
+function showConfirm(message, onConfirm = null, onCancel = null) {
+  const modal = document.getElementById('confirmModal');
+  if (!modal) {
+    return;
+  }
+  const modalMessage = document.getElementById('confirmModalMessage');
+  const confirmButton = document.getElementById('confirmModalConfirm');
+  const cancelButton = document.getElementById('confirmModalCancel');
 
-      const modalMessage = document.getElementById('confirmModalMessage');
-      const confirmButton = document.getElementById('confirmModalConfirm');
-      const cancelButton = document.getElementById('confirmModalCancel');
+  modalMessage.textContent = message;
+  modal.style.display = 'flex';
 
-      modalMessage.textContent = message;
-      modal.style.display = 'flex';
+  $(confirmButton).off('click').on('click', function () {
+    if (onConfirm) onConfirm();
+    modal.style.display = 'none';
+  });
 
-      $(confirmButton).off('click').on('click', function () {
-        if (onConfirm) onConfirm();
-        modal.style.display = 'none';
-      });
+  $(cancelButton).off('click').on('click', function () {
+    if (onCancel) onCancel();
+    modal.style.display = 'none';
+  });
 
-      $(cancelButton).off('click').on('click', function () {
-        if (onCancel) onCancel();
-        modal.style.display = 'none';
-      });
-
-      $(window).off('click').on('click', function (event) {
-        if (event.target === modal) {
-          modal.style.display = 'none';
-        }
-      });
+  $(window).off('click').on('click', function (event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
     }
+  });
+}
 
-    $(".soal-row").on("click", function () {
-      const id = $(this).data("id");
-      const deskripsi = $(this).data("deskripsi");
-      const pilihan = $(this).data("pilihan");
-      const jawaban = $(this).data("jawaban");
-
-      $("#modalDeskripsi").text(deskripsi);
-      $("#modalPilihan").text(pilihan);
-      $("#modalJawaban").text(jawaban);
-
-      $("#editButton").data("id", id);
-      $("#deleteButton").data("id", id);
-
-      $("#detailModal").modal("show");
-    });
-
-    $('input[name="tipeJawaban"]').on("change", function () {
-      if ($(this).val() === "pilihan_ganda") {
-        $("#pilihanGandaInput").show();
-        $("#jawabanGandaInput").show();
-      } else {
-        $("#pilihanGandaInput").hide();
-        $("#jawabanGandaInput").hide();
+/********************************************
+ * Load Data Soal & Render Tabel
+ ********************************************/
+function loadSoal(year) {
+  $.ajax({
+    url: '<?= APP_URL ?>/getallsoal',
+    type: 'POST',
+    data: { year: year },
+    dataType: 'json',
+    success: function (response) {
+      if (response.status === 'testing') {
+        console.log('allsoal : ', response.allSoal);
       }
-    });
-
-    if ($('input[name="tipeJawaban"]:checked').val() === "pilihan_ganda") {
-      $("#pilihanGandaInput").show();
-      $("#jawabanGandaInput").show();
-    } else {
-      $("#pilihanGandaInput").hide();
-      $("#jawabanGandaInput").hide();
-    }
-
-    $('input[name="updateTipeJawaban"]').on("change", function () {
-      if ($(this).val() === "pilihan_ganda") {
-        $("#updatePilihanGandaInput").show();
-        $("#updateJawabanGandaInput").show();
-      } else {
-        $("#updatePilihanGandaInput").hide();
-        $("#updateJawabanGandaInput").hide();
-      }
-    });
-
-    $('input[name="updateTipeSoal"]').on("change", function () {
-      if ($(this).val() === "iya") {
-        $("#updateGambar").closest(".mb-3").show();
-      } else {
-        $("#updateGambar").closest(".mb-3").hide();
-      }
-    });
-
-    if ($('input[name="updateTipeSoal"]:checked').val() === "iya") {
-      $("#updateGambar").closest(".mb-3").show();
-    } else {
-      $("#updateGambar").closest(".mb-3").hide();
-    }
-
-    if ($('input[name="updateTipeJawaban"]:checked').val() === "pilihan_ganda") {
-      $("#updatePilihanGandaInput").show();
-      $("#updateJawabanGandaInput").show();
-    } else {
-      $("#updatePilihanGandaInput").hide();
-      $("#updateJawabanGandaInput").hide();
-    }
-
-    function loadSoal(year) {
-      $.ajax({
-            url: '<?= APP_URL ?>/getallsoal',
-            type: 'POST',
-            data: { year: year },
-            dataType: 'json',
-            success: function(response) {
-              if(response.status === 'testing')  {
-                console.log('allsoal : ',response.allSoal)
-              }
-                let tableBody = $('#soalTableBody');
-                tableBody.empty(); 
-                if (response.allSoal && response.allSoal.length > 0 && response.tstatus === 'success') {
-                    response.allSoal.forEach((row, index) => {
-                        tableBody.append(`
-                            <tr data-id="${row.id}">
-                                <td>${index + 1}</td>
-                                <td>${row.deskripsi}</td>
-                                <td>${row.tipeJawaban}</td>
-                                <td>${row.pilihan}</td>
-                                <td>${row.jawaban}</td>
-                            </tr>
-                        `);
-                    });
-                } else {
-                  console.log('allSoal : ', response.allsoal)
-                    tableBody.append(`<tr>
-                        <td colspan="5">Tidak ada data soal untuk tahun ${year}</td>
-                    </tr>`);
-                    console.log("error : ",response.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX error:', error);
-            }
+      let tableBody = $('#soalTableBody');
+      tableBody.empty();
+      if (response.allSoal && response.allSoal.length > 0 && response.tstatus === 'success') {
+        response.allSoal.forEach((row, index) => {
+          tableBody.append(`
+            <tr class="soal-row" data-id="${row.id}" data-deskripsi="${row.deskripsi}" data-pilihan='${JSON.stringify(row.pilihan)}' data-jawaban="${row.jawaban}">
+              <td>${index + 1}</td>
+              <td>${row.deskripsi}</td>
+              <td>${row.tipeJawaban}</td>
+              <td>${row.pilihan}</td>
+              <td>${row.jawaban}</td>
+            </tr>
+          `);
         });
+      } else {
+        tableBody.append(`
+          <tr>
+            <td colspan="5">Tidak ada data soal untuk tahun ${year}</td>
+          </tr>
+        `);
+        console.log("error : ", response.message);
+      }
+    },
+    error: function(xhr, status, error) {
+      console.error('AJAX error:', error);
     }
-    let currentYear = new Date().getFullYear();
-    console.log("currentYear: ", currentYear);
-    loadSoal(currentYear);
+  });
+}
 
-    $('.year-btn').on('click', function() {
-        let selectedYear = $(this).data('year');
-        loadSoal(selectedYear);
-    });
+let currentYear = new Date().getFullYear();
+console.log("currentYear: ", currentYear);
+loadSoal(currentYear);
 
-    
-    //adding soal logic
-    let soalArray = [];
+$('.year-btn').on('click', function() {
+  let selectedYear = $(this).data('year');
+  loadSoal(selectedYear);
+});
 
-    function renderSoals() {
-      const soalListContainer = $("#soalListContainer"); // Tempat untuk menampilkan daftar soal
-      soalListContainer.empty(); // Clear dulu jika ada soal yang sudah ditambahkan sebelumnya
 
-      soalArray.forEach((soal, index) => {
-        // Buat elemen HTML untuk menampilkan soal
-        const soalElement = `
-            <div class="soal-item">
-                <h5>Soal ${index + 1}:</h5>
-                <p><strong>Deskripsi:</strong> ${soal.deskripsi}</p>
-                <p><strong>Tipe Jawaban:</strong> ${soal.tipeJawaban}</p>
-                ${soal.tipeJawaban === 'pilihan_ganda' ?
-            `<p><strong>Pilihan:</strong> ${soal.pilihan}</p>
-                     <p><strong>Jawaban:</strong> ${soal.jawaban}</p>`
-            : ''}
-                <hr>
-            </div>
-        `;
-        soalListContainer.append(soalElement); // Tambahkan soal ke container
-      });
+$('#soalTableBody').on('click', '.soal-row', function () {
+  const id = $(this).data("id");
+  const deskripsi = $(this).data("deskripsi");
+  let pilihan = $(this).data("pilihan");
+  const jawaban = $(this).data("jawaban");
+
+  try {
+    const parsedPilihan = JSON.parse(pilihan);
+    if (Array.isArray(parsedPilihan)) {
+      pilihan = parsedPilihan.join(", ");
     }
+  } catch (err) {
+    console.warn("Gagal mengurai nilai pilihan, gunakan nilai asli:", err);
+  }
 
-    $('#addSoalButton').on('click', function () {
-      const soal = {}; 
+  $("#modalDeskripsi").text(deskripsi);
+  $("#modalPilihan").text(pilihan);
+  $("#modalJawaban").text(jawaban);
 
-      soal.deskripsi = $("#deskripsi").val();
-      soal.tipeJawaban = $('input[name="tipeJawaban"]:checked').val();
-      soal.pilihan = $("#pilihan").val();
-      soal.jawaban = $("#jawaban").val();
+  $("#editButton").data("id", id);
+  $("#deleteButton").data("id", id);
 
-      if (soal.deskripsi === '' || soal.tipeJawaban === '') {
-        showModal('Deskripsi dan tipe jawaban harus diisi');
-        return;
+  $("#detailModal").modal("show");
+});
+
+$('input[name="tipeJawaban"]').on("change", function () {
+  if ($(this).val() === "pilihan_ganda") {
+    $("#pilihanGandaInput").show();
+    $("#jawabanGandaInput").show();
+    $("#textAnswerInput").hide(); // Sembunyikan input untuk tipe textbox
+  } else if ($(this).val() === "textbox") {
+    $("#pilihanGandaInput").hide();
+    $("#jawabanGandaInput").hide();
+    $("#textAnswerInput").show(); // Tampilkan input untuk tipe textbox
+  }
+});
+
+// Saat halaman dimuat, periksa nilai radio yang dicentang dan atur visibilitas input dengan benar
+if ($('input[name="tipeJawaban"]:checked').val() === "pilihan_ganda") {
+  $("#pilihanGandaInput").show();
+  $("#jawabanGandaInput").show();
+  $("#textAnswerInput").hide();
+} else {
+  $("#pilihanGandaInput").hide();
+  $("#jawabanGandaInput").hide();
+  $("#textAnswerInput").show();
+}
+
+let soalArray = [];
+function renderSoals() {
+  const soalListContainer = $("#soalListContainer");
+  soalListContainer.empty();
+  soalArray.forEach((soal, index) => {
+    const soalElement = `
+      <div class="soal-item">
+        <h5>Soal ${index + 1}:</h5>
+        <p><strong>Deskripsi:</strong> ${soal.deskripsi}</p>
+        <p><strong>Tipe Jawaban:</strong> ${soal.tipeJawaban}</p>
+        ${soal.tipeJawaban === 'pilihan_ganda' ?
+          `<p><strong>Pilihan:</strong> ${soal.pilihan}</p>
+           <p><strong>Jawaban:</strong> ${soal.jawaban}</p>` : ''}
+        <hr>
+      </div>
+    `;
+    soalListContainer.append(soalElement);
+  });
+}
+$('#addSoalButton').on('click', function () {
+  const soal = {}; 
+  soal.deskripsi = $("#deskripsi").val();
+  soal.tipeJawaban = $('input[name="tipeJawaban"]:checked').val();
+  soal.pilihan = $("#pilihan").val();
+  soal.jawaban = $("#jawaban").val();
+
+  if (soal.deskripsi === '' || soal.tipeJawaban === '') {
+    showModal('Deskripsi dan tipe jawaban harus diisi');
+    return;
+  }
+  if (soal.tipeJawaban === 'pilihan_ganda' && (soal.pilihan === '' || soal.jawaban === '')) {
+    showModal('Pilihan dan jawaban harus diisi');
+    return;
+  }
+
+  soalArray.push(soal);
+  console.log("Soal yang ditambahkan: ", soal);
+  console.log("Semua soal yang telah ditambahkan: ", soalArray);
+  renderSoals();
+  $('#addSoalForm')[0].reset();
+});
+
+$("#submitAllSoalButton").on("click", function (e) {
+  if (soalArray.length === 0) {
+    showModal('Tidak ada soal yang ditambahkan');
+    return;
+  }
+  $.ajax({
+    url: '/tubes_web/public/addingsoal',
+    type: 'POST',
+    data: JSON.stringify({ soals: soalArray }),
+    contentType: 'application/json',
+    success: function (response) {
+      if (response.status === 'success') {
+        showModal('Soal berhasil ditambahkan!', '/tubes_web/public/Assets/gif/success.gif');
+        soalArray = [];
+        $('#addSoalForm')[0].reset(); 
+        renderSoals(); 
+        document.querySelector('a[data-page="tesTulis"]').click();
+      } else {
+        showModal(response.message || 'Soal gagal ditambahkan', '/tubes_web/public/Assets/gif/failed.gif');
       }
+    },
+    error: function (xhr) {
+      console.error('Error:', xhr.responseText);
+    }
+  });
+  $('#addSoalModal').modal('hide');
+});
 
-      if (soal.tipeJawaban === 'pilihan_ganda' && (soal.pilihan === '' || soal.jawaban === '')) {
-        showModal('Pilihan dan jawaban harus diisi');
-        return;
-      }
-
-      soalArray.push(soal);
-      console.log("Soal yang ditambahkan: ", soal);
-      console.log("Semua soal yang telah ditambahkan: ", soalArray);
-
-      renderSoals();
-
-      $('#addSoalForm')[0].reset();
-    });
-
-    $("#submitAllSoalButton").on("click", function (e) {
-      if (soalArray.length === 0) {
-        showModal('Tidak ada soal yang ditambahkan');
-        return;
-      }
-
-      $.ajax({
-        url: '/tubes_web/public/addingsoal',
-        type: 'POST',
-        data: JSON.stringify({ soals: soalArray }),
-        contentType: 'application/json',
-        success: function (response) {
-          if (response.status === 'success') {
-            showModal('Soal berhasil ditambahkan!', '/tubes_web/public/Assets/gif/success.gif');
-            soalArray = [];
-            $('#addSoalForm')[0].reset(); 
-            renderSoals(); 
-            document.querySelector('a[data-page="tesTulis"]').click();
-          } else {
-            showModal( response.message ||'Soal gagal ditambahkan', '/tubes_web/public/Assets/gif/failed.gif');
-          }
-        },
-        error: function (xhr) {
-          console.error('Error:', xhr.responseText);
+/********************************************
+ * Delete Soal dari Modal Detail
+ ********************************************/
+$("#deleteButton").on("click", function () {
+  const id = $(this).data("id");
+  console.log("ID yang akan dihapus: ", id);
+  $('#detailModal').modal('hide');
+  showConfirm('Apakah Anda yakin ingin menghapus soal ini?', function () {
+    $.ajax({
+      url: '<?= APP_URL ?>/deletesoal',
+      type: 'POST',
+      data: { id },
+      success: function (response) {
+        if (response.status === 'success') {
+          showModal('Soal berhasil dihapus!', '/tubes_web/public/Assets/gif/success.gif');
+          document.querySelector('a[data-page="tesTulis"]').click();
+        } else {
+          showModal('Soal gagal dihapus: ' + response.message, '/tubes_web/public/Assets/gif/failed.gif');
+          document.querySelector('a[data-page="tesTulis"]').click();
         }
-      });
-
-      $('#addSoalModal').modal('hide');
-    });
-
-    $("#deleteButton").on("click", function () {
-      const id = $(this).data("id");
-      console.log("id: ", id);
-      $('#detailModal').modal('hide');
-      showConfirm('Apakah Anda yakin ingin menghapus soal ini?', function () {
-        $('#detailModal').modal('hide');
-        $.ajax({
-          url: '<?= APP_URL ?>/deletesoal',
-          type: 'POST',
-          data: { id },
-          success: function (response) {
-            if (response.status === 'success') {
-              showModal('Soal berhasil dihapus!', '/tubes_web/public/Assets/gif/success.gif');
-              document.querySelector('a[data-page="tesTulis"]').click();
-            } else {
-              showModal('Soal gagal gagal dihapus: ' + response.message, '/tubes_web/public/Assets/gif/failed.gif');
-              document.querySelector('a[data-page="tesTulis"]').click();
-
-            }
-          },
-          error: function (xhr) {
-            console.error('Error:', xhr.responseText);
-          }
-        });
-        $('#detailModal').modal('hide');
-      });
-    });
-
-    $("#editButton").on("click", function () {
-      const id = $(this).data("id");
-      const deskripsi = $("#modalDeskripsi").text();
-      const pilihan = $("#modalPilihan").text();
-      const jawaban = $("#modalJawaban").text();
-
-      $("#updateSoalId").val(id);
-      $("#updateDeskripsi").val(deskripsi);
-      $("#updatePilihan").val(pilihan);
-      $("#updateJawaban").val(jawaban);
-      $("#detailModal").modal("hide");
-      $("#updateSoalModal").modal("show");
-    });
-
-    $("#updateSoalForm").on("submit", function (e) {
-      e.preventDefault();
-
-      const formData = new FormData();
-      formData.append("id", $("#updateSoalId").val());
-      formData.append("deskripsi", $("#updateDeskripsi").val());
-      formData.append("tipeSoal", $('input[name="updateTipeSoal"]:checked').val());
-
-      formData.append("tipeJawaban", $('input[name="updateTipeJawaban"]:checked').val());
-
-      if ($('input[name="updateTipeJawaban"]:checked').val() === "pilihan_ganda") {
-        formData.append("pilihan", $("#updatePilihan").val());
-        formData.append("jawaban", $("#updateJawaban").val());
+      },
+      error: function (xhr) {
+        console.error('Error:', xhr.responseText);
       }
-      console.log("id: ", formData.get("id"));
-      console.log("deskripsi: ", formData.get("deskripsi"));
-      console.log("pilihan: ", formData.get("pilihan"));
-      console.log("jawaban: ", formData.get("jawaban"));
-
-      $.ajax({
-        url: '/tubes_web/public/updatesoal',
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-        },
-        success: function (response) {
-          try {
-            const jsonResponse = JSON.parse(response);
-            if (jsonResponse.status === 'success') {
-              showModal('Soal berhasil diupdate!', '/tubes_web/public/Assets/gif/success.gif');
-              document.querySelector('a[data-page="tesTulis"]').click();
-            } else {
-              showModal('Soal gagal diupdate: ' + jsonResponse.message, '/tubes_web/public/Assets/gif/failed.gif');
-              document.querySelector('a[data-page="tesTulis"]').click();
-            }
-          } catch (error) {
-            console.log('Error parsing response:', error);
-            alert('Terjadi kesalahan, coba lagi.');
-          }
-        },
-        error: function (xhr) {
-          console.error('Error:', xhr.responseText);
-          alert('Terjadi kesalahan server. Silakan coba lagi.');
-        },
-      });
-
-      $("#updateSoalModal").modal("hide");
     });
   });
+});
+
+/********************************************
+ * Edit Soal dari Modal Detail
+ ********************************************/
+$("#editButton").on("click", function () {
+  const id = $(this).data("id");
+  const deskripsi = $("#modalDeskripsi").text();
+  const pilihan = $("#modalPilihan").text();
+  const jawaban = $("#modalJawaban").text();
+
+  $("#updateSoalId").val(id);
+  $("#updateDeskripsi").val(deskripsi);
+  $("#updatePilihan").val(pilihan);
+  $("#updateJawaban").val(jawaban);
+  $("#detailModal").modal("hide");
+  $("#updateSoalModal").modal("show");
+});
+
+/********************************************
+ * Submit Update Soal (Update via AJAX)
+ ********************************************/
+$("#updateSoalForm").on("submit", function (e) {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append("id", $("#updateSoalId").val());
+  formData.append("deskripsi", $("#updateDeskripsi").val());
+  formData.append("tipeSoal", $('input[name="updateTipeSoal"]:checked').val());
+  formData.append("tipeJawaban", $('input[name="updateTipeJawaban"]:checked').val());
+  if ($('input[name="updateTipeJawaban"]:checked').val() === "pilihan_ganda") {
+    formData.append("pilihan", $("#updatePilihan").val());
+    formData.append("jawaban", $("#updateJawaban").val());
+  }
+  console.log("ID Update: ", formData.get("id"));
+  console.log("Deskripsi Update: ", formData.get("deskripsi"));
+  console.log("Pilihan Update: ", formData.get("pilihan"));
+  console.log("Jawaban Update: ", formData.get("jawaban"));
+  $.ajax({
+    url: '/tubes_web/public/updatesoal',
+    type: 'POST',
+    data: formData,
+    contentType: false,
+    processData: false,
+    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+    success: function (response) {
+      try {
+        const jsonResponse = JSON.parse(response);
+        if (jsonResponse.status === 'success') {
+          showModal('Soal berhasil diupdate!', '/tubes_web/public/Assets/gif/success.gif');
+          document.querySelector('a[data-page="tesTulis"]').click();
+        } else {
+          showModal('Soal gagal diupdate: ' + jsonResponse.message, '/tubes_web/public/Assets/gif/failed.gif');
+          document.querySelector('a[data-page="tesTulis"]').click();
+        }
+      } catch (error) {
+        console.log('Error parsing response:', error);
+        alert('Terjadi kesalahan, coba lagi.');
+      }
+    },
+    error: function (xhr) {
+      console.error('Error:', xhr.responseText);
+      alert('Terjadi kesalahan server. Silakan coba lagi.');
+    },
+  });
+  $("#updateSoalModal").modal("hide");
+});
+});
+
+
 </script>

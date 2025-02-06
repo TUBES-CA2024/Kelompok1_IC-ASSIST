@@ -59,4 +59,5 @@ Router::post("/updatebiodata",[new ProfileController, 'updateBiodata']);
 Router::post("/acceptberkas",[new BerkasUserController, 'updateAcceptedStatus']);
 Router::post("/ruangan/getfilter",[new WawancaraController,'getAllFilterByIdRuangan']);
 Router::post("/updatenilaiakhir",[new NilaiAkhirController, 'updateTotalNilai']);
-Router::post("/getallsoal",[new SoalController, 'getSoalWithJson']);
+Router::post("/getallsoal",[new SoalController, 'getAllSoalWithJson']);
+Router::post('/updatesoaljson',[new SoalController, 'updateSoalJson']);
