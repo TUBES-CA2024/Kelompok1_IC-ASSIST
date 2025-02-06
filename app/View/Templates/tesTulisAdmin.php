@@ -1,6 +1,8 @@
 <?php
 use App\Controllers\exam\ExamController;
+use App\Controllers\exam\SoalController;
 $allSoal = ExamController::viewAllSoal();
+$years = SoalController::getYears();
 ?>
 
 <style>
@@ -174,36 +176,39 @@ $allSoal = ExamController::viewAllSoal();
 
 </style>
 
-</style>
 <main>
   <h1 class="dashboard">Tes Tertulis</h1>
   <button type="button" data-bs-toggle="modal" data-bs-target="#addSoalModal" class="btn btn-primary mb-3">
     Tambah Soal
   </button>
+  <div id="year-buttons" class="mb-3">
+        <?php if (!empty($years)): ?>
+            <?php foreach ($years as $year): ?>
+                <button class="btn btn-primary year-btn" data-year="<?= $year; ?>">
+                    <?= $year; ?>
+                </button>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Tidak ada data tahun.</p>
+        <?php endif; ?>
+    </div>
 
-  <table class="table table-hover rounded-table ">
-    <thead class="table-dark">
-      <tr>
-        <th>No</th>
-        <th>Deskripsi</th>
-        <th>Pilihan</th>
-        <th>Jawaban</th>
-      </tr>
-    </thead>
-    <tbody id="soalTableBody">
-      <?php $i = 1; ?>
-      <?php foreach ($allSoal as $soal): ?>
-        <tr class="soal-row" data-id="<?= $soal['id'] ?>" data-deskripsi="<?= htmlspecialchars($soal['deskripsi']) ?>"
-          data-pilihan="<?= htmlspecialchars($soal['pilihan']) ?>"
-          data-jawaban="<?= htmlspecialchars($soal['jawaban']) ?>">
-          <td><?= $i++ ?></td>
-          <td><?= $soal['deskripsi'] ?></td>
-          <td><?= $soal['pilihan'] ?></td>
-          <td><?= $soal['jawaban'] ?></td>
-        </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
+    <!-- Tabel Soal -->
+    <table class="table table-hover rounded-table">
+        <thead class="table-dark">
+            <tr>
+                <th>No</th>
+                <th>Deskripsi</th>
+                <th>Tipe Jawaban</th>
+                <th>Pilihan</th>
+                <th>Jawaban</th>
+            </tr>
+        </thead>
+        <tbody id="soalTableBody">
+            <!-- Data soal akan di-load melalui AJAX -->
+        </tbody>
+    </table>
+
 
   <div class="modal fade" id="addSoalModal" tabindex="-1" aria-labelledby="addSoalModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -451,6 +456,53 @@ $allSoal = ExamController::viewAllSoal();
       $("#updateJawabanGandaInput").hide();
     }
 
+    function loadSoal(year) {
+      $.ajax({
+            url: '<?= APP_URL ?>/getallsoal',
+            type: 'POST',
+            data: { year: year },
+            dataType: 'json',
+            success: function(response) {
+              if(response.status === 'testing')  {
+                console.log('allsoal : ',response.allSoal)
+              }
+                let tableBody = $('#soalTableBody');
+                tableBody.empty(); 
+                if (response.allSoal && response.allSoal.length > 0 && response.tstatus === 'success') {
+                    response.allSoal.forEach((row, index) => {
+                        tableBody.append(`
+                            <tr data-id="${row.id}">
+                                <td>${index + 1}</td>
+                                <td>${row.deskripsi}</td>
+                                <td>${row.tipeJawaban}</td>
+                                <td>${row.pilihan}</td>
+                                <td>${row.jawaban}</td>
+                            </tr>
+                        `);
+                    });
+                } else {
+                  console.log('allSoal : ', response.allsoal)
+                    tableBody.append(`<tr>
+                        <td colspan="5">Tidak ada data soal untuk tahun ${year}</td>
+                    </tr>`);
+                    console.log("error : ",response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX error:', error);
+            }
+        });
+    }
+    let currentYear = new Date().getFullYear();
+    console.log("currentYear: ", currentYear);
+    loadSoal(currentYear);
+
+    $('.year-btn').on('click', function() {
+        let selectedYear = $(this).data('year');
+        loadSoal(selectedYear);
+    });
+
+    
     //adding soal logic
     let soalArray = [];
 

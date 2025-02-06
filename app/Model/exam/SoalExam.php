@@ -42,6 +42,20 @@ class SoalExam extends Model {
         return $stmt->fetchAll();
     }
 
+    public function getAllTemp() {
+        $query = "SELECT * FROM " . self::$tempTable;
+        $stmt = self::getDB()->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getAllTempByYears($year) {
+        $query = "SELECT * FROM " . self::$tempTable . " WHERE YEAR(created_at) = :year LIMIT 1";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(':year', $year, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
     public function getAllByParity($isGanjil) {
         $parity = $isGanjil ? 1 : 0; 
         $query = "SELECT * FROM " . self::$table . " WHERE id % 2 = :parity LIMIT 60";
@@ -51,6 +65,12 @@ class SoalExam extends Model {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    public function getCreatedAt() {
+        $sql = "SELECT created_at FROM " . static::$tempTable ;
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
     public function save(SoalExam  $soal) {
         $sql = "INSERT INTO " . static::$table . " (deskripsi,pilihan,jawaban,status_soal) VALUES (?,?,?,?)";
         $stmt = self::getDB()->prepare($sql);
