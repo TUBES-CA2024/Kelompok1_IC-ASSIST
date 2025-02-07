@@ -16,19 +16,18 @@ class SoalController extends Controller
                 throw new \Exception('User tidak terautentikasi');
             }
             $id = $_POST['id'] ?? '';
-            $status = $_POST['status'] ?? '';
             $soal = new SoalExam($id);
 
-            if($soal->updateTempTable($status)) {
+            if($soal->updateTempTable()) {
                 echo json_encode([
                     'status' => 'success',
-                    'message' => 'Soal berhasil diupdate'
+                    'message' => 'Soal berhasil diaktifkan'
                 ]);
                 http_response_code(200);
             } else {
                 echo json_encode([
                     'status' => 'error',
-                    'message' => 'Soal gagal diupdate'
+                    'message' => 'Soal gagal diaktifkan'
                 ]);
                 http_response_code(500);
             }
@@ -92,7 +91,39 @@ class SoalController extends Controller
         }
     }
     
-    
+    public function deleteSoalJson() {
+        try {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            if (!isset($_SESSION['user']['id'])) {
+                throw new \Exception('User tidak terautentikasi');
+            }
+            $id = $_POST['id'] ?? '';
+            $soal = new SoalExam($id);
+
+            if($soal->deleteTempTable()) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Soal berhasil dihapus'
+                ]);
+                http_response_code(200);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Soal gagal dihapus'
+                ]);
+                http_response_code(500);
+            }
+
+        } catch (\Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+            http_response_code(500);
+        }
+    }
     public static function getYears()
     {
         if (session_status() === PHP_SESSION_NONE) {

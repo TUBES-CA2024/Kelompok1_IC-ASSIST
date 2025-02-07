@@ -61,3 +61,4 @@ Router::post("/ruangan/getfilter",[new WawancaraController,'getAllFilterByIdRuan
 Router::post("/updatenilaiakhir",[new NilaiAkhirController, 'updateTotalNilai']);
 Router::post("/getallsoal",[new SoalController, 'getAllSoalWithJson']);
 Router::post('/updatesoaljson',[new SoalController, 'updateSoalJson']);
+Router::post('/deletesoaljson',[new SoalController, 'deleteSoalJson']);

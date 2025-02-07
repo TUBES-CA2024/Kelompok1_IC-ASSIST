@@ -55,11 +55,20 @@ class SoalExam extends Model {
         return $stmt->fetchAll();
     }
     
-    public function updateTempTable($status) {
-        $query = "UPDATE " . self::$tempTable . " SET status = ? WHERE id = ?";
+    public function deleteTempTable() {
+        $query = "DELETE FROM " . self::$tempTable . ' WHERE id = ?';
         $stmt = self::getDB()->prepare($query);
-        $stmt->bindParam(1, $status);
-        $stmt->bindParam(2, $this->id);
+        $stmt->bindParam(1, $this->id);
+        return $stmt->execute();
+    }
+    public function updateTempTable() {
+        $firstQuery = "UPDATE " . self::$tempTable . " SET status = 'non_aktif'";
+        $firstStmt = self::getDB()->prepare($firstQuery);
+        $firstStmt->execute();
+
+        $query = "UPDATE " . self::$tempTable . " SET status = 'aktif' WHERE id = ?";
+        $stmt = self::getDB()->prepare($query);
+        $stmt->bindParam(1, $this->id);
         return $stmt->execute();
     }
 
