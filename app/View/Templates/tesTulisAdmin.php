@@ -412,32 +412,38 @@ $years = SoalController::getYears();
 
     $("#deleteSelected").on("click", function () {
       const id = $(this).data("id");
+
       if (!id) {
         alert("Data soal belum dimuat atau tidak ditemukan.");
         return;
       }
-      if (!confirm("Apakah Anda yakin ingin menghapus soal ini?")) {
-        return;
-      }
-      console.log("Delete data untuk id: ", id);
-      $.ajax({
-        url: '<?= APP_URL ?>/deletesoaljson',
-        type: 'POST',
-        data: { id: id },
-        dataType: 'json',
-        success: function (response) {
-          if (response.status === 'success') {
-            showModal('Soal berhasil dihapus!', '/tubes_web/public/Assets/gif/success.gif');
-            document.querySelector('a[data-page="tesTulis"]').click();
-          } else {
-            showModal('Soal gagal dihapus: ' + response.message, '/tubes_web/public/Assets/gif/failed.gif');
+
+      // Gunakan showConfirm untuk menampilkan modal konfirmasi
+      showConfirm("Apakah Anda yakin ingin menghapus soal ini?", function () {
+        // Fungsi ini akan dieksekusi jika pengguna menekan tombol 'Confirm'
+        console.log("Delete data untuk id: ", id);
+
+        $.ajax({
+          url: '<?= APP_URL ?>/deletesoaljson',
+          type: 'POST',
+          data: { id: id },
+          dataType: 'json',
+          success: function (response) {
+            if (response.status === 'success') {
+              showModal('Soal berhasil dihapus!', '/tubes_web/public/Assets/gif/success.gif');
+              document.querySelector('a[data-page="tesTulis"]').click();
+            } else {
+              showModal('Soal gagal dihapus: ' + response.message, '/tubes_web/public/Assets/gif/failed.gif');
+            }
+          },
+          error: function (xhr) {
+            console.error('Error:', xhr.responseText);
           }
-        },
-        error: function (xhr) {
-          console.error('Error:', xhr.responseText);
-        }
+        });
+      }, function () {
       });
     });
+
 
     let currentYear = new Date().getFullYear();
     console.log("currentYear: ", currentYear);

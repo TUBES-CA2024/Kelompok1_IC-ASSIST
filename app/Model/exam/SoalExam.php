@@ -55,6 +55,13 @@ class SoalExam extends Model {
         return $stmt->fetchAll();
     }
     
+    public function getNameTempById() {
+        $sql = "SELECT * FROM " . self::$tempTable . " WHERE id = ?";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindParam(1, $this->id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
     public function deleteTempTable() {
         $query = "DELETE FROM " . self::$tempTable . ' WHERE id = ?';
         $stmt = self::getDB()->prepare($query);

@@ -101,7 +101,18 @@ class SoalController extends Controller
             }
             $id = $_POST['id'] ?? '';
             $soal = new SoalExam($id);
-
+            $file = $soal->getNameTempById();
+            $PATH = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/documents/';
+            $fileName = $PATH.$file['nama'];
+            if(file_exists($fileName)) {
+                if(!unlink($fileName)) {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'file  gagal dihapus'
+                    ]);
+                    return;
+                }
+            }
             if($soal->deleteTempTable()) {
                 echo json_encode([
                     'status' => 'success',
