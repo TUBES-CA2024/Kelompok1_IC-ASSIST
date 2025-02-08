@@ -1,0 +1,64 @@
+[
+    {
+        "id": 1,
+        "deskripsi": "Apa yang dimaksud dengan \"variabel\" dalam pemrograman?\n\n",
+        "status_soal": "pilihan_ganda",
+        "pilihan": [
+            " Sebuah fungsi yang digunakan untuk menjalankan kode",
+            " Sebuah wadah untuk menyimpan nilai atau data",
+            "Sebuah jenis operator matematika",
+            "Sebuah komentar dalam kode"
+        ],
+        "jawaban": "Sebuah wadah untuk menyimpan nilai atau data"
+    },
+    {
+        "id": 2,
+        "deskripsi": "Mana dari berikut ini yang BUKAN merupakan tipe data dasar dalam pemrograman?\n\n",
+        "status_soal": "pilihan_ganda",
+        "pilihan": [
+            "Integer",
+            "String",
+            "Boolean",
+            "Array"
+        ],
+        "jawaban": "Array"
+    },
+    {
+        "id": 3,
+        "deskripsi": "Apa fungsi dari pernyataan \"if\" dalam pemrograman?",
+        "status_soal": "pilihan_ganda",
+        "pilihan": [
+            "Untuk mengulang blok kode beberapa kali",
+            "Untuk membuat keputusan berdasarkan kondisi tertentu",
+            "Untuk mendefinisikan sebuah fungsi baru",
+            "Untuk menampilkan output ke layar"
+        ],
+        "jawaban": "Untuk membuat keputusan berdasarkan kondisi tertentu"
+    },
+    {
+        "id": 4,
+        "deskripsi": "Apa yang dimaksud dengan \"loop\" dalam pemrograman?",
+        "status_soal": "pilihan_ganda",
+        "pilihan": [
+            "Sebuah cara untuk mengorganisir kode dalam blok-blok",
+            "Sebuah struktur kontrol yang memungkinkan kode diulang",
+            "Sebuah jenis variabel khusus",
+            "Sebuah metode untuk menangani kesalahan dalam kode"
+        ],
+        "jawaban": "Sebuah struktur kontrol yang memungkinkan kode diulang"
+    },
+    {
+        "id": 5,
+        "deskripsi": "Sebutkan 3 bahasa pemograman yang penting dalam pembuatan web? dan jelaskan masing2 kegunaan dari bahasa pemograman tersebut",
+        "status_soal": "textbox",
+        "pilihan": "",
+        "jawaban": ""
+    },
+    {
+        "id": 6,
+        "deskripsi": "Buatkan sebuah syntax perulangan yang mencetak angka ganjil dan juga genap ",
+        "status_soal": "textbox",
+        "pilihan": "",
+        "jawaban": ""
+    }
+]

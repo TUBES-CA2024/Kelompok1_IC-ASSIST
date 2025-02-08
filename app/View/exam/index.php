@@ -45,15 +45,17 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
             <div class="questions-container">
             <?php
 foreach ($results as $index => $result): ?>
-    <div class="question" data-id-soal="<?= htmlspecialchars($result['id']) ?>" style="display: none;">
+    <div class="question" 
+    data-id-soal="<?= htmlspecialchars($result['id']) ?>" 
+    data-id-soal-db="<?=htmlspecialchars($id_soal)?>" style="display: none;">
         <h3>Soal <?= $index + 1 ?></h3>
         <p><?= htmlspecialchars($result['deskripsi']) ?></p>
         <?php if ($result['status_soal'] === 'pilihan_ganda'): ?>
             <ul class="options">
                 <?php
-                $options = json_decode($result['pilihan']);
+                $options = $result['pilihan'];
                 foreach ($options as $optionIndex => $option): ?>
-                    <li>
+                    <li style="margin-top:10px">
                         <label>
                             <input type="radio" name="answer[<?= htmlspecialchars($result['id']) ?>]"
                                 value="<?= htmlspecialchars($optionIndex) ?>">

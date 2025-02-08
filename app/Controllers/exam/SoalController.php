@@ -41,6 +41,53 @@ class SoalController extends Controller
         }
     }
 
+    public function getAllSoalForExam() {
+        try {
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                if (!isset($_SESSION['user']['id'])) {
+                    throw new \Exception('User tidak terautentikasi');
+                }
+              
+                $soal = new SoalExam();
+                $soals = $soal->getTempByStatus();
+                $results = null;
+                $dir = $_SERVER['DOCUMENT_ROOT'] . '/tubes_web/res/documents/';
+            
+                if ($soals && !empty($soals['nama'])) {
+                    $file = $dir . $soals['nama'];
+                    if (file_exists($file)) {
+                        $jsonContent = file_get_contents($file);
+                        $dataJson = json_decode($jsonContent, true);
+                        if (is_array($dataJson)) {
+                            $results = $dataJson;
+                        } else {
+                            error_log("JSON decoding failed: " . json_last_error_msg());
+                        }
+                    } else {
+                        error_log("File not found: " . $file);
+                    }
+                    
+                    echo json_encode([
+                        'tstatus' => 'success',
+                        'id' => $soals['id'],
+                        'allSoal' => $results
+                    ]);
+                    exit;
+                }
+                echo json_encode([
+                    'tstatus' => 'error',
+                    'message' => print_r($soals, true)
+                ]);
+            } catch (\Exception $e) {
+                echo json_encode([
+                    'tstatus' => 'error',
+                    'message' => $e->getMessage()
+                ]);
+            }
+        }
+
     public function getAllSoalWithJson()
     {
         try {

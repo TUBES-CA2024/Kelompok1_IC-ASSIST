@@ -522,8 +522,10 @@ $years = SoalController::getYears();
         soalListContainer.append(soalElement);
       });
     }
+    let id = 0;
     $('#addSoalButton').on('click', function () {
       const soal = {};
+      soal.id = id++;
       soal.deskripsi = $("#deskripsi").val();
       soal.tipeJawaban = $('input[name="tipeJawaban"]:checked').val();
       soal.pilihan = $("#pilihan").val();

@@ -11,15 +11,16 @@ class JawabanExam extends Model {
     protected $jawaban;
 
 
-    public function saveJawaban($id_soal, $id_user, $jawaban) {
-        $query = "INSERT INTO jawaban (id_soal, id_mahasiswa, jawaban, created_at)
-                  VALUES (:id_soal, :id_mahasiswa, :jawaban, NOW())
+    public function saveJawaban($id_soal,$id_soal_json, $id_user, $jawaban) {
+        $query = "INSERT INTO jawaban_temp (id_soal, id_mahasiswa, id_soal_json, jawaban, created_at)
+                  VALUES (:id_soal, :id_mahasiswa, :id_soal_json, :jawaban, NOW())
                   ON DUPLICATE KEY UPDATE jawaban = :jawaban, modified = NOW()";
     
         $stmt = self::getDB()->prepare($query);
         $id_mahasiswa = $this->getIdMahasiswa($id_user)['id'];
-        $stmt->bindParam(':id_soal', $id_soal, PDO::PARAM_INT);
+        $stmt->bindParam(':id_soal', $id_soal_json, PDO::PARAM_INT);
         $stmt->bindParam(':id_mahasiswa', $id_mahasiswa, PDO::PARAM_INT);
+        $stmt->bindParam(':id_soal_json', $id_soal, PDO::PARAM_INT);
         $stmt->bindParam(':jawaban', $jawaban, PDO::PARAM_STR);
     
         return $stmt->execute();

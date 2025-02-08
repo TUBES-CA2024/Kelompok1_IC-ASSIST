@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const questions = document.querySelectorAll(
     ".questions-container > .question"
   );
+  console.log(questions);
   const navButtons = document.querySelectorAll(".nav button");
   const timerElement = document.getElementById("timer");
   const endpoint = "/tubes_web/public/hasil";
@@ -162,8 +163,11 @@ document.addEventListener("DOMContentLoaded", () => {
   function submitAllAnswers() {
     const data = Object.entries(answers).map(([idSoal, jawaban]) => ({
       id_soal: idSoal,
+      id_soal_db: jawaban.id_soal_db,
       jawaban: jawaban,
     }));
+
+    console.log( "Data :  ", data);
 
     return new Promise((resolve, reject) => {
       $.ajax({
@@ -278,8 +282,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function saveAnswer(idSoal, answer) {
-    answers[idSoal] = answer;
+  function saveAnswer(idSoal,idSoalDb, answer) {
+    answers[idSoal] = {
+      id_soal_db: idSoalDb,
+      answer: answer
+    }
   }
 
   navButtons.forEach((button, index) => {
@@ -292,22 +299,24 @@ document.addEventListener("DOMContentLoaded", () => {
   questions.forEach((question, index) => {
     const options = question.querySelectorAll("input[type='radio']");
     const textarea = question.querySelector("textarea.text-answer");
+    const idSoalDb = question.getAttribute("data-id-soal-db");
     const idSoal = question.getAttribute("data-id-soal");
 
     options.forEach((option) => {
       option.addEventListener("change", () => {
         const answer = option.value;
-        saveAnswer(idSoal, answer);
+        saveAnswer(idSoal,idSoalDb, answer);
         markAnsweredQuestion(index);
       });
     });
 
     if (textarea) {
+      console.log( "id soal db: ",idSoalDb);
       textarea.addEventListener("input", () => {
         const answer = textarea.value.trim();
-        saveAnswer(idSoal, answer);
+        saveAnswer(idSoal,idSoalDb, answer);
         console.log(
-          `Jawaban disimpan: { idSoal: ${idSoal}, answer: "${answer}" }`
+          `Jawaban disimpan: { idSoal: ${idSoal}, idSoalDb ${idSoalDb}, answer: "${answer}" }`
         );
         markAnsweredQuestion(index);
       });

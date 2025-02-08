@@ -18,7 +18,7 @@ class NilaiAkhir extends Model
         $this->id_mahasiswa = $id_mahasiswa;
         $this->nilai = $nilai;
     }
-    public function saveNilai($id)
+    public function saveNilaiTemp($id)
     {
         $total_nilai = 0;
         $poin_per_benar = 10;
@@ -58,6 +58,16 @@ class NilaiAkhir extends Model
         $stmt_update->execute();
 
         return $total_nilai;
+    }
+
+    public function saveNilai($id) {
+        $sql = "INSERT INTO nilai_akhir (id_mahasiswa,total_nilai) VALUES (?,?,?)";
+        $stmt = self::getDB()->prepare($sql);
+        $idMhs = $this->getIdMahasiswa($id);
+        $nol = 0;
+        $stmt->bindParam(1, $idMhs);
+        $stmt->bindParam(3, $nol);
+        return $stmt->execute();
     }
 
     public function getNilai($id)

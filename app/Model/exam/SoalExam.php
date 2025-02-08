@@ -79,6 +79,13 @@ class SoalExam extends Model {
         return $stmt->execute();
     }
 
+    public function getTempByStatus() 
+    {
+        $sql = "SELECT * FROM " . self::$tempTable . " WHERE status = 'aktif'";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
     public function getAllTemp() {
         $query = "SELECT * FROM " . self::$tempTable;
         $stmt = self::getDB()->prepare($query);

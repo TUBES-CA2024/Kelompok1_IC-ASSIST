@@ -32,21 +32,17 @@ class AnswersController extends Controller {
                 }
     
                 $id_soal = $answer['id_soal'];
+                $id_soal_json = $answer['id_soal_db'];
                 $jawaban = $answer['jawaban'];
     
-                if (!$jawabanExam->saveJawaban($id_soal, $id_user, $jawaban)) {
+                if (!$jawabanExam->saveJawaban($id_soal, $id_soal_json,$id_user, $jawaban)) {
                     $errors[] = "Gagal menyimpan jawaban untuk soal ID: $id_soal";
                 }
             }
-    
-            $nilaiAkhir = new NilaiAkhir();
-            $score = $nilaiAkhir->saveNilai($id_user);
-    
             $response = [
                 'status' => empty($errors) ? 'success' : 'error',
                 'message' => empty($errors) ? 'Semua jawaban berhasil disimpan dan nilai telah dihitung' : 'Gagal menyimpan beberapa jawaban',
                 'errors' => $errors,
-                'score' => $score,
             ];
     
             header('Content-Type: application/json');
