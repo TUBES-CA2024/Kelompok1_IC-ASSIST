@@ -26,6 +26,14 @@ class JawabanExam extends Model {
         return $stmt->execute();
     }
     
+    public function getTempJawaban($id) {
+        $sql = "SELECT DISTINCT m.id, m.nama_lengkap, m.stambuk
+FROM jawaban_temp j
+JOIN mahasiswa m WHERE m.id = j.id_mahasiswa";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
     public function getJawaban($id_soal) {
         $query = "SELECT jawaban FROM " . self::$table . " WHERE id_soal = :id_soal";
         $stmt = self::getDB()->prepare($query);

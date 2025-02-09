@@ -5,51 +5,59 @@ use App\Core\Controller;
 use App\Model\exam\JawabanExam;
 use App\Model\exam\NilaiAkhir;
 
-class AnswersController extends Controller {
-    public function saveAnswer() {
+class AnswersController extends Controller
+{
+    public function saveAnswer()
+    {
         try {
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
                 throw new \Exception('Metode tidak diizinkan');
             }
-    
+
             $data = json_decode(file_get_contents("php://input"), true);
             if (empty($data)) {
                 throw new \Exception('Data jawaban kosong');
             }
-    
+
             if (!isset($_SESSION['user']['id'])) {
                 throw new \Exception('User tidak terautentikasi');
             }
-    
+
             $id_user = $_SESSION['user']['id'];
             $jawabanExam = new JawabanExam();
             $errors = [];
-    
+
             foreach ($data as $answer) {
                 if (!isset($answer['id_soal'], $answer['jawaban'])) {
                     $errors[] = 'Data tidak lengkap untuk soal ID: ' . ($answer['id_soal'] ?? 'unknown');
                     continue;
                 }
-    
+
                 $id_soal = $answer['id_soal'];
                 $id_soal_json = $answer['id_soal_db'];
                 $jawaban = $answer['jawaban'];
-    
-                if (!$jawabanExam->saveJawaban($id_soal, $id_soal_json,$id_user, $jawaban)) {
+
+                if (is_array($jawaban)) {
+                    
+                    $jawaban = implode(', ', $jawaban); 
+                }
+
+                if (!$jawabanExam->saveJawaban($id_soal, $id_soal_json, $id_user, $jawaban)) {
                     $errors[] = "Gagal menyimpan jawaban untuk soal ID: $id_soal";
                 }
             }
+
             $response = [
                 'status' => empty($errors) ? 'success' : 'error',
                 'message' => empty($errors) ? 'Semua jawaban berhasil disimpan dan nilai telah dihitung' : 'Gagal menyimpan beberapa jawaban',
                 'errors' => $errors,
             ];
-    
+
             header('Content-Type: application/json');
             echo json_encode($response);
             error_log("Respons backend: " . json_encode($response));
             http_response_code(200);
-    
+
         } catch (\Exception $e) {
             header('Content-Type: application/json');
             echo json_encode([
@@ -60,4 +68,5 @@ class AnswersController extends Controller {
             http_response_code(500);
         }
     }
+
 }

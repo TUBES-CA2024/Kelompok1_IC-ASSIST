@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = Object.entries(answers).map(([idSoal, jawaban]) => ({
       id_soal: idSoal,
       id_soal_db: jawaban.id_soal_db,
-      jawaban: jawaban,
+      jawaban: jawaban.answer,
     }));
 
     console.log( "Data :  ", data);

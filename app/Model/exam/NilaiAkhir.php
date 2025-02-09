@@ -6,7 +6,9 @@ use PDO;
 class NilaiAkhir extends Model
 {
     protected static $table = "nilai_akhir";
+    protected static $temp_table = "nilai_akhir_temp";
     protected $id;
+
 
     protected $id_mahasiswa;
     protected $nilai;
@@ -17,6 +19,31 @@ class NilaiAkhir extends Model
     ) {
         $this->id_mahasiswa = $id_mahasiswa;
         $this->nilai = $nilai;
+    }
+
+    public function getTempJawaban()
+    {
+        $sql = "SELECT DISTINCT m.id, m.nama_lengkap, m.stambuk
+FROM jawaban_temp j
+JOIN mahasiswa m WHERE m.id = j.id_mahasiswa";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getTemp()
+    {
+        $sql = "SELECT m.id, m.nama_lengkap, m.stambuk, n.total_nilai as nilai
+FROM nilai_akhir_temp n 
+JOIN mahasiswa m WHERE m.id = n.id;";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->execute();
+        if(!$stmt) {
+            return false;
+        }
+        if($stmt->rowCount() > 0) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
     public function saveNilaiTemp($id)
     {
@@ -60,7 +87,8 @@ class NilaiAkhir extends Model
         return $total_nilai;
     }
 
-    public function saveNilai($id) {
+    public function saveNilai($id)
+    {
         $sql = "INSERT INTO nilai_akhir (id_mahasiswa,total_nilai) VALUES (?,?,?)";
         $stmt = self::getDB()->prepare($sql);
         $idMhs = $this->getIdMahasiswa($id);
@@ -91,7 +119,7 @@ class NilaiAkhir extends Model
         return $result ? $result : null;
     }
 
-    public function updateTotalNilai($id,$nilai)
+    public function updateTotalNilai($id, $nilai)
     {
         $sql = "UPDATE " . static::$table . " SET total_nilai = :nilai WHERE id_mahasiswa = :id_mahasiswa";
         $stmt = self::getDB()->prepare($sql);
@@ -100,6 +128,14 @@ class NilaiAkhir extends Model
         return $stmt->execute();
     }
 
+    public function insertTemp()
+    {
+        $sql = "INSERT INTO " . self::$temp_table . " (id_mahasiswa, total_nilai) VALUES (:id_mahasiswa, :total_nilai)";
+        $stmt = self::getDB()->prepare($sql);
+        $stmt->bindParam(':id_mahasiswa', $this->id_mahasiswa);
+        $stmt->bindParam(':total_nilai', $this->nilai);
+        return $stmt->execute();
+    }
     public function getAllNilai()
     {
         $sql = "SELECT m.id, m.nama_lengkap, m.stambuk, n.nilai, n.total_nilai as total FROM mahasiswa m

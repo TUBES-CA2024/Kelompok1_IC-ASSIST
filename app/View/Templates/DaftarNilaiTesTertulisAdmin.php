@@ -198,8 +198,7 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
                 <th>No</th>
                 <th>Nama</th>
                 <th>Stambuk</th>
-                <th>Nilai Tes tertulis</th>
-                <th>Nilai Keseluruhan</th>
+                <th>Nilai Keseluruhan</th>      
             </tr>
         </thead>
         <tbody>
@@ -212,13 +211,11 @@ $nilai = NilaiAkhirController::getAllNilaiAkhirMahasiswa();
                         <button class="btn nama-button" data-id="<?= htmlspecialchars($value['id'] ?? '') ?>"
                             data-nama="<?= htmlspecialchars($value['nama_lengkap'] ?? 'Tidak ada nama') ?>"
                             data-stambuk="<?= htmlspecialchars($value['stambuk'] ?? 'Tidak ada stambuk') ?>"
-                            data-nilai="<?= htmlspecialchars($value['nilai'] ?? 'Tidak ada nilai') ?>"
                             data-total="<?= htmlspecialchars($value['total'] ?? 'Tidak ada nilai') ?>">
                             <?= htmlspecialchars($value['nama_lengkap'] ?? 'Tidak ada nama') ?>
                         </button>
                     </td>
                     <td><?= htmlspecialchars($value['stambuk'] ?? 'Tidak ada stambuk') ?></td>
-                    <td><?= htmlspecialchars($value['nilai'] ?? 'Tidak ada nilai') ?></td>
                     <td><?= htmlspecialchars($value['total'] ?? 'Tidak ada nilai') ?></td>
                 </tr>
                 <?php

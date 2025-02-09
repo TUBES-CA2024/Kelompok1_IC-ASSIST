@@ -5,6 +5,7 @@ use App\Core\Controller;
 use app\Model\exam\NilaiAkhir;
 class NilaiAkhirController extends Controller
 {
+
     public function saveNilai()
     {
         try {
@@ -37,6 +38,27 @@ class NilaiAkhirController extends Controller
         }
     }
 
+    public static function getNilaiByTemp() {
+        if(session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if(!isset($_SESSION['user']['id'])) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'User tidak terautentikasi'
+            ]);
+            return;
+        }
+        try {
+            $nilai = new NilaiAkhir();
+            return $nilai->getTemp();
+        } catch (\Exception $e) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
     public static function getAllNilaiAkhirMahasiswa()
     {
         try {
@@ -47,7 +69,7 @@ class NilaiAkhirController extends Controller
                 throw new \Exception('User tidak terautentikasi');
             }
             $nilai = new NilaiAkhir();
-            return $nilai->getAllNIlai();
+            return $nilai->getTempJawaban();
         } catch (\Exception $e) {
             error_log("Error in getAllNilaiAkhirMahasiswa: " . $e->getMessage());
             return [];
