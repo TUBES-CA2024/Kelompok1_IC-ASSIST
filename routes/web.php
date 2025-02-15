@@ -59,3 +59,4 @@ Router::post("/updatebiodata",[new ProfileController, 'updateBiodata']);
 Router::post("/acceptberkas",[new BerkasUserController, 'updateAcceptedStatus']);
 Router::post("/ruangan/getfilter",[new WawancaraController,'getAllFilterByIdRuangan']);
 Router::post("/updatenilaiakhir",[new NilaiAkhirController, 'updateTotalNilai']);
+Router::post("/updateabsensi",[new AbsensiUserController, 'updateData']);

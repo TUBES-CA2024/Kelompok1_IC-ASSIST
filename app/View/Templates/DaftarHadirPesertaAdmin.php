@@ -370,6 +370,64 @@ $mahasiswaList = MahasiswaController::viewAllMahasiswa();
 
 <script>
     $(document).ready(function () {
+        function showModal(message, gifUrl = null) {
+            const modal = document.getElementById('customModal');
+            if (!modal) {
+                return;
+            }
+
+            const modalMessage = document.getElementById('modalMessage');
+            const modalGif = document.getElementById('modalGif');
+            const closeModal = document.getElementById('closeModal');
+
+            modalMessage.textContent = message;
+            modalGif.style.display = gifUrl ? 'block' : 'none';
+            if (gifUrl) modalGif.src = gifUrl;
+
+            modal.style.display = 'flex';
+
+            $(closeModal).off('click').on('click', function () {
+                modal.style.display = 'none';
+            });
+
+            $(window).off('click').on('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        function showConfirm(message, onConfirm = null, onCancel = null) {
+            const modal = document.getElementById('confirmModal');
+            if (!modal) {
+
+                return;
+            }
+
+            const modalMessage = document.getElementById('confirmModalMessage');
+            const confirmButton = document.getElementById('confirmModalConfirm');
+            const cancelButton = document.getElementById('confirmModalCancel');
+
+            modalMessage.textContent = message;
+            modal.style.display = 'flex';
+
+            $(confirmButton).off('click').on('click', function () {
+                if (onConfirm) onConfirm();
+                modal.style.display = 'none';
+            });
+
+            $(cancelButton).off('click').on('click', function () {
+                if (onCancel) onCancel();
+                modal.style.display = 'none';
+            });
+
+            $(window).off('click').on('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
         const mahasiswaSelect = $("#mahasiswa");
         const selectedMahasiswaList = $("#selectedMahasiswaList");
         const addMahasiswaButton = $("#addMahasiswaButton");
@@ -380,7 +438,7 @@ $mahasiswaList = MahasiswaController::viewAllMahasiswa();
             const selectedOption = mahasiswaSelect.find(":selected");
 
             if (!mahasiswaId) {
-                alert("Silakan pilih mahasiswa terlebih dahulu.");
+                showModal("Silakan pilih mahasiswa terlebih dahulu.");
                 return;
             }
 
@@ -389,7 +447,7 @@ $mahasiswaList = MahasiswaController::viewAllMahasiswa();
             });
 
             if (existingItem.length > 0) {
-                alert("Mahasiswa sudah ada di daftar terpilih.");
+                showModal("Mahasiswa sudah ada di daftar terpilih.");
                 return;
             }
 
@@ -421,7 +479,7 @@ $mahasiswaList = MahasiswaController::viewAllMahasiswa();
             }).get();
 
             if (mahasiswaTerpilih.length === 0) {
-                alert("Silakan tambahkan mahasiswa ke daftar terpilih.");
+                showModal("Silakan pilih mahasiswa terlebih dahulu.");
                 return;
             }
 
@@ -434,7 +492,7 @@ $mahasiswaList = MahasiswaController::viewAllMahasiswa();
             const presentasi = $("#absensiPresentasi").val();
 
             if (!wawancara1 || !wawancara2 || !wawancara3 || !tesTertulis || !presentasi) {
-                alert("Silakan lengkapi semua field absensi dan jadwal.");
+                showModal("Silakan lengkapi semua data.");
                 return;
             }
 
@@ -464,11 +522,11 @@ $mahasiswaList = MahasiswaController::viewAllMahasiswa();
                         console.log(response.message);
                     }
                     if (response.status === "success") {
-                        alert(response.message);
+                        showModal(response.message, "/tubes_web/public/Assets/gif/success.gif");
 
                     } else {
                         console.log(response.message)
-                        alert(response.message);
+                        showModal(response.message, "/tubes_web/public/Assets/gif/failed.gif");
                     }
                 },
             });
@@ -477,6 +535,7 @@ $mahasiswaList = MahasiswaController::viewAllMahasiswa();
         const saveButton = $("#saveDetailAbsensi");
 
         $(document).on("click", ".open-detail", function () {
+            const id = $(this).data("id") || "";
             const nama = $(this).data("nama") || "";
             const stambuk = $(this).data("stambuk") || "";
             const wawancaraI = $(this).data("absensiwawancarai") || "";
@@ -484,8 +543,10 @@ $mahasiswaList = MahasiswaController::viewAllMahasiswa();
             const wawancaraIII = $(this).data("absensiwawancaraiii") || "";
             const tesTertulis = $(this).data("absensitestertulis") || "";
             const presentasi = $(this).data("absensipresentasi") || "";
-
-            console.log({ nama, stambuk, wawancaraI, wawancaraII, wawancaraIII, tesTertulis, presentasi });
+            const userId = $(this).closest('tr').data('userid');
+            console.log(userId);
+            console.log({ id, nama, stambuk, wawancaraI, wawancaraII, wawancaraIII, tesTertulis, presentasi });
+            $("#id").val(userId);
             $("#detailNama").text(nama);
             $("#detailStambuk").text(stambuk);
 
@@ -497,6 +558,7 @@ $mahasiswaList = MahasiswaController::viewAllMahasiswa();
 
             originalValues = { tesTertulis, presentasi, wawancaraI, wawancaraII, wawancaraIII };
             saveButton.prop("disabled", true);
+            $("#detailAbsensiModal").data('userid', userId);
 
             $("#detailAbsensiModal").modal("show");
         });
@@ -527,9 +589,54 @@ $mahasiswaList = MahasiswaController::viewAllMahasiswa();
             saveButton.prop("disabled", true);
         });
 
-        $("#saveDetailAbsensi").on("click", function () {
-            alert("Detail absensi berhasil disimpan!");
-            $("#detailAbsensiModal").modal("hide");
+        $("#saveDetailAbsensi").on("click", function (event) {
+            event.preventDefault();  // Mencegah form submit otomatis
+
+            console.log("Tombol Save diklik");
+
+            const idUser = $("#detailAbsensiModal").data('userid');
+            console.log("ID yang dipilih:", idUser);
+
+            if (!idUser) {
+                console.log("ID tidak ditemukan!");
+                return;  // Jika ID tidak ditemukan, hentikan proses
+            }
+            console.log($("#tesTertulis").val());
+            console.log($("#presentasi").val());
+            console.log($("#wawancaraI").val());
+            console.log($("#wawancaraII").val());
+            console.log($("#wawancaraIII").val());
+
+            // Melanjutkan ke AJAX
+            $.ajax({
+                url: "<?= APP_URL ?>/updateabsensi",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    id: idUser,
+                    tesTertulis: $("#tesTertulis").val(),
+                    presentasi: $("#presentasi").val(),
+                    wawancaraI: $("#wawancaraI").val(),
+                    wawancaraII: $("#wawancaraII").val(),
+                    wawancaraIII: $("#wawancaraIII").val(),
+                }),
+                success: function (response) {
+                    console.log("Response:", response);  // Debug respons server
+                    if (response.status === "success") {
+                        showModal(response.message, "/tubes_web/public/Assets/gif/success.gif");
+                        document.querySelector('a[data-page="daftarKehadiran"]').click();
+                        $("#detailAbsensiModal").modal("hide");
+                    } else {
+                        showModal(response.message, "/tubes_web/public/Assets/gif/failed.gif");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error:", error);  // Debug error jika AJAX gagal
+                    console.log(status)
+                    showModal("Something went wrong. Please try again.", "/tubes_web/public/Assets/gif/failed.gif");
+                }
+            });
         });
+
     });
 </script>

@@ -11,12 +11,14 @@ class Absensi extends Model {
     protected $presentasi;
     
     public function __construct(
+        $id = null,
         $wawancaraI = null,
         $wawancaraII = null,
         $wawancaraIII = null,
         $tesTertulis = null,
         $presentasi = null
     ) {
+        $this->id = $id;
         $this->wawancaraI = $wawancaraI;
         $this->wawancaraII = $wawancaraII;
         $this->wawancaraIII = $wawancaraIII;
@@ -79,10 +81,15 @@ class Absensi extends Model {
         $stmt->execute();
     }
     
-    public function updateAbsensi($id) {
-        $sql = "UPDATE ". self::$table . " SET absensi_wawancara_I = Hadir, absensi_wawancara_II = Hadir, absensi_wawancara_III = Hadir, absensi_tes_tertulis = Hadir, absensi_presentasi = Hadir WHERE id_mahasiswa = :id";
+    public function updateAbsensi() {
+        $sql = "UPDATE ". self::$table . " SET absensi_wawancara_I = ?, absensi_wawancara_II = ?, absensi_wawancara_III = ?, absensi_tes_tertulis = ?, absensi_presentasi = ? WHERE id= ?";
         $stmt = self::getDB()->prepare($sql);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindValue(1, $this->wawancaraI);
+        $stmt->bindValue(2, $this->wawancaraII);
+        $stmt->bindValue(3, $this->wawancaraIII);
+        $stmt->bindValue(4, $this->tesTertulis);
+        $stmt->bindValue(5, $this->presentasi);
+        $stmt->bindValue(6, $this->id);
         return $stmt->execute();
     }
     public function addMahasiswa(Absensi $absensi, $id) {
@@ -107,5 +114,6 @@ class Absensi extends Model {
         }
         return true;
     }
+    
     
 }

@@ -55,4 +55,42 @@ class AbsensiUserController extends Controller
             return;
         }
     }
+    public function updateData() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
+            return;
+        }
+        if (!isset($_SESSION['user']['id'])) {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
+            return;
+        }
+        $input = json_decode(file_get_contents('php://input'), true);
+        
+        $id = $input['id'];
+        $wawancaraI = $input['wawancaraI'];
+        $wawancaraII = $input['wawancaraII'];
+        $wawancaraIII = $input['wawancaraIII'];
+        $tesTertulis = $input['tesTertulis'];
+        $presentasi = $input['presentasi'];
+
+        $absensi = new Absensi(
+            $id,
+            $wawancaraI,
+            $wawancaraII,
+            $wawancaraIII,
+            $tesTertulis,
+            $presentasi
+        );
+        if($absensi->updateAbsensi()) {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'success', 'message' => 'Absensi berhasil diupdate']);
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => 'error', 'message' => 'Gagal mengupdate absensi']);
+        }
+
+
+    }
 }

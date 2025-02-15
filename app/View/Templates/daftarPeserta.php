@@ -13,6 +13,7 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
         background-color: #f0f4f8;
     }
 
+   
     .table-modern {
         background: linear-gradient(145deg, #ffffff, #f3f6fa);
         /* Gradient background */
@@ -41,11 +42,11 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
     }
 
     .table-modern th {
-        background-color: #f9fbfc;
+        background-color: #3dc2ec;
         /* Subtle header background */
         font-weight: 600;
         /* Bold font */
-        color: #555;
+        color: white;
         /* Slightly darker text for headers */
         font-size: 1rem;
         /* Adjust header font size */
@@ -295,7 +296,6 @@ $result = MahasiswaController::viewAllMahasiswa() ?? [];
             });
         }
 
-        const table = $('#daftar').DataTable();
 
         $('#detailModal').on('show.bs.modal', function (event) {
             const button = $(event.relatedTarget);
