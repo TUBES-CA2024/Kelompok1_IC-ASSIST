@@ -1,0 +1,21 @@
+[
+    {
+        "id": 0,
+        "deskripsi": "123123",
+        "tipeJawaban": "pilihan_ganda",
+        "pilihan": [
+            "a",
+            "b",
+            "c",
+            "d"
+        ],
+        "jawaban": "a"
+    },
+    {
+        "id": 1,
+        "deskripsi": "2024",
+        "tipeJawaban": "textbox",
+        "pilihan": "",
+        "jawaban": ""
+    }
+]
