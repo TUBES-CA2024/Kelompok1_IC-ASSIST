@@ -82,7 +82,7 @@ class Absensi extends Model {
     }
     
     public function updateAbsensi() {
-        $sql = "UPDATE ". self::$table . " SET absensi_wawancara_I = ?, absensi_wawancara_II = ?, absensi_wawancara_III = ?, absensi_tes_tertulis = ?, absensi_presentasi = ? WHERE id= ?";
+        $sql = "UPDATE ". self::$table . " SET absensi_wawancara_I = ?, absensi_wawancara_II = ?, absensi_wawancara_III = ?, absensi_tes_tertulis = ?, absensi_presentasi = ? WHERE id = ?";
         $stmt = self::getDB()->prepare($sql);
         $stmt->bindValue(1, $this->wawancaraI);
         $stmt->bindValue(2, $this->wawancaraII);

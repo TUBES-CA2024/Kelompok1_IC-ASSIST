@@ -213,10 +213,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
                     <td><?= $row['judul'] ?></td>
                     <td>
                         <div style="display: flex; gap: 5%;">
-                            <img src="/tubes_web/public/Assets/Img/edit.svg" alt="edit" class="edit-button"
-                                style="cursor: pointer;">
-                            <img src="/tubes_web/public/Assets/Img/delete.svg" alt="delete" class="delete-button"
-                                style="cursor: pointer;">
+                            <img src="/tubes_web/public/Assets/Img/edit.svg" alt="edit" class="edit-button">
                         </div>
                     </td>
                 </tr>
@@ -298,7 +295,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
                 if (!modal) {
                     return;
                 }
-
+                
                 const modalMessage = document.getElementById('modalMessage');
                 const modalGif = document.getElementById('modalGif');
                 const closeModal = document.getElementById('closeModal');
@@ -438,7 +435,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
                     success: function (response) {
                         if (response.status === 'success') {
                             showModal('Mahasiswa berhasil di terima');
-                            location.reload();
+                            document.querySelector('a[data-page="presentasi"]').click();
                         } else {
                             showModal('Mahasiswa gagal di terima');
                         }
@@ -448,6 +445,7 @@ $jadwalPresentasi = JadwalPresentasiController::getJadwalPresentasi();
                         alert('Terjadi kesalahan. Coba lagi nanti.');
                     }
                 });
+                $('#presentasiModal').modal('hide');
             });
         });
     </script>

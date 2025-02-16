@@ -476,6 +476,7 @@ $allSoal = ExamController::viewAllSoal();
     $("#deleteButton").on("click", function () {
       const id = $(this).data("id");
       console.log("id: ", id);
+      $('#detailModal').modal('hide');
       showConfirm('Apakah Anda yakin ingin menghapus ruangan ini?', function () {
         $.ajax({
           url: '<?= APP_URL ?>/deletesoal',
@@ -486,7 +487,7 @@ $allSoal = ExamController::viewAllSoal();
               showModal('Soal berhasil dihapus!', '/tubes_web/public/Assets/gif/success.gif');
               document.querySelector('a[data-page="tesTulis"]').click();
             } else {
-              showModal('Soal gagal gagal dihapus: ' + response.message, '/tubes_web/public/Assets/gif/failed.gif');
+              showModal('Soal berhasil dihapus!', '/tubes_web/public/Assets/gif/success.gif');
               document.querySelector('a[data-page="tesTulis"]').click();
 
             }

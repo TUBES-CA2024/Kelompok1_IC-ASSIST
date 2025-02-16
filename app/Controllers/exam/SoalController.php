@@ -86,7 +86,7 @@ class SoalController extends Controller
                 'status' => 'success',
                 'message' => 'Soal berhasil dihapus'
             ]);
-            http_response_code(200);
+http_response_code(200);
         } catch (\Exception $e) {
             error_log("Error in deleteSoal: " . $e->getMessage());
 

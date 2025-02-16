@@ -5,7 +5,7 @@ use App\Controllers\presentasi\RuanganController;
 $wawancara = WawancaraController::getAll();
 $mahasiswaList = MahasiswaController::viewAllMahasiswa();
 $ruanganList = RuanganController::viewAllRuangan();
-$colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
+$colors = ['#3357FF'];
 ?>
 <style>
     /* Import Font */
@@ -154,7 +154,8 @@ $colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
     <div class="d-flex gap-2 mb-3">
         <?php foreach ($ruanganList as $index => $ruangan): ?>
             <button id="filter-<?= $ruangan['id'] ?>" class="btn text-white filter-btn"
-                data-id="<?= (int) $ruangan['id'] ?>" style="background-color: <?= $colors[$index % count($colors)] ?>;">
+                data-id="<?= (int) $ruangan['id'] ?>"
+                style="background-color: <?= $colors[$index % count($colors)] ?>; width: 200px;">
                 <?= $ruangan['nama'] ?>
             </button>
         <?php endforeach; ?>
@@ -221,7 +222,6 @@ $colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
                             mahasiswa</button>
                         <button type="button" class="btn btn-success mt-2" id="addAllMahasiswaButton">Tambah
                             Semua</button>
-
                     </div>
                     <div class="mb-3">
                         <label for="selectedMahasiswa" class="form-label">Mahasiswa Terpilih</label>
@@ -357,7 +357,62 @@ $colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
 <script>
     $(document).ready(() => {
 
+        function showModal(message, gifUrl = null) {
+            const modal = document.getElementById('customModal');
+            if (!modal) {
+                return;
+            }
 
+            const modalMessage = document.getElementById('modalMessage');
+            const modalGif = document.getElementById('modalGif');
+            const closeModal = document.getElementById('closeModal');
+
+            modalMessage.textContent = message;
+            modalGif.style.display = gifUrl ? 'block' : 'none';
+            if (gifUrl) modalGif.src = gifUrl;
+
+            modal.style.display = 'flex';
+
+            $(closeModal).off('click').on('click', function () {
+                modal.style.display = 'none';
+            });
+
+            $(window).off('click').on('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        function showConfirm(message, onConfirm = null, onCancel = null) {
+            const modal = document.getElementById('confirmModal');
+            if (!modal) {
+                return;
+            }
+
+            const modalMessage = document.getElementById('confirmModalMessage');
+            const confirmButton = document.getElementById('confirmModalConfirm');
+            const cancelButton = document.getElementById('confirmModalCancel');
+
+            modalMessage.textContent = message;
+            modal.style.display = 'flex';
+
+            $(confirmButton).off('click').on('click', function () {
+                if (onConfirm) onConfirm();
+                modal.style.display = 'none';
+            });
+
+            $(cancelButton).off('click').on('click', function () {
+                if (onCancel) onCancel();
+                modal.style.display = 'none';
+            });
+
+            $(window).off('click').on('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
         const mahasiswaDropdown = document.getElementById("mahasiswa");
         const addMahasiswaButton = document.getElementById("addMahasiswaButton");
         const selectedMahasiswaList = document.getElementById("selectedMahasiswaList");
@@ -367,7 +422,6 @@ $colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
 
         function renderSelectedMahasiswa() {
             selectedMahasiswaList.innerHTML = "";
-
             selectedMahasiswa.forEach((mahasiswa) => {
                 const listItem = document.createElement("li");
                 listItem.className = "list-group-item d-flex justify-content-between align-items-center";
@@ -447,10 +501,10 @@ $colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
                 data: JSON.stringify(jadwalData),
                 success: function (response) {
                     if (response.status === 'success') {
-                        alert(response.message || 'Data berhasil disimpan');
-                        location.reload();
+                       showModal("Jadwal berhasil disimpan");
+                       document.querySelector('a[data-page="wawancara"]').click();
                     } else {
-                        alert(response.message || 'Data gagal disimpan');
+                        showModal("Jadwal gagal disimpan");
                     }
 
                     addJadwalForm.reset();
@@ -462,6 +516,7 @@ $colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
                     alert("Gagal menyimpan jadwal. Silakan coba lagi.");
                 }
             });
+            $('#addJadwalModal').modal('hide');
         });
         $(document).on("click", ".open-detail", function () {
             const id = $(this).closest("tr").data("id");
@@ -529,15 +584,14 @@ $colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
                 data: JSON.stringify(updateData),
                 success: function (response) {
                     if (response.status === "success") {
-                        alert(response.message || "Jadwal wawancara berhasil diupdate");
-                        location.reload();
+                    showModal("jadwal berhasil di update");
+                    document.querySelector('a[data-page="wawancara"]').click();
                     } else {
-                        alert(response.message || "Gagal mengupdate jadwal wawancara");
+                        showModal("Gagal mengupdate jadwal wawancara");
                     }
                 },
                 error: function (xhr) {
                     console.error("Error:", xhr.responseText);
-                    alert("Gagal mengupdate jadwal wawancara. Silakan coba lagi.");
                 },
             });
         });
@@ -553,10 +607,10 @@ $colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#A833FF', '#33FFF2'];
                 data: JSON.stringify({ id }),
                 success: function (response) {
                     if (response.status === "success") {
-                        alert(response.message || "Jadwal wawancara berhasil dihapus");
-                        location.reload();
+                        showModal("Jadwal berhasil dihapus");
+                        document.querySelector('a[data-page="wawancara"]').click();
                     } else {
-                        alert(response.message || "Gagal menghapus jadwal wawancara");
+                        showModal("Gagal menghapus jadwal");
                     }
                 },
                 error: function (xhr) {

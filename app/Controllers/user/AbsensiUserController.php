@@ -39,6 +39,7 @@ class AbsensiUserController extends Controller
             }
             
             $absensi = new Absensi(
+                null,
                 $wawancaraI,
                 $wawancaraII,
                 $wawancaraIII,

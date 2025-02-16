@@ -12,7 +12,7 @@ $jenisKelamin = ProfileController::viewBiodata() == null ? "Jenis Kelamin" : Pro
 $tempatLahir = ProfileController::viewBiodata() == null ? "Tempat Lahir" : ProfileController::viewBiodata()["tempatLahir"];
 $tanggalLahir = ProfileController::viewBiodata() == null ? "Tanggal Lahir" : ProfileController::viewBiodata()["tanggalLahir"];
 $noHp = ProfileController::viewBiodata() == null ? "No Telephone" : ProfileController::viewBiodata()["noHp"];
-$photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto"] ?? "default.png");
+$photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewPhoto()["foto"] ?? "default.png");
 ?>
 
 <style>
@@ -365,10 +365,12 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewBerkas()["foto
                 type: 'POST',
                 success: function (response) {
                     if (response.status === 'success') {
-                        showModal('Logout berhasil', '/tubes_web/public/Assets/gif/success.gif').setTimeout(() => {
-                        window.location.href = '/tubes_web/public/';
-                            
-                        }, 2000);
+                        showModal('Logout berhasil', '/tubes_web/public/Assets/gif/success.gif');
+                        setTimeout(() => {
+                            window.location.href = '/tubes_web/public/';
+                            window.location.reload();
+        }, 1000);
+                        
                     } else {
                         showModal('Logout gagal', '/tubes_web/public/Assets/gif/failed.gif');
                     }

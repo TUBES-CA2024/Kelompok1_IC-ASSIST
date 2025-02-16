@@ -518,12 +518,9 @@ $mahasiswaList = MahasiswaController::viewAllMahasiswa();
                 contentType: "application/json",
                 data: JSON.stringify(formData),
                 success: function (response) {
-                    if (response.status === 'tes') {
-                        console.log(response.message);
-                    }
                     if (response.status === "success") {
                         showModal(response.message, "/tubes_web/public/Assets/gif/success.gif");
-
+                        document.querySelector('a[data-page="daftarKehadiran"]').click();
                     } else {
                         console.log(response.message)
                         showModal(response.message, "/tubes_web/public/Assets/gif/failed.gif");

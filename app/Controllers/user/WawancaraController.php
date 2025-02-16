@@ -6,7 +6,7 @@ class WawancaraController extends Controller
 {
     public static function getAll()
     {
-        $wawancara = new Wawancara(0, 0, 0, 0, 0);
+        $wawancara = new Wawancara(0, 0, 0, 0);
         $data = $wawancara->getAll();
         return $data;
     }
