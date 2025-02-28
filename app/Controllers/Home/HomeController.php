@@ -58,9 +58,9 @@ class HomeController extends Controller
                     View::render('DaftarNilaiTesTertulisAdmin', 'Templates');
                     break;
                 case 'logout':
-                    $_SESSION = [];
                     session_destroy();
-                    View::render('index', 'login');
+                    $_SESSION = [];
+                    echo "<script>window.location.href = '';</script>";
                     exit;
             }
 

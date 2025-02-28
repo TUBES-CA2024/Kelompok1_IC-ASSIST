@@ -131,7 +131,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewPhoto()["foto"
         background: #0056b3;
     }
 
-    #closeModal {
+    #closeModaledit {
         padding: 6px 14px;
         font-size: 12px;
         background: #FF0000;
@@ -142,7 +142,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewPhoto()["foto"
         transition: background-color 0.3s ease;
     }
 
-    #closeModal:hover {
+    #closeModaledit:hover {
         background: #cc0000;
     }
 </style>
@@ -260,7 +260,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewPhoto()["foto"
             </div>
             <div class="form-actions">
                 <button type="submit">Save Changes</button>
-                <button type="reset" id="closeModal">Cancel</button>
+                <button type="reset" id="closeModaledit">Cancel</button>
             </div>
         </form>
     </div>
@@ -309,7 +309,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewPhoto()["foto"
     }
 
     function validateNoNumber(input) {
-        const noNumberRegex = /^[^0-9]*$/;
+        const noNumberRegex = /^[A-Za-z\s]*$/;
 
         if (!noNumberRegex.test(input)) {
             return {
@@ -344,7 +344,7 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewPhoto()["foto"
             updateKelasOptions();
         });
 
-        $('#closeModal').click(function () {
+        $('#closeModaledit').click(function () {
             $('#editProfileModal').css('display', 'none');
         });
 
@@ -430,9 +430,11 @@ $photo = "/tubes_web/res/imageUser/" . (BerkasUserController::viewPhoto()["foto"
 
                         if (parsedResponse.status === 'success') {
                             showModal('Data berhasil diperbarui', '/tubes_web/public/Assets/gif/success.gif');
+                            document.querySelector('a[data-page="profile"]').click();
                         } else {
                             console.log('Error:', parsedResponse.message);
                             showModal('Data gagal diperbarui', '/tubes_web/public/Assets/gif/failed.gif');
+                            document.querySelector('a[data-page="profile"]').click();
                         }
                     } catch (error) {
                         console.error('Error parsing response:', error);

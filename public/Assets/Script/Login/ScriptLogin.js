@@ -242,28 +242,6 @@ $(document).ready(function () {
   $("#loginForm").submit(function (e) {
     e.preventDefault();
 
-    const stambuk = document.getElementById("stambuk").value;
-    const password = document.getElementById("passwordLogin").value;
-
-    const stambukResult = validateStambuk(stambuk);
-    const passwordResult = validatePasswordLogin(password);
-
-    let isValid = true;
-    if(!stambukResult.success) {
-      stambukInput.setCustomValidity(stambukResult.message);
-      stambukInput.reportValidity();
-      isValid = false;
-    }
-    if(!passwordResult.success) {
-      passwordInputLogin.setCustomValidity(passwordResult.message);
-      passwordInputLogin.reportValidity();
-    isValid = false;
-    }
-
-    if(!isValid && stambuk !== "admin") {
-      return;
-    }
-
     $.ajax({
       url: "/tubes_web/public/login/authenticate",
       type: "post",

@@ -196,51 +196,57 @@ class BiodataUser extends Model
     }
 
     public function updateBiodata(BiodataUser $biodata)
-    {
-        $sql = "UPDATE " . static::$table . " 
-                SET nama_lengkap = ?, id_jurusan = ?, id_kelas = ?, alamat = ?, jenis_kelamin = ?, tempat_lahir = ?, tanggal_lahir = ? 
-                WHERE id_user = ?";
+{
+    // Mulai dengan query update tanpa kolom no_telp
+    $sql = "UPDATE " . static::$table . " 
+            SET nama_lengkap = ?, id_jurusan = ?, id_kelas = ?, alamat = ?, jenis_kelamin = ?, tempat_lahir = ?, tanggal_lahir = ?";
 
-        $idKelas = $this->getIdKelas($biodata->kelas);
-        $idJurusan = $this->getIdJurusan($biodata->jurusan);
+    // Mendapatkan idKelas dan idJurusan
+    $idKelas = $this->getIdKelas($biodata->kelas);
+    $idJurusan = $this->getIdJurusan($biodata->jurusan);
 
-        if (!$idKelas || !$idJurusan) {
-            throw new \Exception("ID Kelas atau Jurusan tidak valid.");
-        }
-
-        $sqlCheckNoTelp = "SELECT no_telp FROM " . static::$table . " WHERE id_user = ?";
-        $stmtCheck = self::getDB()->prepare($sqlCheckNoTelp);
-        $stmtCheck->bindParam(1, $biodata->idUser);
-        $stmtCheck->execute();
-
-        $existingNoTelp = $stmtCheck->fetchColumn();
-
-        if ($existingNoTelp !== $biodata->noHp) {
-            $sql .= ", no_telp = ?";
-        }
-
-        $stmt = self::getDB()->prepare($sql);
-
-        $stmt->bindParam(1, $biodata->namaLengkap);
-        $stmt->bindParam(2, $idJurusan['id']);
-        $stmt->bindParam(3, $idKelas['id']);
-        $stmt->bindParam(4, $biodata->alamat);
-        $stmt->bindParam(5, $biodata->jenisKelamin);
-        $stmt->bindParam(6, $biodata->tempatLahir);
-        $stmt->bindParam(7, $biodata->tanggalLahir);
-        $stmt->bindParam(8, $biodata->idUser);
-
-        if ($existingNoTelp !== $biodata->noHp) {
-            $stmt->bindParam(9, $biodata->noHp);
-        }
-
-        try {
-            return $stmt->execute();
-        } catch (\Exception $e) {
-            error_log("SQL Error: " . $sql . " Params: " . json_encode([$biodata->namaLengkap, $idJurusan['id'], $idKelas['id'], $biodata->alamat, $biodata->jenisKelamin, $biodata->tempatLahir, $biodata->tanggalLahir, $biodata->noHp, $biodata->idUser]));
-            throw new \Exception("Gagal mengupdate biodata: " . $e->getMessage());
-        }
+    if (!$idKelas || !$idJurusan) {
+        throw new \Exception("ID Kelas atau Jurusan tidak valid.");
     }
 
+    // Cek apakah no_telp perlu diperbarui
+    $sqlCheckNoTelp = "SELECT no_telp FROM " . static::$table . " WHERE id_user = ?";
+    $stmtCheck = self::getDB()->prepare($sqlCheckNoTelp);
+    $stmtCheck->bindParam(1, $biodata->idUser);
+    $stmtCheck->execute();
 
+    $existingNoTelp = $stmtCheck->fetchColumn();
+
+    // Tambahkan kolom no_telp ke query jika diperlukan
+    if ($existingNoTelp !== $biodata->noHp) {
+        $sql .= ", no_telp = ?";
+    }
+
+    // Tambahkan kondisi WHERE ke query
+    $sql .= " WHERE id_user = ?";
+
+    // Persiapkan statement
+    $stmt = self::getDB()->prepare($sql);
+
+    // Bind parameter sesuai dengan query
+    $stmt->bindParam(1, $biodata->namaLengkap);
+    $stmt->bindParam(2, $idJurusan['id']);
+    $stmt->bindParam(3, $idKelas['id']);
+    $stmt->bindParam(4, $biodata->alamat);
+    $stmt->bindParam(5, $biodata->jenisKelamin);
+    $stmt->bindParam(6, $biodata->tempatLahir);
+    $stmt->bindParam(7, $biodata->tanggalLahir);
+    if ($existingNoTelp !== $biodata->noHp) {
+        $stmt->bindParam(8, $biodata->noHp);  
+        $stmt->bindParam(9, $biodata->idUser); 
+    } else {
+        $stmt->bindParam(8, $biodata->idUser); 
+    }
+    try {
+        return $stmt->execute();
+    } catch (\Exception $e) {
+        error_log("SQL Error: " . $sql . " Params: " . json_encode([$biodata->namaLengkap, $idJurusan['id'], $idKelas['id'], $biodata->alamat, $biodata->jenisKelamin, $biodata->tempatLahir, $biodata->tanggalLahir, $biodata->noHp, $biodata->idUser]));
+        throw new \Exception("Gagal mengupdate biodata: " . $e->getMessage());
+    }
+}
 }

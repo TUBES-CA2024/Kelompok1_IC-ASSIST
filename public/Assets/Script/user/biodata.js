@@ -41,7 +41,7 @@ function validatePhoneNumber(phoneNumber) {
 }
 
 function validateNoNumber(input) {
-  const noNumberRegex = /^[^0-9]*$/;
+  const noNumberRegex = /^[A-Za-z\s]*$/;
 
   if (!noNumberRegex.test(input)) {
     return {
